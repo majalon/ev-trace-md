@@ -1,0 +1,2717 @@
+{
+  "metadata": {
+    "title": "Catálogo estructurado del marco EV-TRACE-MD para evaluación de herramientas software en desarrollo de SaMD",
+    "short_title": "Catálogo EV-TRACE-MD para el EV-TRACE-MD Assistant",
+    "language": "es-ES",
+    "version": "0.7",
+    "status": "Operativo (v0.7). Pendiente: normalización definitiva de la regla de pesos.",
+    "source_document": "Entrega-3-B-TFM.docx",
+    "source_date_in_document": "24/06/2026",
+    "scope": "Organización fabricante de software como producto sanitario (SaMD) en el marco regulatorio europeo.",
+    "statistics": {
+      "families_or_subfamilies": 7,
+      "risk_dimensions": 8,
+      "transversal_criteria": 3,
+      "specific_criteria": 74,
+      "total_criteria": 77,
+      "normative_anchors": 39
+    }
+  },
+  "agent_governance": {
+    "purpose": "Asistir en la aplicación del marco EV-TRACE-MD: recopilar información, homogeneizar criterios, leer fuentes públicas del proveedor y generar una valoración estructurada con riesgos, mitigaciones y evidencias.",
+    "limits": [
+      "No sustituye la decisión humana ni automatiza la aprobación.",
+      "No emite la resolución final: corresponde al responsable de cumplimiento.",
+      "No debe presentar como verificado ningún dato sin una evidencia identificable.",
+      "No debe resolver la viabilidad técnica de implementación, que se declara fuera del alcance del prototipo.",
+      "Ante evidencia insuficiente debe devolver «evidencia insuficiente» y formular preguntas o tareas de obtención de evidencia.",
+      "Si el proveedor no se indica, buscar en fuentes públicas la empresa o autor del producto antes de evaluar.",
+      "Rellenar automáticamente la acción requerida con la propuesta del catálogo (campo ov)."
+    ],
+    "source": "TFM, apartados 1.3, 2 y 3.3; 6.1.1; 6.2.5",
+    "evaluation_states": {
+      "cumple": "El proveedor cumple el criterio. Que existan medidas organizativas adicionales como capa extra de control NO convierte un cumplimiento en parcial.",
+      "parcial": "Dudas reales sobre el cumplimiento del proveedor, pero existe una medida organizativa que puede mitigar la desviación.",
+      "no-cumple": "Carencia grave del proveedor que NO puede compensarse con medidas organizativas. Solo para incumplimientos severos.",
+      "no-verif": "Sin evidencia pública suficiente, criterio organizativo, o requiere información no pública.",
+      "no-aplica": "El criterio no es relevante para la herramienta en el contexto de uso declarado."
+    },
+    "evaluation_examples": [
+      {
+        "scenario": "El proveedor ofrece MFA pero la organización debe activarlo",
+        "status": "cumple",
+        "reason": "El proveedor lo ofrece"
+      },
+      {
+        "scenario": "El proveedor menciona cifrado pero no especifica el estándar",
+        "status": "parcial",
+        "reason": "Duda del proveedor"
+      },
+      {
+        "scenario": "El proveedor no ofrece exportación de datos en ningún formato",
+        "status": "no-cumple",
+        "reason": "Carencia grave"
+      },
+      {
+        "scenario": "No se encuentra información sobre el tema",
+        "status": "no-verif",
+        "reason": "Sin evidencia"
+      }
+    ]
+  },
+  "scope": {
+    "definition": "Herramientas software de terceros que intervienen en el diseño, desarrollo, fabricación, verificación, validación, mantenimiento o soporte del SaMD, o que contribuyen a demostrar el cumplimiento aplicable.",
+    "activation_paths": [
+      {
+        "id": "activa",
+        "name": "Activa",
+        "trigger": "Un empleado o departamento identifica la necesidad y presenta una solicitud formal.",
+        "minimum_information": "Uso previsto, proceso afectado, usuarios y tratamiento de datos personales o confidenciales.",
+        "source": "TFM, apartado 6.2.2"
+      },
+      {
+        "id": "tecnica",
+        "name": "Técnica",
+        "trigger": "Nueva dependencia, librería o complemento incorporado al código del SaMD o a infraestructura CI/CD mediante una PR.",
+        "minimum_information": "Detalles de la dependencia o complemento, versión y cambios en el manifiesto; no necesariamente el formulario completo.",
+        "control": "Regla de protección de rama que impida fusionar la PR hasta superar la validación.",
+        "source": "TFM, apartado 6.2.2"
+      },
+      {
+        "id": "reactiva",
+        "name": "Reactiva",
+        "trigger": "Auditoría, revisión del inventario de activos, revisión de SBOM u otra detección de una herramienta no registrada.",
+        "minimum_information": "Identificación de la herramienta descubierta, contexto de uso y motivo de la detección.",
+        "control": "El responsable de cumplimiento inicia la validación para subsanar la falta de registro.",
+        "source": "TFM, apartado 6.2.2"
+      }
+    ],
+    "scope_decision_tree": {
+      "id": "nivel_1_alcance",
+      "title": "Determinación de la necesidad de validación",
+      "questions": [
+        {
+          "order": 1,
+          "question": "¿Podrían los fallos del software afectar a la seguridad o a la calidad del SaMD?",
+          "yes": "dentro_del_alcance_validacion",
+          "no": "pregunta_2"
+        },
+        {
+          "order": 2,
+          "question": "¿Podría verse afectada la conformidad del SaMD si el software no funciona correctamente?",
+          "yes": "dentro_del_alcance_validacion",
+          "no": "pregunta_3"
+        },
+        {
+          "order": 3,
+          "question": "¿El software automatiza o ejecuta una actividad exigida por los requisitos regulatorios?",
+          "yes": "dentro_del_alcance_validacion",
+          "no": "fuera_del_alcance_obligatorio"
+        }
+      ],
+      "outcomes": {
+        "dentro_del_alcance_validacion": "Continuar a clasificación y evaluación.",
+        "fuera_del_alcance_obligatorio": "No es necesaria la validación del software. Valorar si accede, procesa o almacena información confidencial para su registro en el inventario de activos."
+      },
+      "source": "TFM, Figura 4 y apartado 6.2.2"
+    }
+  },
+  "classification_and_risk": {
+    "families": [
+      {
+        "id": "S1",
+        "family": "Dependencias y componentes de terceros",
+        "function": "Incorporación de código externo al producto SaMD",
+        "examples": "Librerías npm, PyPI; imágenes de contenedor (Docker); frameworks de desarrollo (Angular, Symfony)",
+        "source": "TFM, Tabla 3"
+      },
+      {
+        "id": "S2",
+        "family": "Repositorios de código y herramientas CI/CD.",
+        "function": "Custodia del código y producción automatizada de artefactos",
+        "examples": "GitHub, GitLab, BitBucket (control de versiones); Jenkins, GitHub Actions (CI/CD); JFrog Artifactory, Nexus (gestores de artefactos)",
+        "source": "TFM, Tabla 3"
+      },
+      {
+        "id": "S3",
+        "family": "Herramientas instalables",
+        "function": "Uso local de software de terceros",
+        "examples": "Visual Studio Code, PHPStorm, Jupyter Notebook (IDEs); DBeaver, MySQL Workbench (gestores de bases de datos); Postman (clientes de API)",
+        "source": "TFM, Tabla 3"
+      },
+      {
+        "id": "S4.1",
+        "family": "Servicios SaaS de soporte interno",
+        "function": "Gestión del ciclo de vida del proyecto, colaboración, calidad y observabilidad",
+        "examples": "Jira, Notion, Slack, Grafana, Google Workspace",
+        "source": "TFM, Tabla 3"
+      },
+      {
+        "id": "S4.2",
+        "family": "Servicios SaaS integrados en el producto",
+        "function": "Funcionalidad de terceros incorporada al comportamiento del SaMD en tiempo de ejecución",
+        "examples": "Intercom (atención al cliente); HubSpot (gestor de clientes); Segment (analíticas de uso); Stripe (pagos integrados)",
+        "source": "TFM, Tabla 3"
+      },
+      {
+        "id": "S5",
+        "family": "Herramientas con IA",
+        "function": "Asistencia, generación y automatización mediante modelos de IA en cualquier fase",
+        "examples": "GitHub Copilot, ChatGPT, Claude, Gemini",
+        "source": "TFM, Tabla 3"
+      },
+      {
+        "id": "S6",
+        "family": "Complementos y extensiones",
+        "function": "Extensión del entorno de ejecución de otras herramientas",
+        "examples": "Extensiones de Visual Studio Code; extensiones de navegador; plugins de Jira; add-ons de herramientas de ofimática",
+        "source": "TFM, Tabla 3"
+      }
+    ],
+    "family_handling": [
+      {
+        "family_id": "S1",
+        "handling": "Aplicar CT.1–CT.3 y la tabla S1. En la vía técnica, bloquear la fusión de la PR hasta completar la validación.",
+        "source": "TFM, apartados 6.2.2 y Anexo D"
+      },
+      {
+        "family_id": "S2",
+        "handling": "Aplicar CT.1–CT.3 y la tabla S2 para repositorios, CI/CD y gestores de artefactos.",
+        "source": "TFM, Anexo D"
+      },
+      {
+        "family_id": "S3",
+        "handling": "Aplicar CT.1–CT.3 y la tabla S3. Los complementos se evalúan por separado con S6.",
+        "source": "TFM, Anexo D"
+      },
+      {
+        "family_id": "S4",
+        "handling": "Aplicar CT.1–CT.3 y la tabla S4. Distinguir S4.1 (soporte interno) y S4.2 (integrado en el producto); aplicar las filas etiquetadas específicamente para cada subfamilia.",
+        "source": "TFM, Tabla 3 y Anexo D"
+      },
+      {
+        "family_id": "S5",
+        "handling": "Aplicar CT.1–CT.3 y S5 como módulo adicional cuando la herramienta con IA pertenezca también a otra familia.",
+        "source": "TFM, apartado 6.1.2 y Anexo D"
+      },
+      {
+        "family_id": "S6",
+        "handling": "Aplicar CT.1–CT.3 y S6 de forma adicional a la familia huésped S2, S3 o S4; el expediente debe referenciarse en el expediente de la herramienta huésped.",
+        "source": "TFM, Anexo D"
+      }
+    ],
+    "criticality_decision_tree": {
+      "id": "nivel_3_criticidad",
+      "title": "Determinación del nivel de criticidad",
+      "notes": "La figura está titulada «Nuevo proveedor»; la metodología utiliza los niveles Crítico, Importante y Bajo para la herramienta evaluada.",
+      "questions": [
+        {
+          "order": 1,
+          "question": "¿Un fallo o interrupción en el servicio podría causar un impacto severo en la operativa?",
+          "yes": "critico",
+          "no": "pregunta_2"
+        },
+        {
+          "order": 2,
+          "question": "¿Un fallo o interrupción en el servicio podría causar un incumplimiento legal?",
+          "yes": "critico",
+          "no": "pregunta_3"
+        },
+        {
+          "order": 3,
+          "question": "¿El proveedor tratará datos sensibles, reservados o confidenciales?",
+          "yes": "importante",
+          "no": "pregunta_4"
+        },
+        {
+          "order": 4,
+          "question": "¿Existen proveedores alternativos que ofrezcan el mismo servicio?",
+          "yes": "pregunta_5",
+          "no": "critico"
+        },
+        {
+          "order": 5,
+          "question": "¿El proveedor tratará datos de carácter personal sin llegar a ser sensibles?",
+          "yes": "importante",
+          "no": "pregunta_6"
+        },
+        {
+          "order": 6,
+          "question": "¿Un fallo o interrupción en el servicio podría influir en la operativa pero no afectar al servicio diario?",
+          "yes": "importante",
+          "no": "bajo"
+        }
+      ],
+      "levels": {
+        "critico": "La herramienta interviene en procesos de alto impacto.",
+        "importante": "La herramienta tiene un impacto moderado.",
+        "bajo": "La herramienta tiene impacto reducido."
+      },
+      "source": "TFM, Figura 5 y apartado 6.2.3"
+    },
+    "risk_dimensions": [
+      {
+        "id": "A1",
+        "category": "Identidad, autenticación y control de acceso",
+        "subcategories": [
+          {
+            "id": "A1.1",
+            "name": "Autenticación, MFA y políticas de acceso"
+          },
+          {
+            "id": "A1.2",
+            "name": "Roles, permisos, mínimo privilegio y segregación de funciones"
+          },
+          {
+            "id": "A1.3",
+            "name": "Gestión de cuentas, altas/bajas y accesos del proveedor"
+          },
+          {
+            "id": "A1.4",
+            "name": "Gestión de secretos y credenciales"
+          }
+        ],
+        "source": "TFM, Tabla 4",
+        "description": "Riesgos derivados de una gestión insuficiente de identidades digitales y mecanismos de autenticación en herramientas de terceros: cuentas compartidas, permisos excesivos, credenciales en texto plano o bajas de acceso no formalizadas."
+      },
+      {
+        "id": "A2",
+        "category": "Confidencialidad",
+        "subcategories": [
+          {
+            "id": "A2.1",
+            "name": "Datos tratados: transmisión, almacenamiento y exposición"
+          },
+          {
+            "id": "A2.2",
+            "name": "Cifrado y protección de ficheros"
+          },
+          {
+            "id": "A2.3",
+            "name": "Telemetría y uso de datos por el proveedor (no confundir con IA)"
+          },
+          {
+            "id": "A2.4",
+            "name": "Privacidad, gobierno del dato y ciclo de vida (retención, borrado y exportación de datos) (no confundir con cumplimiento normativo)"
+          }
+        ],
+        "source": "TFM, Tabla 4",
+        "description": "Riesgos de exposición de información restringida cuando la herramienta transmite, almacena o procesa datos fuera de un sistema controlado; incluye fuga de código, secretos, datos personales y telemetría."
+      },
+      {
+        "id": "A3",
+        "category": "Integridad",
+        "subcategories": [
+          {
+            "id": "A3.1",
+            "name": "Integridad del código y artefactos"
+          },
+          {
+            "id": "A3.2",
+            "name": "Integridad de pipelines CI/CD"
+          },
+          {
+            "id": "A3.3",
+            "name": "Integridad de evidencias y registros"
+          }
+        ],
+        "source": "TFM, Tabla 4",
+        "description": "Modificaciones no autorizadas o no intencionadas en código fuente, artefactos de compilación, resultados de pruebas, evidencias o configuraciones."
+      },
+      {
+        "id": "A4",
+        "category": "Trazabilidad",
+        "subcategories": [
+          {
+            "id": "A4.1",
+            "name": "Registro de cambios y autoría"
+          },
+          {
+            "id": "A4.2",
+            "name": "Trazabilidad de requisitos y casos de prueba"
+          },
+          {
+            "id": "A4.3",
+            "name": "Logs de actividad y auditoría"
+          },
+          {
+            "id": "A4.4",
+            "name": "Retención y exportación de registros (no confundir con gobierno del dato)"
+          }
+        ],
+        "source": "TFM, Tabla 4",
+        "description": "Incapacidad de demostrar qué ocurrió, cuándo, quién realizó una acción o qué evidencia respalda una liberación; incluye registros insuficientes o no auditables."
+      },
+      {
+        "id": "A5",
+        "category": "Disponibilidad",
+        "subcategories": [
+          {
+            "id": "A5.1",
+            "name": "Disponibilidad del servicio y SLA"
+          },
+          {
+            "id": "A5.2",
+            "name": "Continuidad operativa y plan de contingencia"
+          },
+          {
+            "id": "A5.3",
+            "name": "Copias de seguridad y reversibilidad"
+          },
+          {
+            "id": "A5.4",
+            "name": "Portabilidad de datos y salida del proveedor"
+          }
+        ],
+        "source": "TFM, Tabla 4",
+        "description": "Interrupciones por caída del proveedor, discontinuidad del servicio o revocación de licencias, con impacto operativo en el fabricante."
+      },
+      {
+        "id": "A6",
+        "category": "Cadena de suministro",
+        "subcategories": [
+          {
+            "id": "A6.1",
+            "name": "Actividad y mantenibilidad del componente"
+          },
+          {
+            "id": "A6.2",
+            "name": "Vulnerabilidades conocidas (SCA)"
+          },
+          {
+            "id": "A6.3",
+            "name": "Procedencia, firma e integridad de paquetes (relacionada con integridad pero del componentes externo incorporado)"
+          },
+          {
+            "id": "A6.4",
+            "name": "SBOM y política de actualización"
+          },
+          {
+            "id": "A6.5",
+            "name": "Plugins, extensiones y Marketplace"
+          },
+          {
+            "id": "A6.6",
+            "name": "Dependencias transitivas y subcomponentes"
+          }
+        ],
+        "source": "TFM, Tabla 4",
+        "description": "Amenazas derivadas de componentes, servicios o herramientas de terceros y sus dependencias: versiones vulnerables, obsolescencia, procedencia, actualizaciones, plugins o componentes transitivos."
+      },
+      {
+        "id": "A7",
+        "category": "Cumplimiento y garantías",
+        "subcategories": [
+          {
+            "id": "A7.1",
+            "name": "Certificaciones, auditorías y políticas de seguridad del proveedor"
+          },
+          {
+            "id": "A7.2",
+            "name": "Gestión de vulnerabilidades, incidentes y subproveedores"
+          },
+          {
+            "id": "A7.3",
+            "name": "Licencias de software y compatibilidad"
+          },
+          {
+            "id": "A7.4",
+            "name": "Condiciones contractuales (DPA, SLA y propiedad de resultados)"
+          },
+          {
+            "id": "A7.5",
+            "name": "Localización del dato y transferencias internacionales"
+          },
+          {
+            "id": "A7.6",
+            "name": "Monitorización del proveedor"
+          }
+        ],
+        "source": "TFM, Tabla 4",
+        "description": "Riesgos de incumplimiento y falta de garantías del proveedor: certificaciones, incidentes, licencias, DPA/SLA, transferencias, subproveedores y seguimiento."
+      },
+      {
+        "id": "A8",
+        "category": "Gobernanza de la IA",
+        "subcategories": [
+          {
+            "id": "A8.1",
+            "name": "Clasificación regulatoria y rol de la organización"
+          },
+          {
+            "id": "A8.2",
+            "name": "Condiciones de uso de datos e inputs (entrenamiento)"
+          },
+          {
+            "id": "A8.3",
+            "name": "Supervisión humana y riesgo de outputs incorrectos"
+          },
+          {
+            "id": "A8.4",
+            "name": "Registro del uso, modelo, versión y finalidad"
+          },
+          {
+            "id": "A8.5",
+            "name": "Componentes de IA de terceros (SBOM for AI, procedencia del modelo)"
+          },
+          {
+            "id": "A8.6",
+            "name": "Normas internas del uso de IA"
+          }
+        ],
+        "source": "TFM, Tabla 4",
+        "description": "Riesgos específicos de IA: transmisión de datos mediante prompts, reutilización para entrenamiento, salidas incorrectas o sesgadas, propiedad intelectual, falta de trazabilidad y ausencia de revisión humana."
+      }
+    ],
+    "family_dimension_matrix": {
+      "legend": {
+        "■": "amenaza predominante",
+        "○": "amenaza secundaria",
+        "—": "no aplica de forma significativa"
+      },
+      "entries": [
+        {
+          "family_label": "S1 – Dependencias",
+          "dimensions": {
+            "A1": "—",
+            "A2": "○",
+            "A3": "■",
+            "A4": "○",
+            "A5": "○",
+            "A6": "■",
+            "A7": "○",
+            "A8": "—"
+          }
+        },
+        {
+          "family_label": "S2 – Repos y CI/CD",
+          "dimensions": {
+            "A1": "■",
+            "A2": "■",
+            "A3": "■",
+            "A4": "■",
+            "A5": "■",
+            "A6": "○",
+            "A7": "○",
+            "A8": "—"
+          }
+        },
+        {
+          "family_label": "S3 – Instalables",
+          "dimensions": {
+            "A1": "—",
+            "A2": "■",
+            "A3": "■",
+            "A4": "○",
+            "A5": "○",
+            "A6": "—",
+            "A7": "○",
+            "A8": "—"
+          }
+        },
+        {
+          "family_label": "S4.1 – SaaS soporte",
+          "dimensions": {
+            "A1": "■",
+            "A2": "■",
+            "A3": "○",
+            "A4": "■",
+            "A5": "■",
+            "A6": "—",
+            "A7": "■",
+            "A8": "—"
+          }
+        },
+        {
+          "family_label": "S4.2 – SaaS integrado",
+          "dimensions": {
+            "A1": "■",
+            "A2": "■",
+            "A3": "—",
+            "A4": "○",
+            "A5": "■",
+            "A6": "○",
+            "A7": "■",
+            "A8": "—"
+          }
+        },
+        {
+          "family_label": "S5 – IA",
+          "dimensions": {
+            "A1": "○",
+            "A2": "■",
+            "A3": "■",
+            "A4": "■",
+            "A5": "○",
+            "A6": "○",
+            "A7": "■",
+            "A8": "■"
+          }
+        },
+        {
+          "family_label": "S6 – Complementos",
+          "dimensions": {
+            "A1": "■",
+            "A2": "■",
+            "A3": "■",
+            "A4": "○",
+            "A5": "—",
+            "A6": "■",
+            "A7": "○",
+            "A8": "—"
+          }
+        }
+      ],
+      "source": "TFM, Tabla 5"
+    }
+  },
+  "roles": [
+    {
+      "role": "Solicitante",
+      "type": "obligatorio",
+      "when_involved": "Vía activa. Puede no existir en vía reactiva.",
+      "responsibilities": [
+        "Detectar la necesidad de incorporar una nueva herramienta y activar el proceso mediante el formulario de solicitud.",
+        "Definir con precisión el uso previsto: proceso afectado, tareas que realizará o automatizará, usuarios y tratamiento de datos personales o confidenciales."
+      ],
+      "source": "TFM, apartado 6.1.3"
+    },
+    {
+      "role": "Responsable de cumplimiento",
+      "type": "obligatorio",
+      "when_involved": "Todas las evaluaciones.",
+      "responsibilities": [
+        "Recibir la solicitud, aplicar el árbol de decisiones y coordinar los roles de consulta.",
+        "Supervisar la ejecución de las listas de verificación y emitir la resolución final justificada.",
+        "Custodiar el inventario de herramientas validadas y los informes.",
+        "Coordinar la evaluación de impacto y revalidación ante cambios relevantes."
+      ],
+      "source": "TFM, apartado 6.1.3"
+    },
+    {
+      "role": "Responsable de la implementación",
+      "type": "obligatorio",
+      "when_involved": "Durante el despliegue y cuando se requiera conocimiento técnico de integración.",
+      "responsibilities": [
+        "Aportar conocimiento sobre la integración, los accesos y los controles técnicos viables.",
+        "Desplegar y configurar la herramienta tras la aprobación.",
+        "Comunicar al responsable de cumplimiento los cambios que puedan afectar al estado validado."
+      ],
+      "source": "TFM, apartado 6.1.3"
+    },
+    {
+      "role": "Responsable de calidad (QA/RA)",
+      "type": "consulta",
+      "when_involved": "Cuando la herramienta afecte directamente a procesos del sistema de gestión de calidad.",
+      "responsibilities": [
+        "Participar en la valoración de la herramienta respecto de procesos del SGC."
+      ],
+      "source": "TFM, apartado 6.1.3"
+    },
+    {
+      "role": "Responsable de seguridad de la información",
+      "type": "consulta",
+      "when_involved": "Cuando la herramienta acceda, procese o almacene información confidencial o existan riesgos de confidencialidad, integridad o disponibilidad.",
+      "responsibilities": [
+        "Verificar la adecuación de los controles del proveedor.",
+        "Valorar riesgos de cadena de suministro.",
+        "Proponer medidas de seguridad."
+      ],
+      "source": "TFM, apartado 6.1.3"
+    },
+    {
+      "role": "Delegado de protección de datos (DPO)",
+      "type": "consulta",
+      "when_involved": "Siempre que la herramienta trate datos personales y el proveedor actúe como encargado del tratamiento.",
+      "responsibilities": [
+        "Supervisar los requisitos de protección de datos aplicables.",
+        "Proponer medidas privacy by design y by default."
+      ],
+      "source": "TFM, apartado 6.1.3"
+    }
+  ],
+  "framework_requirements": [
+    {
+      "id": "R1",
+      "name": "Diferenciación por tipología",
+      "description": "El proceso debe modularse según la naturaleza de la herramienta, los vectores de riesgo, las obligaciones aplicables y los controles verificables.",
+      "source": "TFM, apartado 6.1.4"
+    },
+    {
+      "id": "R2",
+      "name": "Suficiencia documental",
+      "description": "La evaluación debe documentar criterios, fuentes de evidencia, riesgos, mitigaciones y resolución final.",
+      "source": "TFM, apartado 6.1.4"
+    },
+    {
+      "id": "R3",
+      "name": "Proporcionalidad al nivel de criticidad",
+      "description": "El esfuerzo y el umbral de exigencia deben modularse por impacto del fallo, uso indebido o compromiso sobre seguridad, evidencias y datos.",
+      "source": "TFM, apartado 6.1.4"
+    },
+    {
+      "id": "R4",
+      "name": "Responsabilidad compartida",
+      "description": "Cada criterio diferencia los controles nativos esperados del proveedor y las medidas complementarias de la organización.",
+      "source": "TFM, apartado 6.1.4"
+    },
+    {
+      "id": "R5",
+      "name": "Cobertura del ciclo de vida del estado validado",
+      "description": "La validación debe mantenerse y revisarse ante cambios que puedan comprometer el estado validado.",
+      "source": "TFM, apartado 6.1.4"
+    }
+  ],
+  "evaluation": {
+    "sequence": [
+      "Aplicar criterios transversales CT.1–CT.3.",
+      "Aplicar la tabla específica de la familia principal.",
+      "Aplicar S5 adicionalmente cuando haya capacidades de IA.",
+      "Aplicar S6 adicionalmente cuando se evalúe un complemento o extensión.",
+      "Calcular o asignar el peso efectivo conforme al nivel de criticidad.",
+      "Documentar evidencia, brechas, mitigaciones y propuesta de resolución."
+    ],
+    "weight_rules": {
+      "definitions": {
+        "B": "Bloqueante. Su incumplimiento impide la aprobación de la herramienta.",
+        "C": "Condicionante. Permite la aprobación si se llevan a cabo planes de acción.",
+        "O": "Observación. Se registra en el expediente y no condiciona la aprobación."
+      },
+      "source_variant_table_6": {
+        "description": "Conversión indicada en la Tabla 6 «Pesos de criterios según el impacto».",
+        "mapping": {
+          "B": {
+            "critico": "B",
+            "importante": "C",
+            "bajo": "C"
+          },
+          "C": {
+            "critico": "C",
+            "importante": "O",
+            "bajo": "O"
+          },
+          "O": {
+            "critico": "B",
+            "importante": "C",
+            "bajo": "O"
+          }
+        },
+        "source": "TFM, Tabla 6"
+      },
+      "source_variant_method_and_annex_d": {
+        "description": "El apartado 6.2.4 indica que los criterios con peso simple son fijos e independientes del nivel de riesgo. La leyenda del Anexo D define B, C y O como pesos simples y B/C y C/O como pesos duales.",
+        "mapping": {
+          "B": {
+            "critico": "B",
+            "importante": "B",
+            "bajo": "B"
+          },
+          "C": {
+            "critico": "C",
+            "importante": "C",
+            "bajo": "C"
+          },
+          "O": {
+            "critico": "O",
+            "importante": "O",
+            "bajo": "O"
+          },
+          "B/C": {
+            "critico": "B",
+            "importante": "C",
+            "bajo": "C"
+          },
+          "C/O": {
+            "critico": "C",
+            "importante": "O",
+            "bajo": "O"
+          }
+        },
+        "source": "TFM, apartado 6.2.4 y leyenda del Anexo D"
+      },
+      "automation_status": "BLOQUEADO HASTA NORMALIZACIÓN",
+      "implementation_note": "El borrador contiene dos lecturas incompatibles para los pesos simples B, C y O. El agente debe mostrar el peso bruto y abstenerse de calcular un peso efectivo o una resolución automática hasta que se apruebe una regla única."
+    },
+    "transversal_criteria": [
+      {
+        "id": "CT.1",
+        "criterion": "Adecuación al uso previsto declarado",
+        "threats": [],
+        "provider_verification": [
+          "La documentación técnica del proveedor describe con claridad el uso previsto de la herramienta.",
+          "Las funcionalidades ofrecidas cubren los requisitos que motivaron la solicitud."
+        ],
+        "organization_verification": [
+          "Definir y documentar el uso previsto de la herramienta dentro del proceso. Se recibe a través del formulario de solicitud.",
+          "Comparar el uso previsto declarado por el proveedor con el que se hará internamente."
+        ],
+        "raw_weight": "B",
+        "source": "TFM, Tabla 7"
+      },
+      {
+        "id": "CT.2",
+        "criterion": "Verificación de requisitos funcionales mínimos",
+        "threats": [],
+        "provider_verification": [
+          "La herramienta produce los resultados esperados bajo las condiciones de uso definidas.",
+          "Existen casos de prueba o evidencias de comportamiento documentadas."
+        ],
+        "organization_verification": [
+          "Diseñar y ejecutar pruebas de aceptación específicas. LAS DISEÑA LA PERSONA/ÁREA QUE DEBE USAR LA HERRAMIENTA"
+        ],
+        "raw_weight": "B",
+        "source": "TFM, Tabla 7"
+      },
+      {
+        "id": "CT.3",
+        "criterion": "Reproducibilidad y estabilidad del comportamiento",
+        "threats": [],
+        "provider_verification": [
+          "La herramienta produce resultados consistentes ante los mismos datos de entrada.",
+          "El proveedor documenta el comportamiento esperado y las limitaciones conocidas."
+        ],
+        "organization_verification": [
+          "Verificar la reproducibilidad como parte de las pruebas de aceptación.",
+          "Documentar las limitaciones conocidas de la herramienta."
+        ],
+        "raw_weight": "B",
+        "source": "TFM, Tabla 7"
+      }
+    ],
+    "family_metadata": {
+      "S1": {
+        "title": "S1 – Dependencias y componentes de terceros — Criterios de evaluación",
+        "applies_to": "Aplica a librerías, paquetes, frameworks, imágenes de contenedor y cualquier componente de código incorporado directamente al producto SaMD.",
+        "source": "TFM, Anexo D, tabla S1"
+      },
+      "S2": {
+        "title": "S2 – Repositorios de código y herramientas CI/CD — Criterios de evaluación",
+        "applies_to": "Aplica a plataformas de control de versiones (GitHub, GitLab, Bitbucket), sistemas CI/CD (Jenkins, GitHub Actions) y gestores de artefactos (Artifactory, Nexus). Concentran acceso privilegiado al código fuente y a los artefactos distribuidos del SaMD.",
+        "source": "TFM, Anexo D, tabla S2"
+      },
+      "S3": {
+        "title": "S3 – Herramientas de desarrollo instalables — Criterios de evaluación",
+        "applies_to": "Aplica a software instalado localmente: IDEs, gestores de bases de datos, clientes de API.\nLos complementos y extensiones se evalúan de forma separada en la tabla de verificación S6.",
+        "source": "TFM, Anexo D, tabla S3"
+      },
+      "S4": {
+        "title": "S4 – Servicios SaaS — Criterios de evaluación",
+        "applies_to": "Aplica a servicios en la nube (software residente en infraestructura del proveedor).\nS4.1: soporte interno (Jira, Slack, Notion).\nS4.2: integrado en el SaMD (Stripe, Segment, Intercom).\nLas filas aplicables exclusivamente a una subfamilia se indican entre corchetes en la columna de verificación.",
+        "source": "TFM, Anexo D, tabla S4"
+      },
+      "S5": {
+        "title": "S5 – Herramientas con inteligencia artificial — Criterios de evaluación",
+        "applies_to": "Aplica a asistentes de codificación, LLMs, copilotos de IDE y herramientas de análisis con ML (ChatGPT, GitHub Copilot, Claude, Gemini).\nPara herramientas que combinen IA con otra familia (p. ej. GitHub Copilot = S2+S5), esta tabla se aplica en su totalidad como módulo complementario a la tabla de la familia principal.",
+        "source": "TFM, Anexo D, tabla S5"
+      },
+      "S6": {
+        "title": "S6 – Complementos y extensiones — Criterios de evaluación",
+        "applies_to": "Aplica a extensiones de navegador, plugins de IDE, add-ons de herramientas SaaS.\nSe evalúa siempre de forma adicional a la familia huésped (S2, S3 o S4). El expediente de evaluación de S6 debe quedar referenciado en el expediente de la herramienta huésped.",
+        "source": "TFM, Anexo D, tabla S6"
+      }
+    },
+    "criteria_by_family": {
+      "S1": [
+        {
+          "id": "CS1.1",
+          "criterion": "Procedencia y canal de distribución oficial",
+          "threats": [
+            "A6.3"
+          ],
+          "provider_verification": [
+            "Verificar que el paquete se distribuye desde el repositorio oficial del proyecto (npm, PyPI, Docker Hub oficial).",
+            "Comprobar que la URL del repositorio en los metadatos es accesible y coincide con el proyecto declarado.",
+            "Constatar la existencia de firma criptográfica del artefacto (hash SHA-256 o firma GPG/Sigstore) verificable de forma independiente."
+          ],
+          "organization_verification": [
+            "Registrar en el expediente el canal de descarga utilizado.",
+            "Si se usa un repositorio interno, documentar que el paquete fue importado desde la fuente oficial y no modificado."
+          ],
+          "raw_weight": "B",
+          "section": "Cadena de suministro y procedencia (A6)",
+          "source": "TFM, Anexo D, tabla S1"
+        },
+        {
+          "id": "CS1.2",
+          "criterion": "Actividad y mantenibilidad del componente",
+          "threats": [
+            "A6.1"
+          ],
+          "provider_verification": [
+            "Consultar el historial de cambios del repositorio fuente: el componente debe haber tenido actividad de mantenimiento en los últimos 12 meses.",
+            "Verificar si existe equipo o fundación que respalde el proyecto.",
+            "Comprobar si el componente ha sido declarado obsoleto, retirato o sin soporte."
+          ],
+          "organization_verification": [
+            "Para componentes sin actividad reciente, evaluar si existe un fork activo mantenido o si la funcionalidad puede sustituirse.",
+            "Documentar la decisión en el expediente."
+          ],
+          "raw_weight": "B/C",
+          "section": "Cadena de suministro y procedencia (A6)",
+          "source": "TFM, Anexo D, tabla S1"
+        },
+        {
+          "id": "CS1.3",
+          "criterion": "Vulnerabilidades conocidas (SCA)",
+          "threats": [
+            "A6.2"
+          ],
+          "provider_verification": [
+            "Obtener el identificador exacto del paquete y su versión.",
+            "Consultar la base de datos NVD/CVE y los avisos de seguridad del registro del paquete para verificar ausencia de vulnerabilidades conocidas no parcheadas."
+          ],
+          "organization_verification": [
+            "Ejecutar análisis SCA sobre el árbol de dependencias completo (Dependabot, OWASP Dependency-Check, Snyk u otros).",
+            "Documentar el resultado con fecha y versión de la herramienta SCA utilizada.",
+            "Si existen vulnerabilidades, registrar el CVSS y la decisión adoptada."
+          ],
+          "raw_weight": "B",
+          "section": "Cadena de suministro y procedencia (A6)",
+          "source": "TFM, Anexo D, tabla S1"
+        },
+        {
+          "id": "CS1.4",
+          "criterion": "Dependencias transitivas y subcomponentes",
+          "threats": [
+            "A6.6"
+          ],
+          "provider_verification": [
+            "Generar el árbol de dependencias completo (npm list --all, pip-tree, mvn dependency:tree).",
+            "Identificar todos los subcomponentes introducidos de forma transitiva."
+          ],
+          "organization_verification": [
+            "Aplicar los criterios CS1.1–CS1.3 a las dependencias transitivas de mayor criticidad.",
+            "Documentar el alcance del análisis y las dependencias revisadas."
+          ],
+          "raw_weight": "C/O",
+          "section": "Cadena de suministro y procedencia (A6)",
+          "source": "TFM, Anexo D, tabla S1"
+        },
+        {
+          "id": "CS1.5",
+          "criterion": "SBOM y política de actualización",
+          "threats": [
+            "A6.4"
+          ],
+          "provider_verification": [
+            "Verificar si el proyecto publica un SBOM.",
+            "Consultar si existe política de publicación de actualizaciones de seguridad."
+          ],
+          "organization_verification": [
+            "Generar o mantener internamente el SBOM del producto que incluya este componente.",
+            "Establecer proceso de revisión periódica y aplicación de parches."
+          ],
+          "raw_weight": "C/O",
+          "section": "Cadena de suministro y procedencia (A6)",
+          "source": "TFM, Anexo D, tabla S1"
+        },
+        {
+          "id": "CS1.6",
+          "criterion": "Integridad del artefacto descargado",
+          "threats": [
+            "A3.1"
+          ],
+          "provider_verification": [
+            "Verificar el hash publicado del artefacto (SHA-256 o equivalente) contra el artefacto descargado antes de su incorporación.",
+            "Comprobar si el paquete incluye firma de procedencia (Sigstore/cosign, npm provenance)."
+          ],
+          "organization_verification": [
+            "Incorporar la verificación de integridad al pipeline CI/CD como paso obligatorio previo a la instalación.",
+            "Registrar el hash verificado en el expediente."
+          ],
+          "raw_weight": "B",
+          "section": "Integridad del componente (A3)",
+          "source": "TFM, Anexo D, tabla S1"
+        },
+        {
+          "id": "CS1.7",
+          "criterion": "Licencia de software y compatibilidad",
+          "threats": [
+            "A7.3"
+          ],
+          "provider_verification": [
+            "Identificar la licencia del componente (SPDX identifier).",
+            "Clasificarla: permisiva (MIT, Apache 2.0, BSD), débilmente copyleft (LGPL, MPL) o fuertemente copyleft (GPL, AGPL).",
+            "Verificar la compatibilidad con la licencia del producto SaMD."
+          ],
+          "organization_verification": [
+            "Mantener un inventario de licencias de todas las dependencias.",
+            "Para licencias copyleft, evaluar el impacto sobre la propiedad intelectual del SaMD con criterio jurídico.",
+            "Documentar la decisión."
+          ],
+          "raw_weight": "B",
+          "section": "Licencias y compatibilidad (A7)",
+          "source": "TFM, Anexo D, tabla S1"
+        },
+        {
+          "id": "CS1.8",
+          "criterion": "Fijación de versión y control de cambios (pinning)",
+          "threats": [
+            "A4.1"
+          ],
+          "provider_verification": [
+            "Verificar que la dependencia está fijada a una versión concreta en el fichero de definición de dependencias (package-lock.json, poetry.lock, requirements.txt con versión exacta).",
+            "Comprobar que no se usan rangos semánticos amplios que permitan actualizaciones automáticas no controladas."
+          ],
+          "organization_verification": [
+            "Establecer política de fijación de versión de dependencias.",
+            "Documentar la versión aprobada en el expediente.",
+            "Cualquier cambio de versión debe reiniciar el proceso de evaluación."
+          ],
+          "raw_weight": "B",
+          "section": "Trazabilidad (A4)",
+          "source": "TFM, Anexo D, tabla S1"
+        },
+        {
+          "id": "CS1.9",
+          "criterion": "Riesgo de discontinuidad del componente",
+          "threats": [
+            "A5.2"
+          ],
+          "provider_verification": [
+            "Evaluar indicadores de riesgo de abandono: número de mantenedores activos, existencia de patrocinadores, dependencia de un único autor, antigüedad sin releases.",
+            "*Se diferencia de la CS1.2 sobre el plan de mantenimiento futuro."
+          ],
+          "organization_verification": [
+            "Para dependencias críticas con alto riesgo de abandono, evaluar alternativas o la viabilidad de mantener un fork interno.",
+            "Documentar el plan de contingencia."
+          ],
+          "raw_weight": "C/O",
+          "section": "Disponibilidad y continuidad (A5)",
+          "source": "TFM, Anexo D, tabla S1"
+        },
+        {
+          "id": "CS1.10",
+          "criterion": "Comportamiento en tiempo de ejecución y acceso a datos del entorno",
+          "threats": [
+            "A2.1",
+            "A2.3"
+          ],
+          "provider_verification": [
+            "Revisar si la dependencia accede en tiempo de ejecución a variables de entorno, ficheros de configuración, credenciales del SO o datos del proceso.",
+            "Consultar el historial de incidentes del proyecto para detectar casos previos de exfiltración de datos.",
+            "Si el repositorio fuente es público, revisar si el código realiza llamadas de red en contextos no esperados."
+          ],
+          "organization_verification": [
+            "Para dependencias con acceso potencial a datos sensibles del entorno, restringir mediante configuración del entorno de ejecución: limitación de variables de entorno accesibles, aislamiento del componente y reducción de permisos.",
+            "Documentar la evaluación."
+          ],
+          "raw_weight": "C/O",
+          "section": "Confidencialidad (A2)",
+          "source": "TFM, Anexo D, tabla S1"
+        }
+      ],
+      "S2": [
+        {
+          "id": "CS2.1",
+          "criterion": "Autenticación multifactor (MFA)",
+          "threats": [
+            "A1.1"
+          ],
+          "provider_verification": [
+            "Verificar que la plataforma soporta MFA para todos los roles y permite hacerlo obligatorio a nivel de organización.",
+            "Obtener captura de la configuración de MFA activa en la organización."
+          ],
+          "organization_verification": [
+            "Activar la obligatoriedad de MFA antes del primer uso productivo.",
+            "Revisar periódicamente (mínimo semestral) cuentas activas sin MFA.",
+            "Registrar la política interna aprobada."
+          ],
+          "raw_weight": "B",
+          "section": "Identidad, autenticación y control de acceso (A1)",
+          "source": "TFM, Anexo D, tabla S2"
+        },
+        {
+          "id": "CS2.2",
+          "criterion": "Control de acceso y principio de mínimo privilegio",
+          "threats": [
+            "A1.2"
+          ],
+          "provider_verification": [
+            "Verificar que la plataforma permite gestión de roles y permisos granulares por repositorio (lectura, escritura, administración) y que es posible restringir acceso a colaboradores externos."
+          ],
+          "organization_verification": [
+            "Documentar los roles asignados a cada miembro del equipo.",
+            "Mantener proceso formal de baja de accesos con registro de auditoría cuando un colaborador abandona el proyecto."
+          ],
+          "raw_weight": "B",
+          "section": "Identidad, autenticación y control de acceso (A1)",
+          "source": "TFM, Anexo D, tabla S2"
+        },
+        {
+          "id": "CS2.3",
+          "criterion": "Gestión de secretos y credenciales",
+          "threats": [
+            "A1.4"
+          ],
+          "provider_verification": [
+            "Verificar que la plataforma dispone de gestión de secretos (GitHub Secrets, GitLab CI/CD Variables protegidas) que impide su exposición en logs y en el historial de commits.",
+            "Comprobar que el escaneo de secretos está activado."
+          ],
+          "organization_verification": [
+            "Establecer política que prohíba credenciales en texto plano en el repositorio.",
+            "Verificar periódicamente el historial de commits en busca de secretos expuestos.",
+            "Registrar el resultado de la verificación."
+          ],
+          "raw_weight": "B",
+          "section": "Identidad, autenticación y control de acceso (A1)",
+          "source": "TFM, Anexo D, tabla S2"
+        },
+        {
+          "id": "CS2.4",
+          "criterion": "Gestión de accesos del proveedor a los repositorios",
+          "threats": [
+            "A1.3"
+          ],
+          "provider_verification": [
+            "Revisar las condiciones de servicio respecto al acceso del personal del proveedor al código fuente alojado.",
+            "Verificar si el proveedor ofrece auditoría de acceso interno."
+          ],
+          "organization_verification": [
+            "Documentar qué información sensible reside en los repositorios.",
+            "Verificar el uso de repositorios privados o solución on-premise para código crítico."
+          ],
+          "raw_weight": "B/C",
+          "section": "Identidad, autenticación y control de acceso (A1)",
+          "source": "TFM, Anexo D, tabla S2"
+        },
+        {
+          "id": "CS2.5",
+          "criterion": "Protección de ramas y control de cambios",
+          "threats": [
+            "A3.1"
+          ],
+          "provider_verification": [
+            "Verificar que la plataforma permite configurar reglas de protección de ramas que exijan:",
+            "Revisión de código por al menos un aprobador.",
+            "Superación de checks de CI obligatorios.",
+            "Prohibición de push directo a la rama principal."
+          ],
+          "organization_verification": [
+            "Activar y documentar las reglas de protección de ramas para todas las ramas de producción y release.",
+            "Registrar capturas de la configuración activa como evidencia."
+          ],
+          "raw_weight": "B",
+          "section": "Integridad del código y los artefactos (A3)",
+          "source": "TFM, Anexo D, tabla S2"
+        },
+        {
+          "id": "CS2.6",
+          "criterion": "Integridad del pipeline CI/CD y de los artefactos producidos",
+          "threats": [
+            "A3.2"
+          ],
+          "provider_verification": [
+            "Verificar si la plataforma soporta la firma de artefactos generados en el pipeline.",
+            "Comprobar si los runners son gestionados por la plataforma o son self-hosted y, en este caso, si están sujetos a hardening documentado."
+          ],
+          "organization_verification": [
+            "Configurar el pipeline para que genere hashes de los artefactos publicados.",
+            "Implementar verificación de integridad como paso obligatorio antes del despliegue.",
+            "Mantener los runners actualizados."
+          ],
+          "raw_weight": "B/C",
+          "section": "Integridad del código y los artefactos (A3)",
+          "source": "TFM, Anexo D, tabla S2"
+        },
+        {
+          "id": "CS2.7",
+          "criterion": "Trazabilidad de commits y autoría",
+          "threats": [
+            "A3.3",
+            "A4.1"
+          ],
+          "provider_verification": [
+            "Verificar que la plataforma registra la autoría de todos los commits con identidad verificada (signed commits con GPG o SSH).",
+            "Comprobar que el historial de commits es inmutable."
+          ],
+          "organization_verification": [
+            "Establecer política de firma de commits para el equipo de desarrollo.",
+            "Documentar la política y registrar evidencia de su activación en los repositorios."
+          ],
+          "raw_weight": "C/O",
+          "section": "Integridad del código y los artefactos (A3)",
+          "source": "TFM, Anexo D, tabla S2"
+        },
+        {
+          "id": "CS2.8",
+          "criterion": "Logs de actividad y exportación de auditoría",
+          "threats": [
+            "A4.3"
+          ],
+          "provider_verification": [
+            "Verificar que la plataforma genera logs de auditoría de actividad de usuarios (accesos, modificaciones de permisos, eliminaciones).",
+            "Comprobar el periodo de retención y si son exportables."
+          ],
+          "organization_verification": [
+            "Establecer proceso de revisión periódica de logs de auditoría.",
+            "Si el periodo de retención del proveedor es insuficiente, configurar exportación periódica a almacenamiento propio."
+          ],
+          "raw_weight": "B/C",
+          "section": "Trazabilidad y auditoría (A4)",
+          "source": "TFM, Anexo D, tabla S2"
+        },
+        {
+          "id": "CS2.9",
+          "criterion": "Trazabilidad de requisitos y casos de prueba",
+          "threats": [
+            "A4.2"
+          ],
+          "provider_verification": [
+            "Evaluar si la plataforma permite vincular commits, pull requests o issues a requisitos o casos de prueba (integración con herramientas de ALM)."
+          ],
+          "organization_verification": [
+            "Establecer una convención de etiquetado de commits que referencie el identificador de requisito o tarea correspondiente.",
+            "Documentar la convención y verificar su aplicación."
+          ],
+          "raw_weight": "C/O",
+          "section": "Trazabilidad y auditoría (A4)",
+          "source": "TFM, Anexo D, tabla S2"
+        },
+        {
+          "id": "CS2.10",
+          "criterion": "Visibilidad de repositorios y exposición de información sensible",
+          "threats": [
+            "A2.1"
+          ],
+          "provider_verification": [
+            "Verificar la visibilidad de todos los repositorios (privados vs. públicos).",
+            "Comprobar si la plataforma dispone de escaneo de información sensible en el código (secret scanning, code scanning)."
+          ],
+          "organization_verification": [
+            "Auditar periódicamente la visibilidad de los repositorios.",
+            "Activar el escaneo automático de secretos y configurar alertas.",
+            "Verificar que los repositorios son privados salvo decisión deliberada y documentada."
+          ],
+          "raw_weight": "B",
+          "section": "Confidencialidad (A2)",
+          "source": "TFM, Anexo D, tabla S2"
+        },
+        {
+          "id": "CS2.11",
+          "criterion": "SLA, continuidad y plan de contingencia",
+          "threats": [
+            "A5.1",
+            "A5.2"
+          ],
+          "provider_verification": [
+            "Revisar el SLA publicado: disponibilidad mínima garantizada, tiempo de respuesta ante incidencias.",
+            "Verificar si el proveedor ofrece histórico de disponibilidad (status page).",
+            "Comprobar si el contrato incluye compensaciones por indisponibilidad."
+          ],
+          "organization_verification": [
+            "Evaluar el impacto de una indisponibilidad del CI/CD sobre los compromisos de validación del SaMD.",
+            "Establecer plan de contingencia con capacidad de compilación local de emergencia."
+          ],
+          "raw_weight": "B/C",
+          "section": "Disponibilidad y continuidad (A5)",
+          "source": "TFM, Anexo D, tabla S2"
+        },
+        {
+          "id": "CS2.12",
+          "criterion": "Portabilidad del código y salida del proveedor",
+          "threats": [
+            "A5.4"
+          ],
+          "provider_verification": [
+            "Verificar que el código fuente puede exportarse en formatos estándar (git bundle).",
+            "Comprobar que los metadatos relevantes (issues, pull requests, wiki) pueden exportarse o migrarse."
+          ],
+          "organization_verification": [
+            "Documentar el procedimiento de migración o exportación del repositorio.",
+            "Realizar y registrar al menos una prueba de exportación completa."
+          ],
+          "raw_weight": "C/O",
+          "section": "Disponibilidad y continuidad (A5)",
+          "source": "TFM, Anexo D, tabla S2"
+        },
+        {
+          "id": "CS2.13",
+          "criterion": "Certificaciones y políticas de seguridad del proveedor",
+          "threats": [
+            "A7.1"
+          ],
+          "provider_verification": [
+            "Verificar la existencia de certificaciones del proveedor (ISO/IEC 27001, SOC 2 Type II, ENS).",
+            "Consultar si el proveedor publica un programa de gestión de vulnerabilidades y proceso de divulgación responsable."
+          ],
+          "organization_verification": [
+            "Registrar las certificaciones verificadas con fecha de emisión y vencimiento.",
+            "Establecer proceso de revisión anual del estado de certificación."
+          ],
+          "raw_weight": "B/C",
+          "section": "Cumplimiento y garantías del proveedor (A7)",
+          "source": "TFM, Anexo D, tabla S2"
+        },
+        {
+          "id": "CS2.14",
+          "criterion": "Condiciones contractuales y localización de datos",
+          "threats": [
+            "A7.4",
+            "A7.5"
+          ],
+          "provider_verification": [
+            "Revisar las condiciones de servicio: propiedad del código alojado, jurisdicción aplicable, localización de centros de datos, transferencias internacionales y política de retención tras la cancelación."
+          ],
+          "organization_verification": [
+            "Si el repositorio contiene código fuente del SaMD o datos de pacientes, verificar que la jurisdicción y localización de datos son compatibles con el RGPD y el MDR.",
+            "Documentar la revisión."
+          ],
+          "raw_weight": "B",
+          "section": "Cumplimiento y garantías del proveedor (A7)",
+          "source": "TFM, Anexo D, tabla S2"
+        },
+        {
+          "id": "CS2.15",
+          "criterion": "Monitorización continua y gestión de incidencias del proveedor",
+          "threats": [
+            "A7.2",
+            "A7.6"
+          ],
+          "provider_verification": [
+            "Verificar si el proveedor dispone de un canal oficial de comunicación de incidencias de seguridad (status page).",
+            "* Similar a CS2.11, distintas finalidades.",
+            "Comprobar si el proveedor publica un proceso formal de gestión de vulnerabilidades y notificación a clientes ante incidencias."
+          ],
+          "organization_verification": [
+            "Establecer proceso de seguimiento activo del proveedor: suscripción a la página de estado del servicio, suscripción al canal de avisos de seguridad, revisión anual de las condiciones de servicio y del DPA.",
+            "Registrar las revisiones realizadas con fecha."
+          ],
+          "raw_weight": "C/O",
+          "section": "Cumplimiento y garantías del proveedor (A7)",
+          "source": "TFM, Anexo D, tabla S2"
+        },
+        {
+          "id": "CS2.16",
+          "criterion": "Procedencia e integridad de los componentes del pipeline (acciones, runners e imágenes base)",
+          "threats": [
+            "A6.3",
+            "A6.5"
+          ],
+          "provider_verification": [
+            "Verificar si el marketplace del CI/CD ofrece verificación del editor.",
+            "Comprobar si las acciones de terceros utilizadas en el pipeline tienen repositorio fuente accesible, actividad de mantenimiento reciente y firma o acreditación de procedencia verificable."
+          ],
+          "organization_verification": [
+            "Fijar todas las acciones de terceros a un commit hash específico en lugar de a una etiqueta de versión mutable (p. ej. uses: actions/checkout@abc1234 en lugar de @v3).",
+            "Mantener un inventario de las acciones y runners de terceros utilizados en el pipeline.",
+            "Revisar periódicamente su estado de mantenimiento."
+          ],
+          "raw_weight": "B/C",
+          "section": "Cadena de suministro del pipeline (A6)",
+          "source": "TFM, Anexo D, tabla S2"
+        }
+      ],
+      "S3": [
+        {
+          "id": "CS3.1",
+          "criterion": "Descarga desde canal oficial y verificación de integridad",
+          "threats": [
+            "A6.3",
+            "A3.1"
+          ],
+          "provider_verification": [
+            "Verificar que el software se descarga desde el sitio oficial del proveedor o canal de distribución reconocido.",
+            "Comprobar que el instalador dispone de firma digital del fabricante (Authenticode en Windows, notarization en macOS) verificable antes de la ejecución."
+          ],
+          "organization_verification": [
+            "Documentar el canal de descarga y la versión instalada.",
+            "Verificar la firma digital del instalador antes de su ejecución.",
+            "Registrar el hash del instalador en el expediente."
+          ],
+          "raw_weight": "B",
+          "section": "Procedencia e integridad del instalador (A6 / A3)",
+          "source": "TFM, Anexo D, tabla S3"
+        },
+        {
+          "id": "CS3.2",
+          "criterion": "Actividad de mantenimiento y soporte del proveedor",
+          "threats": [
+            "A6.1"
+          ],
+          "provider_verification": [
+            "Verificar que el software tiene versión estable con soporte activo del fabricante.",
+            "Consultar la política de fin de vida (EOL) y las versiones con soporte de seguridad vigente."
+          ],
+          "organization_verification": [
+            "Establecer proceso de seguimiento de versiones instaladas.",
+            "No utilizar versiones EOL en entornos de producción vinculados al SaMD."
+          ],
+          "raw_weight": "B/C",
+          "section": "Procedencia e integridad del instalador (A6 / A3)",
+          "source": "TFM, Anexo D, tabla S3"
+        },
+        {
+          "id": "CS3.3",
+          "criterion": "Vulnerabilidades conocidas en la versión instalada",
+          "threats": [
+            "A6.2"
+          ],
+          "provider_verification": [
+            "Consultar la NVD/CVE para la versión específica del software instalado.",
+            "Verificar si el proveedor publica un canal de seguridad."
+          ],
+          "organization_verification": [
+            "Mantener un inventario de software instalado con versiones.",
+            "Aplicar actualizaciones de seguridad en un plazo máximo definido.",
+            "Documentar la gestión de vulnerabilidades."
+          ],
+          "raw_weight": "B",
+          "section": "Procedencia e integridad del instalador (A6 / A3)",
+          "source": "TFM, Anexo D, tabla S3"
+        },
+        {
+          "id": "CS3.4",
+          "criterion": "Integridad del software instalado y ausencia de modificaciones no autorizadas",
+          "threats": [
+            "A3.1"
+          ],
+          "provider_verification": [
+            "Verificar tras la instalación que el software no ha sido modificado respecto al instalador original, mediante comparación de hashes o herramientas de verificación de integridad del sistema de archivos.",
+            "Comprobar si el proveedor publica hashes de los binarios instalados para verificación post-instalación."
+          ],
+          "organization_verification": [
+            "Establecer un proceso de verificación de integridad del software instalado, especialmente tras actualizaciones.",
+            "Documentar el resultado de la verificación como evidencia."
+          ],
+          "raw_weight": "B/C",
+          "section": "Integridad del software instalado (A3)",
+          "source": "TFM, Anexo D, tabla S3"
+        },
+        {
+          "id": "CS3.5",
+          "criterion": "Control de instalación en equipos corporativos",
+          "threats": [
+            "A1.2"
+          ],
+          "provider_verification": [
+            "Verificar si el software requiere permisos de administrador para su instalación y si existen mecanismos de distribución centralizada (MDM, SCCM, políticas de grupo)."
+          ],
+          "organization_verification": [
+            "Establecer política de software aprobado para los equipos de desarrollo.",
+            "La instalación de herramientas vinculadas al SaMD debe pasar por el proceso de evaluación.",
+            "Documentar los equipos en los que está instalado el software aprobado."
+          ],
+          "raw_weight": "B/C",
+          "section": "Identidad y control de acceso al equipo (A1)",
+          "source": "TFM, Anexo D, tabla S3"
+        },
+        {
+          "id": "CS3.6",
+          "criterion": "Telemetría y envío de datos al proveedor",
+          "threats": [
+            "A2.3"
+          ],
+          "provider_verification": [
+            "Revisar la política de privacidad del proveedor para identificar qué datos recoge la herramienta durante su uso (telemetría, código fuente analizado, diagnósticos).",
+            "Verificar si existe la posibilidad de desactivar la telemetría de forma total o parcial."
+          ],
+          "organization_verification": [
+            "Evaluar si los datos recogidos incluyen información sensible.",
+            "Si es así, desactivar la telemetría o garantizar que los datos transmitidos están dentro del alcance del DPA aplicable.",
+            "Registrar la decisión."
+          ],
+          "raw_weight": "B/C",
+          "section": "Confidencialidad y telemetría (A2)",
+          "source": "TFM, Anexo D, tabla S3"
+        },
+        {
+          "id": "CS3.7",
+          "criterion": "Cifrado de datos en reposo y en tránsito",
+          "threats": [
+            "A2.2"
+          ],
+          "provider_verification": [
+            "Verificar si la herramienta almacena datos localmente (cachés, tokens de sesión, fragmentos de código) y si dicho almacenamiento está cifrado.",
+            "Comprobar que las comunicaciones con servicios externos se realizan sobre TLS."
+          ],
+          "organization_verification": [
+            "Asegurarse de que los equipos aplican cifrado de disco completo.",
+            "Revisar si la herramienta puede configurarse para minimizar el almacenamiento local de datos sensibles."
+          ],
+          "raw_weight": "C/O",
+          "section": "Confidencialidad y telemetría (A2)",
+          "source": "TFM, Anexo D, tabla S3"
+        },
+        {
+          "id": "CS3.8",
+          "criterion": "Registro de versiones instaladas y actualizaciones",
+          "threats": [
+            "A4.1"
+          ],
+          "provider_verification": [
+            "Verificar si el proveedor documenta el historial de versiones y los cambios de seguridad en notas de versión públicas."
+          ],
+          "organization_verification": [
+            "Mantener registro del software instalado en los equipos de desarrollo: nombre, versión y fecha de instalación.",
+            "Registrar las actualizaciones aplicadas y su fecha."
+          ],
+          "raw_weight": "C/O",
+          "section": "Trazabilidad y auditoría (A4)",
+          "source": "TFM, Anexo D, tabla S3"
+        },
+        {
+          "id": "CS3.9",
+          "criterion": "Dependencia de licencia y activación online",
+          "threats": [
+            "A5.1",
+            "A5.2"
+          ],
+          "provider_verification": [
+            "Verificar si la herramienta requiere activación online periódica o acceso continuado a un servidor de licencias del proveedor.",
+            "Comprobar las condiciones de uso en caso de indisponibilidad del servidor de licencias."
+          ],
+          "organization_verification": [
+            "Para herramientas críticas, evaluar si la dependencia de activación online representa un riesgo inaceptable.",
+            "Considerar licencias offline o soluciones alternativas."
+          ],
+          "raw_weight": "C/O",
+          "section": "Disponibilidad y continuidad (A5)",
+          "source": "TFM, Anexo D, tabla S3"
+        },
+        {
+          "id": "CS3.10",
+          "criterion": "Licencia de uso y condiciones contractuales",
+          "threats": [
+            "A7.3",
+            "A7.4"
+          ],
+          "provider_verification": [
+            "Revisar los términos de la licencia: número de instalaciones permitidas, uso comercial, restricciones de uso en entornos de producción de dispositivos médicos y derechos de auditoría del proveedor sobre el uso."
+          ],
+          "organization_verification": [
+            "Verificar que el número de licencias adquiridas cubre las instalaciones activas.",
+            "Registrar las licencias en el sistema de gestión de activos.",
+            "Revisar las condiciones de uso ante cambios de versión o de plan de licencia."
+          ],
+          "raw_weight": "B/C",
+          "section": "Cumplimiento y licencia (A7)",
+          "source": "TFM, Anexo D, tabla S3"
+        }
+      ],
+      "S4": [
+        {
+          "id": "CS4.1",
+          "criterion": "Autenticación y control de acceso (MFA, SSO, roles)",
+          "threats": [
+            "A1.1",
+            "A1.2"
+          ],
+          "provider_verification": [
+            "Verificar que el servicio soporta MFA y permite hacerlo obligatorio.",
+            "Comprobar si el servicio es integrable con el proveedor de identidad corporativo (SSO/SAML/OIDC).",
+            "Revisar la granularidad de roles y permisos disponibles."
+          ],
+          "organization_verification": [
+            "Activar MFA o integrar con SSO corporativo antes del primer uso.",
+            "Documentar la matriz de roles y permisos asignados a cada usuario o grupo."
+          ],
+          "raw_weight": "B",
+          "section": "Identidad, autenticación y control de acceso (A1)",
+          "source": "TFM, Anexo D, tabla S4"
+        },
+        {
+          "id": "CS4.2",
+          "criterion": "Gestión de altas, bajas y accesos del proveedor",
+          "threats": [
+            "A1.3"
+          ],
+          "provider_verification": [
+            "Revisar en los términos de servicio o DPA qué personal del proveedor puede acceder a los datos de la organización y en qué condiciones.",
+            "Verificar si existe proceso de notificación al cliente."
+          ],
+          "organization_verification": [
+            "Establecer procedimiento formal de alta y baja de usuarios que incluya la revocación del acceso al servicio.",
+            "Documentar el proceso y registrar las bajas realizadas."
+          ],
+          "raw_weight": "B",
+          "section": "Identidad, autenticación y control de acceso (A1)",
+          "source": "TFM, Anexo D, tabla S4"
+        },
+        {
+          "id": "CS4.3",
+          "criterion": "Cifrado en tránsito y en reposo",
+          "threats": [
+            "A2.2"
+          ],
+          "provider_verification": [
+            "Verificar que el servicio utiliza TLS 1.2 o superior para todas las comunicaciones.",
+            "Comprobar si los datos en reposo están cifrados y con qué estándar.",
+            "Obtener la información de la documentación técnica o página de seguridad del proveedor."
+          ],
+          "organization_verification": [
+            "Registrar en el expediente el estándar de cifrado declarado por el proveedor y la fecha de verificación."
+          ],
+          "raw_weight": "B",
+          "section": "Confidencialidad y privacidad (A2)",
+          "source": "TFM, Anexo D, tabla S4"
+        },
+        {
+          "id": "CS4.4",
+          "criterion": "Tratamiento de datos personales y DPA",
+          "threats": [
+            "A2.4"
+          ],
+          "provider_verification": [
+            "Verificar si el servicio procesa datos personales en nombre de la organización.",
+            "En caso afirmativo, comprobar la existencia de un DPA disponible y aceptado.",
+            "Revisar condiciones del DPA: subencargados, localización, transferencias internacionales."
+          ],
+          "organization_verification": [
+            "Firmar o aceptar el DPA antes de la puesta en producción si el servicio procesa datos personales.",
+            "Registrar el DPA firmado en el expediente."
+          ],
+          "raw_weight": "B",
+          "section": "Confidencialidad y privacidad (A2)",
+          "source": "TFM, Anexo D, tabla S4"
+        },
+        {
+          "id": "CS4.5",
+          "criterion": "Telemetría, uso de datos y propiedad de los datos",
+          "threats": [
+            "A2.3"
+          ],
+          "provider_verification": [
+            "Revisar los términos de servicio para identificar si el proveedor puede utilizar los datos de la organización para sus propios fines.",
+            "Verificar si el contrato establece que los datos y los resultados generados pertenecen a la organización."
+          ],
+          "organization_verification": [
+            "Documentar la revisión de los términos.",
+            "Si el proveedor utiliza los datos para sus propios fines, evaluar si dicho uso es compatible con las obligaciones del fabricante."
+          ],
+          "raw_weight": "B/C",
+          "section": "Confidencialidad y privacidad (A2)",
+          "source": "TFM, Anexo D, tabla S4"
+        },
+        {
+          "id": "CS4.6",
+          "criterion": "Integridad, trazabilidad y retención de los registros generados",
+          "threats": [
+            "A3.3",
+            "A4.3",
+            "A4.4"
+          ],
+          "provider_verification": [
+            "[S4.1] Verificar si el servicio genera logs de actividad de usuario exportables.",
+            "Comprobar el periodo de retención de dichos logs y si son exportables a sistemas propios.",
+            "Verificar que los registros exportados no pueden alterarse retroactivamente."
+          ],
+          "organization_verification": [
+            "Establecer proceso de exportación periódica de registros relevantes para el expediente de conformidad del SaMD.",
+            "Si el periodo de retención del proveedor es inferior al requerido por el marco regulatorio, configurar la exportación periódica."
+          ],
+          "raw_weight": "B/C",
+          "section": "Integridad de los datos y trazabilidad (A3 / A4)",
+          "source": "TFM, Anexo D, tabla S4"
+        },
+        {
+          "id": "CS4.7",
+          "criterion": "SLA y disponibilidad garantizada",
+          "threats": [
+            "A5.1"
+          ],
+          "provider_verification": [
+            "Revisar el SLA del proveedor: disponibilidad mínima comprometida, ventanas de mantenimiento, proceso de notificación de incidencias y compensaciones por incumplimiento.",
+            "Verificar el historial de disponibilidad publicado (status page)."
+          ],
+          "organization_verification": [
+            "Evaluar el impacto de una indisponibilidad sobre el proceso del SaMD que utiliza el servicio.",
+            "Para servicios críticos, establecer plan de contingencia."
+          ],
+          "raw_weight": "B/C",
+          "section": "Disponibilidad y continuidad (A5)",
+          "source": "TFM, Anexo D, tabla S4"
+        },
+        {
+          "id": "CS4.8",
+          "criterion": "Portabilidad de datos y política de salida del proveedor",
+          "threats": [
+            "A5.4"
+          ],
+          "provider_verification": [
+            "Verificar si el servicio permite la exportación completa de los datos en un formato estándar o portable.",
+            "Comprobar las condiciones de acceso a los datos tras la cancelación del contrato (plazo, formato, coste)."
+          ],
+          "organization_verification": [
+            "Documentar el procedimiento de exportación de datos.",
+            "Realizar y registrar al menos una prueba de exportación antes de la puesta en producción para servicios críticos."
+          ],
+          "raw_weight": "B/C",
+          "section": "Disponibilidad y continuidad (A5)",
+          "source": "TFM, Anexo D, tabla S4"
+        },
+        {
+          "id": "CS4.9",
+          "criterion": "Copias de seguridad gestionadas por el proveedor",
+          "threats": [
+            "A5.3"
+          ],
+          "provider_verification": [
+            "Verificar la política de copias de seguridad del proveedor: frecuencia, retención, cifrado de las copias, procedimiento de restauración y RTO/RPO declarados."
+          ],
+          "organization_verification": [
+            "Para datos críticos evaluar si la política de copias del proveedor es suficiente o si se requiere una copia adicional propia."
+          ],
+          "raw_weight": "C/O",
+          "section": "Disponibilidad y continuidad (A5)",
+          "source": "TFM, Anexo D, tabla S4"
+        },
+        {
+          "id": "CS4.10",
+          "criterion": "Subencargados y cadena de suministro del proveedor SaaS",
+          "threats": [
+            "A6.5"
+          ],
+          "provider_verification": [
+            "[S4.2] Verificar si el servicio utiliza subproveedores para la prestación de la funcionalidad contratada.",
+            "Comprobar si el DPA o los términos listan los subencargados y si el proveedor notifica cambios en la cadena."
+          ],
+          "organization_verification": [
+            "Evaluar el riesgo introducido por cada subencargado relevante.",
+            "Documentar la revisión."
+          ],
+          "raw_weight": "C/O",
+          "section": "Cadena de suministro del servicio (A6) — S4.2",
+          "source": "TFM, Anexo D, tabla S4"
+        },
+        {
+          "id": "CS4.11",
+          "criterion": "Viabilidad y continuidad del proveedor SaaS",
+          "threats": [
+            "A6.1"
+          ],
+          "provider_verification": [
+            "Evaluar la viabilidad del proveedor: antigüedad, modelo de negocio, financiación, historial de adquisiciones o cambios de titularidad.",
+            "Verificar si el proveedor ha comunicado cambios relevantes en su modelo de servicio en los últimos 12 meses."
+          ],
+          "organization_verification": [
+            "Para servicios críticos documentar la evaluación de viabilidad del proveedor.",
+            "Establecer criterios de alerta ante cambios relevantes (adquisición, cambio de modelo de negocio, fin del servicio)."
+          ],
+          "raw_weight": "C/O",
+          "section": "Cadena de suministro del servicio (A6) — S4.2",
+          "source": "TFM, Anexo D, tabla S4"
+        },
+        {
+          "id": "CS4.12",
+          "criterion": "Certificaciones de seguridad del proveedor",
+          "threats": [
+            "A7.1"
+          ],
+          "provider_verification": [
+            "Verificar la existencia y vigencia de certificaciones del proveedor (ISO/IEC 27001, SOC 2 Type II, CSA STAR, ENS).",
+            "Comprobar si el proveedor publica informes de auditoría de terceros compartibles bajo NDA."
+          ],
+          "organization_verification": [
+            "Registrar las certificaciones verificadas con fecha de emisión y vencimiento.",
+            "Revisar anualmente."
+          ],
+          "raw_weight": "B/C",
+          "section": "Cumplimiento y garantías del proveedor (A7)",
+          "source": "TFM, Anexo D, tabla S4"
+        },
+        {
+          "id": "CS4.13",
+          "criterion": "Localización de datos y transferencias internacionales",
+          "threats": [
+            "A7.5"
+          ],
+          "provider_verification": [
+            "Identificar los países en los que el proveedor almacena y procesa los datos.",
+            "Verificar si las transferencias fuera del EEE están amparadas por mecanismos adecuados (cláusulas contractuales tipo, decisión de adecuación)."
+          ],
+          "organization_verification": [
+            "Si el SaMD procesa datos de pacientes europeos, verificar que la localización y transferencia de datos es compatible con el RGPD.",
+            "Documentar la revisión."
+          ],
+          "raw_weight": "B",
+          "section": "Cumplimiento y garantías del proveedor (A7)",
+          "source": "TFM, Anexo D, tabla S4"
+        },
+        {
+          "id": "CS4.14",
+          "criterion": "Monitorización continua del proveedor",
+          "threats": [
+            "A7.6"
+          ],
+          "provider_verification": [
+            "Verificar si el proveedor dispone de un canal de comunicación de incidencias de seguridad y de cambios relevantes en los términos del servicio."
+          ],
+          "organization_verification": [
+            "Establecer proceso de seguimiento del proveedor: suscripción a la página de estado, revisión anual del DPA y los términos, gestión de notificaciones de incidencias."
+          ],
+          "raw_weight": "C/O",
+          "section": "Cumplimiento y garantías del proveedor (A7)",
+          "source": "TFM, Anexo D, tabla S4"
+        }
+      ],
+      "S5": [
+        {
+          "id": "CS5.1",
+          "criterion": "Clasificación de riesgo conforme al Reglamento de IA de la UE",
+          "threats": [
+            "A8.1"
+          ],
+          "provider_verification": [
+            "Identificar la clasificación de riesgo de la herramienta IA según el AI Act (inaceptable, alto riesgo, riesgo limitado, riesgo mínimo).",
+            "Para herramientas de alto riesgo aplicables al sector sanitario, verificar si el proveedor ha realizado la evaluación de conformidad y si el sistema está inscrito en la base de datos de la UE."
+          ],
+          "organization_verification": [
+            "Documentar la clasificación de riesgo determinada y su fundamento.",
+            "Si la herramienta se clasifica como de alto riesgo, escalar la decisión de aprobación al nivel directivo correspondiente."
+          ],
+          "raw_weight": "B",
+          "section": "Clasificación regulatoria y gobernanza (A8)",
+          "source": "TFM, Anexo D, tabla S5"
+        },
+        {
+          "id": "CS5.2",
+          "criterion": "Rol de la organización como desplegador de IA",
+          "threats": [
+            "A8.1"
+          ],
+          "provider_verification": [
+            "Verificar si los términos de uso del proveedor reconocen el rol de desplegador de la organización conforme al AI Act y si el proveedor facilita la información necesaria para cumplir las obligaciones del desplegador."
+          ],
+          "organization_verification": [
+            "Registrar formalmente el rol de la organización como desplegador.",
+            "Implementar las medidas de supervisión humana requeridas y documentarlas."
+          ],
+          "raw_weight": "B/C",
+          "section": "Clasificación regulatoria y gobernanza (A8)",
+          "source": "TFM, Anexo D, tabla S5"
+        },
+        {
+          "id": "CS5.3",
+          "criterion": "Normas internas de uso de IA aprobadas",
+          "threats": [
+            "A8.6"
+          ],
+          "provider_verification": [
+            "No aplica (criterio organizativo)."
+          ],
+          "organization_verification": [
+            "Verificar que la organización dispone de política interna de uso de herramientas IA aprobada que cubra: usos permitidos y prohibidos, tipos de datos admisibles, requisito de revisión crítica de las salidas y proceso de registro del uso."
+          ],
+          "raw_weight": "B",
+          "section": "Clasificación regulatoria y gobernanza (A8)",
+          "source": "TFM, Anexo D, tabla S5"
+        },
+        {
+          "id": "CS5.4",
+          "criterion": "Política de uso de datos de entrada para entrenamiento del modelo",
+          "threats": [
+            "A8.2",
+            "A2.3"
+          ],
+          "provider_verification": [
+            "Revisar los términos de uso para determinar si los datos introducidos (prompts, código, documentos) son utilizados para el entrenamiento del modelo.",
+            "Verificar si existe posibilidad de deshabilitar el uso de datos para entrenamiento (opt-out) o si dicha garantía está incluida en planes empresariales."
+          ],
+          "organization_verification": [
+            "Seleccionar un plan o configuración que excluya el uso de datos para entrenamiento cuando se introduzca información sensible.",
+            "Documentar la configuración activa como evidencia."
+          ],
+          "raw_weight": "B",
+          "section": "Condiciones de uso de datos y entrenamiento del modelo (A8 / A2)",
+          "source": "TFM, Anexo D, tabla S5"
+        },
+        {
+          "id": "CS5.5",
+          "criterion": "Datos permitidos para introducir en la herramienta",
+          "threats": [
+            "A8.2",
+            "A2.1"
+          ],
+          "provider_verification": [
+            "Revisar si los términos establecen restricciones sobre el tipo de datos que pueden introducirse (datos personales, información de salud, secretos comerciales, código fuente propietario)."
+          ],
+          "organization_verification": [
+            "Establecer en la política interna de uso de IA una clasificación de los datos que pueden y no pueden introducirse en herramientas IA externas.",
+            "Implementar proceso de revisión previa antes de introducir datos del SaMD o de pacientes."
+          ],
+          "raw_weight": "B",
+          "section": "Condiciones de uso de datos y entrenamiento del modelo (A8 / A2)",
+          "source": "TFM, Anexo D, tabla S5"
+        },
+        {
+          "id": "CS5.6",
+          "criterion": "Supervisión humana de los resultados generados",
+          "threats": [
+            "A8.3"
+          ],
+          "provider_verification": [
+            "Verificar si el proveedor documenta las limitaciones conocidas del modelo, los tipos de errores frecuentes (alucinaciones, sesgos) y las recomendaciones de supervisión humana para los casos de uso declarados."
+          ],
+          "organization_verification": [
+            "Establecer en la política interna que ninguna salida de una herramienta IA puede utilizarse directamente en un proceso del SaMD sin revisión crítica por personal cualificado.",
+            "Documentar el proceso de revisión y los criterios de aceptación."
+          ],
+          "raw_weight": "B",
+          "section": "Supervisión humana y calidad de las salidas (A8)",
+          "source": "TFM, Anexo D, tabla S5"
+        },
+        {
+          "id": "CS5.7",
+          "criterion": "Integridad de los artefactos generados e incorporados al SaMD",
+          "threats": [
+            "A3.1",
+            "A3.3"
+          ],
+          "provider_verification": [
+            "Verificar si el proveedor documenta el proceso de generación de salidas y si existen mecanismos de trazabilidad entre la salida generada y el modelo o versión que la produjo.",
+            "Comprobar si el proveedor garantiza que las salidas no son alteradas durante la transmisión."
+          ],
+          "organization_verification": [
+            "Establecer un proceso de verificación de las salidas de la herramienta IA antes de su incorporación al código, documentación técnica o evidencias de validación del SaMD.",
+            "Registrar qué salidas fueron revisadas, por quién y con qué resultado.",
+            "Guardar una copia de la salida original junto con el registro de revisión."
+          ],
+          "raw_weight": "B/C",
+          "section": "Integridad de los artefactos generados (A3)",
+          "source": "TFM, Anexo D, tabla S5"
+        },
+        {
+          "id": "CS5.8",
+          "criterion": "Propiedad intelectual de las salidas generadas",
+          "threats": [
+            "A8.3",
+            "A7.4"
+          ],
+          "provider_verification": [
+            "Revisar los términos del proveedor respecto a la titularidad del contenido generado: si la organización es propietaria de las salidas, si existen restricciones de uso comercial y si el proveedor puede utilizar las salidas generadas."
+          ],
+          "organization_verification": [
+            "Documentar la revisión de las condiciones de propiedad intelectual.",
+            "Si las salidas se incorporan a la documentación técnica o al código del SaMD, verificar que la organización ostenta los derechos necesarios."
+          ],
+          "raw_weight": "B/C",
+          "section": "Supervisión humana y calidad de las salidas (A8)",
+          "source": "TFM, Anexo D, tabla S5"
+        },
+        {
+          "id": "CS5.9",
+          "criterion": "Registro del uso: modelo, versión y finalidad",
+          "threats": [
+            "A8.4",
+            "A4.4"
+          ],
+          "provider_verification": [
+            "Verificar si el proveedor identifica de forma inequívoca el modelo y la versión utilizada en cada interacción.",
+            "Comprobar si el servicio ofrece historial de conversaciones exportable o API de auditoría."
+          ],
+          "organization_verification": [
+            "Establecer proceso de registro interno del uso de herramientas IA: nombre y versión del modelo, fecha y hora, finalidad, usuario y decisión adoptada a partir de la salida.",
+            "Este registro forma parte del expediente de conformidad del SaMD."
+          ],
+          "raw_weight": "B/C",
+          "section": "Registro y trazabilidad del uso (A8 / A4)",
+          "source": "TFM, Anexo D, tabla S5"
+        },
+        {
+          "id": "CS5.10",
+          "criterion": "Procedencia del modelo y SBOM for AI",
+          "threats": [
+            "A8.5",
+            "A6.4"
+          ],
+          "provider_verification": [
+            "Verificar si el proveedor publica información sobre la procedencia del modelo (datos de entrenamiento, arquitectura, versión, fecha de corte del conocimiento).",
+            "Para modelos construidos sobre bases de terceros, comprobar si se declaran los componentes base.",
+            "Verificar si el proveedor publica SBOM for AI."
+          ],
+          "organization_verification": [
+            "Registrar la información disponible sobre procedencia del modelo en el expediente.",
+            "Evaluar si la opacidad del proveedor sobre la composición del modelo es aceptable para el nivel de riesgo de la herramienta."
+          ],
+          "raw_weight": "C/O",
+          "section": "Componentes de IA de terceros y cadena de suministro del modelo (A8 / A6)",
+          "source": "TFM, Anexo D, tabla S5"
+        },
+        {
+          "id": "CS5.11",
+          "criterion": "Mantenibilidad y soporte activo del modelo o versión utilizada",
+          "threats": [
+            "A6.1",
+            "A6.2"
+          ],
+          "provider_verification": [
+            "Verificar si el modelo o versión utilizada sigue teniendo soporte activo del proveedor.",
+            "Comprobar si el proveedor notifica con antelación suficiente las deprecaciones de modelos o versiones.",
+            "Consultar si existen vulnerabilidades conocidas asociadas a los componentes del modelo."
+          ],
+          "organization_verification": [
+            "Establecer un proceso de seguimiento del ciclo de vida del modelo utilizado.",
+            "Documentar la versión activa y revisar el estado de soporte de forma periódica.",
+            "Ante una deprecación, evaluar la migración a la versión sucesora y su impacto sobre los procesos que dependen de la herramienta."
+          ],
+          "raw_weight": "C/O",
+          "section": "Componentes de IA de terceros y cadena de suministro del modelo (A8 / A6)",
+          "source": "TFM, Anexo D, tabla S5"
+        },
+        {
+          "id": "CS5.12",
+          "criterion": "Controles de seguridad del modelo",
+          "threats": [
+            "A8.5",
+            "A1.4"
+          ],
+          "provider_verification": [
+            "Verificar si el proveedor implementa controles contra ataques de prompt injection y si existen filtros de entrada y salida activos.",
+            "Comprobar si el proveedor publica evaluaciones de seguridad del modelo."
+          ],
+          "organization_verification": [
+            "Evaluar si los controles del proveedor son suficientes para el caso de uso previsto.",
+            "Si la herramienta procesa inputs de usuarios no confiables en un flujo automatizado, implementar controles adicionales de validación de entrada."
+          ],
+          "raw_weight": "B/C",
+          "section": "Componentes de IA de terceros y cadena de suministro del modelo (A8 / A6)",
+          "source": "TFM, Anexo D, tabla S5"
+        },
+        {
+          "id": "CS5.13",
+          "criterion": "Cifrado y aislamiento de datos entre clientes",
+          "threats": [
+            "A2.2"
+          ],
+          "provider_verification": [
+            "Verificar que el servicio garantiza el aislamiento de datos entre diferentes clientes (tenant isolation).",
+            "Comprobar que los datos en tránsito y en reposo están cifrados.",
+            "Verificar si los planes empresariales ofrecen garantías adicionales de aislamiento."
+          ],
+          "organization_verification": [
+            "Para herramientas IA que manejan información confidencial, seleccionar planes que garanticen el aislamiento de datos.",
+            "Documentar la configuración y las garantías contractuales."
+          ],
+          "raw_weight": "B",
+          "section": "Confidencialidad y privacidad (A2)",
+          "source": "TFM, Anexo D, tabla S5"
+        },
+        {
+          "id": "CS5.14",
+          "criterion": "SLA y continuidad del servicio IA",
+          "threats": [
+            "A5.1",
+            "A5.2"
+          ],
+          "provider_verification": [
+            "Revisar el SLA del proveedor para el plan contratado.",
+            "Verificar el historial de disponibilidad (status page).",
+            "Comprobar si el proveedor notifica cambios en el modelo o deprecaciones con antelación suficiente."
+          ],
+          "organization_verification": [
+            "Evaluar el impacto de una indisponibilidad o cambio de comportamiento del modelo sobre los procesos del SaMD.",
+            "Establecer procedimientos alternativos para los procesos críticos que dependen de la herramienta IA."
+          ],
+          "raw_weight": "C/O",
+          "section": "Disponibilidad (A5)",
+          "source": "TFM, Anexo D, tabla S5"
+        },
+        {
+          "id": "CS5.15",
+          "criterion": "DPA, condiciones de uso y certificaciones del proveedor IA",
+          "threats": [
+            "A7.1",
+            "A7.4"
+          ],
+          "provider_verification": [
+            "Verificar la existencia de DPA si el servicio procesa datos personales.",
+            "Comprobar si el proveedor dispone de certificaciones de seguridad (ISO 27001, SOC 2).",
+            "Revisar las condiciones de uso respecto a usos prohibidos relevantes para el contexto médico."
+          ],
+          "organization_verification": [
+            "Firmar o aceptar el DPA.",
+            "Registrar las certificaciones.",
+            "Verificar que el uso previsto no está incluido en la lista de usos prohibidos del proveedor."
+          ],
+          "raw_weight": "B",
+          "section": "Cumplimiento y condiciones contractuales (A7)",
+          "source": "TFM, Anexo D, tabla S5"
+        }
+      ],
+      "S6": [
+        {
+          "id": "CS6.1",
+          "criterion": "Procedencia desde marketplace oficial y verificación del editor",
+          "threats": [
+            "A6.3",
+            "A1.3"
+          ],
+          "provider_verification": [
+            "Verificar que el complemento se instala desde el marketplace oficial de la plataforma huésped (VS Code Marketplace, JetBrains Marketplace, Chrome Web Store, Jira Marketplace).",
+            "Comprobar que el editor o publisher está verificado por el marketplace.",
+            "Revisar el historial de publicaciones del editor para descartar typosquatting."
+          ],
+          "organization_verification": [
+            "Documentar el nombre exacto del complemento, el editor verificado, la versión instalada y el marketplace de origen.",
+            "Prohibir la instalación de complementos desde fuera de los marketplaces oficiales."
+          ],
+          "raw_weight": "B",
+          "section": "Procedencia e identidad del complemento (A6 / A1)",
+          "source": "TFM, Anexo D, tabla S6"
+        },
+        {
+          "id": "CS6.2",
+          "criterion": "Actividad de mantenimiento y número de instalaciones",
+          "threats": [
+            "A6.1"
+          ],
+          "provider_verification": [
+            "Verificar en el marketplace el número de instalaciones activas, la valoración de la comunidad, la fecha de la última actualización y el historial de versiones."
+          ],
+          "organization_verification": [
+            "Establecer umbrales mínimos de aceptabilidad (p. ej. número mínimo de instalaciones activas, última actualización no superior a 12 meses) como criterios orientativos de la evaluación."
+          ],
+          "raw_weight": "B/C",
+          "section": "Procedencia e identidad del complemento (A6 / A1)",
+          "source": "TFM, Anexo D, tabla S6"
+        },
+        {
+          "id": "CS6.3",
+          "criterion": "Repositorio fuente accesible y licencia",
+          "threats": [
+            "A6.3",
+            "A7.3"
+          ],
+          "provider_verification": [
+            "Verificar si el complemento tiene repositorio fuente público accesible.",
+            "Si es así, comprobar la licencia del software y la actividad del repositorio.",
+            "Para complementos de código cerrado, revisar las condiciones de uso publicadas en el marketplace."
+          ],
+          "organization_verification": [
+            "Documentar la licencia aplicable y cualquier restricción relevante."
+          ],
+          "raw_weight": "C/O",
+          "section": "Procedencia e identidad del complemento (A6 / A1)",
+          "source": "TFM, Anexo D, tabla S6"
+        },
+        {
+          "id": "CS6.4",
+          "criterion": "Revisión de permisos declarados por el complemento",
+          "threats": [
+            "A1.2",
+            "A2.1"
+          ],
+          "provider_verification": [
+            "Revisar la lista de permisos que solicita el complemento durante la instalación o que declara en su manifiesto (acceso al sistema de archivos, red, portapapeles, otras extensiones, ventanas del navegador).",
+            "Evaluar si los permisos son proporcionales a la funcionalidad declarada."
+          ],
+          "organization_verification": [
+            "Rechazar complementos que soliciten permisos de acceso a red o al sistema de archivos cuando su función no lo requiere.",
+            "Documentar la justificación de los permisos aceptados."
+          ],
+          "raw_weight": "B",
+          "section": "Permisos de ejecución y acceso al entorno (A1 / A2 / A3)",
+          "source": "TFM, Anexo D, tabla S6"
+        },
+        {
+          "id": "CS6.5",
+          "criterion": "Acceso al código fuente y al portapapeles",
+          "threats": [
+            "A2.1",
+            "A3.1"
+          ],
+          "provider_verification": [
+            "Identificar si el complemento puede acceder al código fuente abierto en el IDE o al portapapeles del sistema.",
+            "Evaluar si este acceso es necesario para la función declarada y si el complemento puede transmitir dicho contenido a servicios externos."
+          ],
+          "organization_verification": [
+            "Para complementos con acceso al código fuente del SaMD o al portapapeles, evaluar si la transmisión de datos al proveedor es aceptable.",
+            "Si no lo es, rechazar el complemento o configurar el entorno para restringir el acceso de red del proceso."
+          ],
+          "raw_weight": "B",
+          "section": "Permisos de ejecución y acceso al entorno (A1 / A2 / A3)",
+          "source": "TFM, Anexo D, tabla S6"
+        },
+        {
+          "id": "CS6.6",
+          "criterion": "Integridad del código fuente y evidencias accesibles desde el complemento",
+          "threats": [
+            "A3.1",
+            "A3.3"
+          ],
+          "provider_verification": [
+            "Evaluar si el complemento tiene capacidad técnica de modificar ficheros del proyecto o del workspace activo (no solo leer, sino escribir o eliminar).",
+            "Verificar si el complemento accede a registros, logs o evidencias almacenadas en el entorno de trabajo y si podría manipularlos.",
+            "Si el repositorio fuente está disponible, revisar las funciones de escritura de ficheros del complemento."
+          ],
+          "organization_verification": [
+            "Para complementos con permisos de escritura sobre el sistema de archivos o el workspace, exigir revisión de código de las modificaciones realizadas por el complemento antes de su confirmación en el repositorio.",
+            "Establecer alertas de monitorización sobre cambios inesperados en ficheros críticos del proyecto."
+          ],
+          "raw_weight": "B",
+          "section": "Integridad (A3)",
+          "source": "TFM, Anexo D, tabla S6"
+        },
+        {
+          "id": "CS6.7",
+          "criterion": "Comunicaciones de red del complemento",
+          "threats": [
+            "A2.1",
+            "A2.3"
+          ],
+          "provider_verification": [
+            "Verificar si el complemento realiza comunicaciones de red y con qué destinos.",
+            "Esta información puede obtenerse de la documentación del complemento, del análisis del código fuente si está disponible, o de herramientas de monitorización de red."
+          ],
+          "organization_verification": [
+            "Para complementos que realizan comunicaciones de red, verificar que los destinos son conocidos y esperados.",
+            "Evaluar si dichas comunicaciones implican la transmisión de datos del SaMD."
+          ],
+          "raw_weight": "B/C",
+          "section": "Permisos de ejecución y acceso al entorno (A1 / A2 / A3)",
+          "source": "TFM, Anexo D, tabla S6"
+        },
+        {
+          "id": "CS6.8",
+          "criterion": "Inventario de complementos instalados por equipo",
+          "threats": [
+            "A4.1"
+          ],
+          "provider_verification": [
+            "No aplica (criterio organizativo)."
+          ],
+          "organization_verification": [
+            "Mantener un inventario actualizado de los complementos instalados en los equipos, con nombre, versión, editor, plataforma huésped y fecha de aprobación.",
+            "Verificar que ningún complemento instalado es ajeno a la lista aprobada."
+          ],
+          "raw_weight": "B/C",
+          "section": "Trazabilidad y gestión del inventario (A4)",
+          "source": "TFM, Anexo D, tabla S6"
+        },
+        {
+          "id": "CS6.9",
+          "criterion": "Política de privacidad y tratamiento de datos del complemento",
+          "threats": [
+            "A7.4",
+            "A2.4"
+          ],
+          "provider_verification": [
+            "Verificar si el complemento dispone de política de privacidad publicada y si declara qué datos recoge y cómo los utiliza.",
+            "Para complementos que acceden al código fuente o al entorno de trabajo, revisar si se aplica un DPA."
+          ],
+          "organization_verification": [
+            "Para complementos que recogen datos relevantes del proceso de desarrollo, registrar la revisión de la política de privacidad.",
+            "Si los datos recogidos incluyen datos personales, verificar la base jurídica del tratamiento."
+          ],
+          "raw_weight": "B/C",
+          "section": "Cumplimiento y condiciones de uso (A7)",
+          "source": "TFM, Anexo D, tabla S6"
+        }
+      ]
+    }
+  },
+  "decision_and_lifecycle": {
+    "resolutions": {
+      "approved": {
+        "label": "Aprobado",
+        "conditions": "Todos los criterios aplicables se cumplen y no hay incumplimientos bloqueantes ni condicionantes pendientes de resolución."
+      },
+      "approved_conditionally": {
+        "label": "Aprobado condicionado",
+        "conditions": "Existen incumplimientos que no impiden la aprobación, pero requieren medidas de mitigación específicas antes del uso."
+      },
+      "rejected": {
+        "label": "Rechazado",
+        "conditions": "Existe uno o más incumplimientos bloqueantes."
+      },
+      "authority": "La resolución final corresponde al responsable de cumplimiento.",
+      "source": "TFM, apartado 6.2.5"
+    },
+    "minimum_validation_report_fields": [
+      "Identificación de la herramienta: denominación, versión o plan, familia, nivel de riesgo y uso previsto.",
+      "Vía de activación y fechas de inicio y final de la evaluación.",
+      "Criterios aplicados, resultado de cada criterio y fuentes o evidencias consultadas.",
+      "Medidas de mitigación acordadas.",
+      "Resolución final, fecha y firma del responsable de cumplimiento.",
+      "Frecuencia de revisión periódica asignada."
+    ],
+    "inventory_rule": "Toda herramienta se registra en el inventario de herramientas validadas independientemente de la resolución. Las rechazadas se registran con ese estado para conservar el historial.",
+    "review_and_revalidation": {
+      "periodic_review": {
+        "critico": "Periodicidad máxima semestral.",
+        "importante": "Periodicidad máxima anual.",
+        "bajo": "Periodicidad máxima trienal."
+      },
+      "early_revalidation_triggers": [
+        "Nueva versión mayor con cambios de arquitectura, funcionalidades significativas, modelo de datos o integraciones; los cambios menores pueden requerir análisis de impacto.",
+        "Modificación de condiciones de servicio, política de privacidad o DPA, especialmente por localización de datos, cesión a terceros, subencargados o derechos sobre los datos generados.",
+        "Vulnerabilidad CVSS alta o crítica que afecte a la herramienta o sus componentes sin parche disponible.",
+        "Incidente de seguridad, brecha de datos o no conformidad relevante de la herramienta, interna o públicamente notificada por el proveedor.",
+        "Cambio del uso previsto, por ampliación a nuevos procesos o datos."
+      ],
+      "source": "TFM, apartado 6.2.5"
+    }
+  },
+  "normative_anchors": [
+    {
+      "section": "SaMD",
+      "reference": "MDR",
+      "title": "Reglamento (UE) 2017/745 sobre productos sanitarios",
+      "scope": "EU",
+      "type": "Reg",
+      "relevance": "Marco central. Obliga al fabricante a mantener control sobre procesos externalizados, componentes integrados y servicios de terceros que puedan afectar a la seguridad o conformidad del producto.",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "SaMD",
+      "reference": "RD 192/2023",
+      "title": "Real Decreto 192/2023 sobre productos sanitarios",
+      "scope": "ES",
+      "type": "RD",
+      "relevance": "Desarrollo español del MDR. Articula las obligaciones de los operadores económicos y refuerza el control sobre actores externos en comercialización y seguimiento.",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "SaMD",
+      "reference": "Reg. Ejec. (UE) 2021/2226",
+      "title": "Reglamento de Ejecución sobre instrucciones electrónicas de uso",
+      "scope": "EU",
+      "type": "RegEj",
+      "relevance": "Relevancia acotada: aplica cuando se emplean herramientas externas para suministrar instrucciones electrónicas de uso, debiendo garantizarse accesibilidad, seguridad e integridad.",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "SaMD",
+      "reference": "RGPD",
+      "title": "Reglamento (UE) 2016/679. Reglamento general de protección de datos",
+      "scope": "EU",
+      "type": "Reg",
+      "relevance": "Aplicable cuando herramientas de terceros tratan datos personales. Obliga a delimitar responsabilidades, regular contractualmente al proveedor y evitar riesgos para los derechos de los interesados.",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "SaMD",
+      "reference": "LOPDGDD",
+      "title": "LO 3/2018 de Protección de Datos Personales y garantía de derechos digitales",
+      "scope": "ES",
+      "type": "LO",
+      "relevance": "Complemento español del RGPD. Refuerza las obligaciones sobre terceros que accedan o traten información personal en nombre de la organización.",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "SaMD",
+      "reference": "ISO 13485",
+      "title": "EN ISO 13485:2016. SGC para dispositivos médicos",
+      "scope": "INT",
+      "type": "Norm",
+      "relevance": "Obliga a integrar en el SGC los procesos, herramientas y servicios externos que puedan influir en la conformidad del producto sanitario.",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "SaMD",
+      "reference": "ISO 14971",
+      "title": "EN ISO 14971:2019. Gestión de riesgos para dispositivos médicos",
+      "scope": "INT",
+      "type": "Norm",
+      "relevance": "Base para evaluar cómo una herramienta o librería de terceros puede introducir peligros o modificar el perfil de riesgo del producto.",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "SaMD",
+      "reference": "IEC 62304",
+      "title": "IEC 62304:2006. Procesos del ciclo de vida del software sanitario",
+      "scope": "INT",
+      "type": "Norm",
+      "relevance": "Todo elemento software externo que forme parte del producto o de su desarrollo debe quedar sujeto a control, trazabilidad y verificación.",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "SaMD",
+      "reference": "ISO 15223-1",
+      "title": "EN ISO 15223-1:2021. Símbolos para etiquetado de productos sanitarios",
+      "scope": "INT",
+      "type": "Norm",
+      "relevance": "Relevancia residual: incide únicamente cuando una herramienta externa interviene en la generación o presentación de información de etiquetado.",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "SaMD",
+      "reference": "ISO 20417",
+      "title": "UNE-EN ISO 20417:2021. Información a suministrar por el fabricante",
+      "scope": "INT",
+      "type": "Norm",
+      "relevance": "Relevancia indirecta: puede ser de apoyo cuando terceros intervienen en la gestión o distribución de la información del producto.",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "SaMD",
+      "reference": "EN 82304-1",
+      "title": "UNE-EN 82304-1:2017. Software sanitario. Requisitos generales de seguridad",
+      "scope": "INT",
+      "type": "Norm",
+      "relevance": "Permite fundamentar la comprobación de requisitos de seguridad, fiabilidad y ciclo de vida de software sanitario suministrado o mantenido por un tercero.",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "SaMD",
+      "reference": "ISO/TR 80002-2",
+      "title": "ISO/TR 80002-2. Validación de software en SGC de dispositivos médicos",
+      "scope": "INT",
+      "type": "IT",
+      "relevance": "Referencia especialmente valiosa: establece que la validación debe extenderse al software usado en diseño, pruebas, aceptación, fabricación, etiquetado y gestión de reclamaciones dentro del SGC.",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "SaMD",
+      "reference": "EN 62366-1",
+      "title": "UNE-EN 62366-1:2015/A1:2020. Ingeniería de usabilidad en productos sanitarios",
+      "scope": "INT",
+      "type": "Norm",
+      "relevance": "Relevancia indirecta: aplica cuando una herramienta de terceros afecta a la usabilidad del sistema y, por tanto, a su uso seguro.",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "Guías",
+      "reference": "MDCG 2020-1",
+      "title": "Guidance on clinical evaluation of medical device software",
+      "scope": "EU",
+      "type": "Guía",
+      "relevance": "Útil cuando módulos o evidencias clínicas proceden de elementos externos que deben considerarse en la evaluación global del producto.",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "Guías",
+      "reference": "MDCG 2020-13",
+      "title": "Clinical evaluation assessment report template",
+      "scope": "EU",
+      "type": "Guía",
+      "relevance": "Relevancia limitada: puede servir de apoyo cuando la evidencia clínica depende parcialmente de componentes o desarrollos externos.",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "Guías",
+      "reference": "MDCG 2019-16 rev.1",
+      "title": "Guidance on cybersecurity for medical devices",
+      "scope": "EU",
+      "type": "Guía",
+      "relevance": "Una de las referencias más relevantes: aborda expresamente el impacto de componentes hardware y software de terceros desde la perspectiva de la ciberseguridad del producto.",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "Guías",
+      "reference": "MDCG 2018-5",
+      "title": "UDI Assignment to Medical Device Software",
+      "scope": "EU",
+      "type": "Guía",
+      "relevance": "Relevancia marginal: solo aplica cuando terceros intervienen en la configuración o distribución del software identificado por UDI.",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "Guías",
+      "reference": "MDCG 2019-11 rev.1",
+      "title": "Qualification and classification of software (MDR/IVDR)",
+      "scope": "EU",
+      "type": "Guía",
+      "relevance": "Clave para determinar cuándo una solución de terceros debe considerarse producto sanitario o accesorio, condicionando el nivel de control y validación exigible.",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "Guías",
+      "reference": "MDCG 2020-7",
+      "title": "Guidance on PMCF plan template",
+      "scope": "EU",
+      "type": "Guía",
+      "relevance": "Relevancia secundaria: aplica cuando el plan de seguimiento poscomercialización debe contemplar incidencias asociadas a componentes externos.",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "Guías",
+      "reference": "MDCG 2020-8",
+      "title": "Guidance on PMCF evaluation report template",
+      "scope": "EU",
+      "type": "Guía",
+      "relevance": "Relevancia secundaria: puede incluir efectos de herramientas de terceros si repercuten en el comportamiento del producto en condiciones reales.",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "Guías",
+      "reference": "MDCG 2022-21",
+      "title": "Guidance on Periodic Safety Update Report (PSUR)",
+      "scope": "EU",
+      "type": "Guía",
+      "relevance": "Relevancia indirecta: el PSUR puede verse afectado por incidentes o vulnerabilidades derivados de componentes externos.",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "Guías",
+      "reference": "MDCG 2023-3 rev.2",
+      "title": "Q&A on vigilance terms and concepts (MDR/IVDR)",
+      "scope": "EU",
+      "type": "Guía",
+      "relevance": "Contribuye a interpretar adecuadamente incidentes en los que intervengan herramientas o servicios de terceros.",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "Guías",
+      "reference": "IMDRF/SaMD WG/N41FINAL:2017",
+      "title": "SaMD: Clinical Evaluation",
+      "scope": "INT",
+      "type": "DT",
+      "relevance": "El origen externo de un componente software no exime de demostrar su seguridad, rendimiento y adecuación clínica.",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "GRC",
+      "reference": "ENS",
+      "title": "RD 311/2022. Esquema Nacional de Seguridad",
+      "scope": "ES",
+      "type": "RD",
+      "relevance": "Exige considerar la cadena de suministro en el análisis de riesgos y extender las cautelas a contratistas y prestadores de servicios tecnológicos.",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "GRC",
+      "reference": "ISO/IEC 27001",
+      "title": "ISO/IEC 27001:2022. SGSI — Requisitos",
+      "scope": "INT",
+      "type": "Norm",
+      "relevance": "Marco de gestión para identificar, evaluar y tratar los riesgos asociados a proveedores, servicios externalizados y herramientas que afecten a la seguridad de la información.",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "GRC",
+      "reference": "ISO/IEC 27002",
+      "title": "ISO/IEC 27002:2022. Controles de seguridad de la información",
+      "scope": "INT",
+      "type": "Norm",
+      "relevance": "Controles operativos directamente aplicables a la gestión de proveedores, cadena de suministro TIC y servicios cloud (controles 5.19–5.23 y 8.26).",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "GRC",
+      "reference": "ISO/IEC 27701",
+      "title": "ISO/IEC 27701:2025. Sistema de gestión de la información de privacidad",
+      "scope": "INT",
+      "type": "Norm",
+      "relevance": "Aplicable cuando terceros o subencargados intervienen en operaciones sobre datos personales; obliga a documentar responsabilidades y garantías.",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "GRC",
+      "reference": "ISO/IEC 42001",
+      "title": "ISO/IEC 42001:2023. Sistema de gestión de IA",
+      "scope": "INT",
+      "type": "Norm",
+      "relevance": "Pertinente cuando se valoran herramientas de IA de terceros: exige gobernanza, gestión del riesgo y control organizativo sobre sistemas de IA externos.",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "GRC",
+      "reference": "NIST AI RMF 1.0",
+      "title": "AI Risk Management Framework (AI RMF 1.0)",
+      "scope": "EE. UU.",
+      "type": "Marco",
+      "relevance": "Referencia técnica de uso voluntario. Aporta estructura para evaluar riesgos de IA de terceros en aspectos como opacidad, sesgos, dependencia y cadena de suministro del modelo.",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "GRC",
+      "reference": "AI Act",
+      "title": "Reglamento (UE) 2024/1689. Normas armonizadas en materia de IA",
+      "scope": "EU",
+      "type": "Reg",
+      "relevance": "Establece obligaciones específicas para operadores que incorporen sistemas de IA de terceros: análisis de finalidad, nivel de riesgo, documentación y responsabilidades del proveedor.",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "GRC",
+      "reference": "eIDAS",
+      "title": "Reglamento (UE) 910/2014 sobre identificación electrónica y servicios de confianza",
+      "scope": "EU",
+      "type": "Reg",
+      "relevance": "Relevante cuando se externalizan servicios de firma electrónica, sellado temporal o certificación: la dependencia de terceros queda sujeta a requisitos regulatorios de confianza reforzada.",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "GRC",
+      "reference": "Ley 6/2020",
+      "title": "Ley 6/2020 de servicios electrónicos de confianza",
+      "scope": "ES",
+      "type": "Ley",
+      "relevance": "Complementa eIDAS en España. Aplica cuando se externalizan servicios electrónicos de confianza a proveedores críticos.",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "GRC",
+      "reference": "RDL 12/2018",
+      "title": "RDL 12/2018 de seguridad de redes y sistemas de información",
+      "scope": "ES",
+      "type": "RDL",
+      "relevance": "Extiende obligaciones de seguridad a proveedores de servicios digitales; la externalización no elimina la responsabilidad de la entidad sobre la seguridad de sus sistemas.",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "GRC",
+      "reference": "RD 43/2021",
+      "title": "RD 43/2021. Desarrollo del RDL 12/2018",
+      "scope": "ES",
+      "type": "RD",
+      "relevance": "Consolida la supervisión sobre operadores y proveedores digitales; refuerza que la externalización no traslada la responsabilidad de seguridad.",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "GRC",
+      "reference": "NIS 2",
+      "title": "Directiva (UE) 2022/2555 sobre ciberseguridad (NIS2)",
+      "scope": "EU",
+      "type": "Dir",
+      "relevance": "Incorpora expresamente los riesgos de la cadena de suministro y de las relaciones con suministradores dentro de las medidas de gestión de ciberseguridad exigidas.",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "GRC",
+      "reference": "CRA",
+      "title": "Reglamento (UE) 2024/2847. Requisitos de ciberseguridad para productos con elementos digitales",
+      "scope": "EU",
+      "type": "Reg",
+      "relevance": "Refuerza el control sobre componentes digitales externos y dependencias a lo largo del ciclo de vida. Aunque excluye los productos cubiertos por el MDR, contextualiza la evolución regulatoria en curso.",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "PI",
+      "reference": "Ley de Marcas",
+      "title": "Ley 17/2001, de 7 de diciembre, de Marcas",
+      "scope": "ES",
+      "type": "Ley",
+      "relevance": "Relevancia indirecta: aplica cuando el uso de una solución externa implica explotación de signos distintivos o riesgos de confusión comercial.",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "PI",
+      "reference": "LPI",
+      "title": "RDL 1/1996. Texto Refundido de la Ley de Propiedad Intelectual",
+      "scope": "ES",
+      "type": "RDL",
+      "relevance": "El uso de software, librerías o contenidos de terceros obliga a considerar aspectos de licenciamiento, titularidad y límites de uso que condicionan la viabilidad de determinadas herramientas externas.",
+      "source": "TFM, Anexo A"
+    },
+    {
+      "section": "Pagos",
+      "reference": "PCI DSS",
+      "title": "Payment Card Industry Data Security Standard (PCI DSS)",
+      "scope": "INT",
+      "type": "Norm",
+      "relevance": "Aplicable cuando intervienen proveedores de pago o terceros que almacenen, procesen o transmitan datos de tarjeta; permite documentar la responsabilidad compartida en entornos de pago.",
+      "source": "TFM, Anexo A"
+    }
+  ],
+  "agent_input_contract": {
+    "form_fields_from_annex_c": [
+      {
+        "field": "Departamento solicitante",
+        "guidance": "Indicar el área, departamento o equipo que solicita la incorporación de la herramienta.\nEjemplo: Área de Sistemas.",
+        "source": "TFM, Anexo C"
+      },
+      {
+        "field": "Nombre de la herramienta",
+        "guidance": "Indicar el área comercial o técnico de la herramienta solicitada.\nEjemplo: Bitwarden",
+        "source": "TFM, Anexo C"
+      },
+      {
+        "field": "Tipo de software",
+        "guidance": "Seleccionar la categoría que mejor describa la herramienta solicitada:\nRepositorio de código y herramientas CI/CD\nSoftware instalable\nSaaS\nHerramienta IA\nComplementos y extensiones\nEjemplo: Proveedor SaaS",
+        "source": "TFM, Anexo C"
+      },
+      {
+        "field": "Describe la herramienta",
+        "guidance": "Describir brevemente la finalidad de la herramienta, sus principales funcionalidades, el modelo de uso y el enlace oficial del proveedor o repositorio.\nEjemplo: Bitwarden es una plataforma de gestión de credenciales basada en la nube (SaaS), diseñada para el almacenamiento, intercambio y generación de contraseñas. El software garantiza que los datos sólo sean accesibles para los usuarios autorizados mediante una clave maestra. Permite la gestión centralizada de identidades, la implementación de políticas de seguridad empresarial y la sincronización multiplataforma bajo un modelo de actualización continua por parte del proveedor.\nhttps://bitwarden.com/",
+        "source": "TFM, Anexo C"
+      },
+      {
+        "field": "Tipo de licencia",
+        "guidance": "Indicar el tipo de licencia, plan o modalidad de contratación necesaria para el uso previsto.\nEjemplo: Teams\nAclaración: en herramientas SaaS, las funcionalidades de seguridad, administración, auditoría, integración o cumplimiento pueden variar significativamente según el plan contratado.",
+        "source": "TFM, Anexo C"
+      },
+      {
+        "field": "Procesos en los que se usará",
+        "guidance": "Indicar los procesos internos que se verán afectados por el uso de la herramienta.\nEjemplo: Procesos de mantenimiento de infraestructuras, equipamiento y herramientas software.",
+        "source": "TFM, Anexo C"
+      },
+      {
+        "field": "Tareas para las que se hará uso de la herramienta o que serán automatizadas",
+        "guidance": "Describir el uso previsto de la herramienta dentro del flujo de trabajo de la organización.\nEjemplos:\n- Eliminará el riesgo de almacenar contraseñas en texto plano.\n- Automatizar la detección de vulnerabilidades en el código.\n- Registrar y realizar seguimiento de incidencias con clientes.\n- Facilitar la planificación de las actividades del equipo.\n- Automatizar el envío de correos o comunicaciones internas.",
+        "source": "TFM, Anexo C"
+      },
+      {
+        "field": "Datos personales tratados por la herramienta",
+        "guidance": "Indicar si la herramienta tratará datos personales en el contexto de uso previsto.\nDe acuerdo con el Reglamento General de Protección de Datos, se entiende por dato personal toda información sobre una persona física identificada o identificable. Esto incluye, entre otros, nombre, apellidos, correo electrónico, identificadores en línea, datos de localización, información profesional o cualquier otro dato que permita identificar directa o indirectamente a una persona.\nEjemplos:\n- Una herramienta de control horario tratará datos de empleados.\n- Un CRM tratará datos de clientes, contactos profesionales o potenciales clientes.\nEjemplo de respuesta: La herramienta tratará nombre, apellidos y correo electrónico corporativo de empleados.",
+        "source": "TFM, Anexo C"
+      },
+      {
+        "field": "Datos confidenciales tratados por la herramienta",
+        "guidance": "Indicar si la herramienta almacenará, procesará o permitirá acceder a información confidencial de la organización.\nEjemplo: La herramienta contendrá información reservada, incluyendo credenciales de acceso a otros sistemas corporativos.",
+        "source": "TFM, Anexo C"
+      },
+      {
+        "field": "Prioridad de uso",
+        "guidance": "Indicar la prioridad de incorporación de la herramienta en una escala del 1 al 5:\n1: Baja: Mejora deseable, pero no impide el flujo de trabajo actual.\n5: Crítica: La falta de esta herramienta detiene la operación actual.",
+        "source": "TFM, Anexo C"
+      }
+    ],
+    "additional_fields_proposed_for_digital_execution": [
+      {
+        "field": "via_activacion",
+        "allowed_values": [
+          "activa",
+          "tecnica",
+          "reactiva"
+        ],
+        "reason": "Determina el origen del expediente y la información mínima aplicable.",
+        "status": "Propuesta de modelado para la implementación; derivada de la Etapa 1."
+      },
+      {
+        "field": "version_o_plan_evaluado",
+        "reason": "El informe debe identificar versión o plan evaluado; los criterios dependen de la versión concreta.",
+        "status": "Propuesta de modelado para la implementación; derivada de los apartados 6.2.3 y 6.2.5."
+      },
+      {
+        "field": "familia_principal_y_modulos_adicionales",
+        "reason": "Permite seleccionar la tabla principal y añadir S5 o S6 cuando proceda.",
+        "status": "Propuesta de modelado para la implementación; derivada de la taxonomía y Anexo D."
+      },
+      {
+        "field": "respuestas_al_arbol_de_alcance",
+        "reason": "Registra las respuestas que determinan la necesidad de validación.",
+        "status": "Propuesta de modelado para la implementación; derivada de la Figura 4."
+      },
+      {
+        "field": "respuestas_al_arbol_de_criticidad",
+        "reason": "Sustenta el nivel Crítico, Importante o Bajo.",
+        "status": "Propuesta de modelado para la implementación; derivada de la Figura 5."
+      },
+      {
+        "field": "evidencias",
+        "reason": "Cada criterio debe conservar fuente, URL o documento, fecha de consulta, localizador y resultado de la verificación.",
+        "status": "Propuesta de modelado para la implementación; derivada de los requisitos de suficiencia documental e informe de validación."
+      }
+    ],
+    "criterion_result_schema_proposed": {
+      "criterion_id": "CT.1 o CSx.y",
+      "status": "conforme | no_conforme | no_aplicable | evidencia_insuficiente | pendiente_mitigacion",
+      "effective_weight": "No calcular hasta que la autora unifique la regla de pesos. Mientras tanto, registrar raw_weight y rule_status='pendiente_normalizacion'.",
+      "evidence": [
+        {
+          "source_type": "documentación oficial | contrato/DPA/SLA | repositorio/registro | CVE/NVD | evidencia interna | otro",
+          "title": "Título del documento o página",
+          "url_or_location": "URL o ubicación interna",
+          "accessed_or_issued_date": "AAAA-MM-DD",
+          "locator": "sección, página, captura, commit o fragmento",
+          "summary": "hecho verificable y limitado que respalda el resultado"
+        }
+      ],
+      "gap_or_risk": "Brecha constatada o riesgo asociado",
+      "organization_action": "Medida organizativa prevista",
+      "owner": "Rol responsable",
+      "due_date": "AAAA-MM-DD o no aplica"
+    },
+    "status": "Los campos y estados anteriores son una propuesta de estructura digital. No cambian los criterios ni las reglas del marco."
+  },
+  "quality_control_notes": [
+    "La taxonomía se expresa como seis familias S1–S6; S4 se divide en S4.1 y S4.2, por lo que el catálogo contiene siete filas de familia o subfamilia.",
+    "El Anexo C enumera cinco tipos de software en la solicitud activa; S1 se activa principalmente por la vía técnica o reactiva.",
+    "El apartado 6.2.4 y la leyenda del Anexo D tratan los pesos simples B, C y O como fijos, mientras que la Tabla 6 los convierte por criticidad. El agente no debe aplicar una conversión hasta que se normalice la regla final.",
+    "Las referencias normativas se incorporan como anclajes y no sustituyen la consulta de sus textos oficiales vigentes.",
+    "El catálogo no incorpora información del proveedor evaluado: cada evaluación deberá respaldarse con evidencias contextualizadas, fechadas y trazables."
+  ]
+}

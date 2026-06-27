@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EV-TRACE-MD Assistant v0.7</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:15px;color:#1a1a1a;background:#f0f2f5;line-height:1.6}
+.app{max-width:860px;margin:0 auto;padding:1.5rem 1rem 4rem}
+.gov{background:#fffbeb;border:1px solid #f59e0b;border-radius:8px;padding:10px 16px;font-size:13px;color:#78350f;margin-bottom:1rem;display:flex;gap:8px;align-items:flex-start}
+.vb{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:4px;background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;margin-left:6px;vertical-align:middle}
+.prog-wrap{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:12px 16px;margin-bottom:1rem}
+.pb{display:flex;align-items:center}
+.sd{width:32px;height:32px;border-radius:50%;border:1.5px solid #d1d5db;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;cursor:pointer;flex-shrink:0;background:#fff;color:#6b7280;transition:all .15s;user-select:none}
+.sd:hover{border-color:#93c5fd}.sd.active{background:#eff6ff;border-color:#3b82f6;color:#1d4ed8}.sd.done{background:#f0fdf4;border-color:#22c55e;color:#15803d}
+.sc{flex:1;height:1.5px;background:#e5e7eb}
+.sn{display:flex;margin-top:6px}.snm{flex:1;text-align:center;font-size:10px;color:#9ca3af}.snm.active{color:#1d4ed8;font-weight:600}.snm.done{color:#15803d}
+.panel{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:1.5rem;margin-bottom:1rem}
+.ptitle{font-size:16px;font-weight:600;margin-bottom:1rem;padding-bottom:0.75rem;border-bottom:1px solid #f3f4f6;display:flex;align-items:center;gap:8px;color:#111827}
+.fr{margin-bottom:0.875rem}.fr label{display:block;font-size:13px;font-weight:500;color:#374151;margin-bottom:3px}
+.fr input,.fr select,.fr textarea{width:100%;font-size:14px;padding:8px 10px;border:1px solid #d1d5db;border-radius:6px;background:#fff;color:#111827;font-family:inherit}
+.fr textarea{resize:vertical;min-height:60px}
+.fr input:focus,.fr select:focus,.fr textarea:focus{outline:none;border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,.1)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+@media(max-width:600px){.g2,.g3{grid-template-columns:1fr}}
+.rb-g{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px}
+.rb{padding:5px 14px;border:1px solid #d1d5db;border-radius:20px;font-size:13px;cursor:pointer;background:#fff;color:#374151;transition:all .15s;user-select:none}
+.rb:hover{border-color:#93c5fd;background:#eff6ff;color:#1d4ed8}.rb.sel{background:#eff6ff;border-color:#3b82f6;color:#1d4ed8;font-weight:500}
+.ck{display:flex;align-items:flex-start;gap:8px;margin-bottom:9px;font-size:14px;cursor:pointer;color:#374151}
+.ck input[type=checkbox]{width:16px;height:16px;margin-top:2px;flex-shrink:0;accent-color:#3b82f6}
+.btn{padding:8px 18px;border:1px solid #d1d5db;border-radius:6px;font-size:14px;cursor:pointer;font-weight:500;background:#fff;color:#374151;transition:all .15s;font-family:inherit}
+.btn:hover{background:#f9fafb;border-color:#9ca3af}.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-p{background:#1d4ed8;border-color:#1d4ed8;color:#fff}.btn-p:hover{background:#1e40af}
+.btn-ai{background:#065f46;border-color:#065f46;color:#fff;font-weight:600}.btn-ai:hover{background:#047857}
+.btn-sec{background:#f3f4f6;border-color:#e5e7eb;color:#374151}.btn-d{background:#fef2f2;border-color:#fca5a5;color:#dc2626}
+.btn-row{display:flex;gap:8px;margin-top:1.25rem;flex-wrap:wrap;align-items:center}.spacer{flex:1}
+.al{padding:10px 14px;border-radius:8px;font-size:13px;margin-bottom:0.875rem;line-height:1.5}
+.al-i{background:#eff6ff;border:1px solid #bfdbfe;color:#1e40af}.al-w{background:#fffbeb;border:1px solid #fde68a;color:#78350f}
+.al-s{background:#f0fdf4;border:1px solid #bbf7d0;color:#14532d}
+.qcard{border:1px solid #e5e7eb;border-radius:8px;padding:1rem 1.25rem;margin-bottom:0.75rem;background:#fafafa}
+.lv-crítico{display:inline-block;padding:3px 12px;border-radius:20px;font-size:13px;font-weight:600;background:#fef2f2;color:#dc2626;border:1px solid #fca5a5}
+.lv-importante{display:inline-block;padding:3px 12px;border-radius:20px;font-size:13px;font-weight:600;background:#fffbeb;color:#d97706;border:1px solid #fcd34d}
+.lv-bajo{display:inline-block;padding:3px 12px;border-radius:20px;font-size:13px;font-weight:600;background:#f0fdf4;color:#15803d;border:1px solid #86efac}
+.out-in{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:6px;font-size:13px;font-weight:500;background:#f0fdf4;color:#15803d;border:1px solid #86efac;margin-top:0.625rem}
+.out-out{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:6px;font-size:13px;font-weight:500;background:#f9fafb;color:#6b7280;border:1px solid #e5e7eb;margin-top:0.625rem}
+.stat-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(105px,1fr));gap:8px;margin-bottom:1rem}
+.stat{background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:10px;text-align:center;min-height:72px;display:flex;flex-direction:column;justify-content:center}
+.stat .n{font-size:22px;font-weight:700;color:#111827}.stat .l{font-size:11px;color:#6b7280;margin-top:2px}
+.stat.sc .n{color:#15803d}.stat.sw .n{color:#d97706}.stat.sd2 .n{color:#dc2626}.stat.si .n{color:#1d4ed8}
+.crit-card{border:1px solid #e5e7eb;border-radius:8px;margin-bottom:8px;overflow:hidden}
+.crit-hdr{padding:10px 13px;background:#f9fafb;display:flex;align-items:center;gap:7px;cursor:pointer;user-select:none;transition:background .1s}
+.crit-hdr:hover{background:#f3f4f6}
+.cid{font-size:11px;font-weight:700;background:#e5e7eb;padding:2px 7px;border-radius:4px;flex-shrink:0;color:#374151}
+.cnm{font-size:13px;font-weight:500;flex:1;color:#111827;min-width:0}
+.wp{font-size:11px;padding:2px 7px;border-radius:4px;font-weight:700;flex-shrink:0}
+.wB{background:#fef2f2;color:#dc2626}.wC{background:#fffbeb;color:#d97706}.wO{background:#f0fdf4;color:#15803d}.wBC{background:#fff7ed;color:#c2410c}.wCO{background:#f0fdf4;color:#15803d}
+.crit-body{padding:13px;display:none;border-top:1px solid #e5e7eb}.crit-body.open{display:block}
+.vsec{margin-bottom:10px}.vsec h4{font-size:11px;font-weight:700;color:#6b7280;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em}
+.vlist{font-size:13px;padding-left:1.25rem;color:#374151}.vlist li{margin-bottom:3px}
+.ttag{font-size:11px;padding:2px 7px;border:1px solid #e5e7eb;border-radius:4px;color:#6b7280;background:#f9fafb}
+.ev-blk{background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:9px 12px;margin-bottom:9px;font-size:13px;color:#1e40af}
+.ev-org{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:9px 12px;margin-bottom:9px;font-size:13px;color:#78350f}
+.ev-pend{background:#f9fafb;border:1px dashed #d1d5db;border-radius:8px;padding:9px 12px;margin-bottom:9px;font-size:13px;color:#6b7280}
+.sp{font-size:11px;padding:2px 7px;border-radius:4px;font-weight:600;white-space:nowrap}
+.sp-c{background:#f0fdf4;color:#15803d}.sp-p{background:#fffbeb;color:#d97706}.sp-nc{background:#fef2f2;color:#dc2626}
+.sp-nv{background:#f3f4f6;color:#6b7280;border:1px solid #e5e7eb}.sp-na{background:#f3f4f6;color:#9ca3af}
+.sp-auto-c{background:#f0fdf4;color:#15803d;border:1.5px solid #86efac}
+.sp-auto-nc{background:#fef2f2;color:#dc2626;border:1.5px solid #fca5a5}
+.sp-auto-nv{background:#f9fafb;color:#6b7280;border:1.5px dashed #d1d5db}
+.eff-bar{background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:8px 12px;font-size:12px;display:flex;gap:16px;flex-wrap:wrap;margin-bottom:1rem;color:#6b7280}
+.eff-bar strong{color:#1d4ed8}
+.fam-sec{margin-bottom:1.25rem}.fam-tit{font-size:12px;font-weight:700;color:#6b7280;margin-bottom:7px;padding-bottom:5px;border-bottom:1.5px solid #e5e7eb;text-transform:uppercase;letter-spacing:.05em}
+.stbl{width:100%;border-collapse:collapse;font-size:13px}
+.stbl th{background:#f9fafb;padding:8px 11px;text-align:left;font-weight:600;font-size:12px;border:1px solid #e5e7eb;color:#374151}
+.stbl td{padding:7px 11px;border:1px solid #e5e7eb;vertical-align:top;color:#374151}
+.rep-sec{margin-bottom:1.25rem}.rep-sec h3{font-size:14px;font-weight:600;margin-bottom:6px;color:#374151;padding-bottom:4px;border-bottom:1px solid #f3f4f6}
+.rep-blk{background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:1rem;font-size:13px;line-height:1.8;color:#374151}
+.rec-box{border:1px solid #bfdbfe;border-radius:12px;padding:1rem 1.25rem;margin-bottom:1rem}
+.rec-box.fav{background:#f0fdf4;border-color:#86efac}.rec-box.cond{background:#fffbeb;border-color:#fde68a}
+.rec-box.nofav{background:#fef2f2;border-color:#fca5a5}.rec-box.noc{background:#f9fafb;border-color:#e5e7eb}
+.rec-title{font-size:15px;font-weight:600;margin-bottom:6px}
+.rec-title.fav{color:#15803d}.rec-title.cond{color:#d97706}.rec-title.nofav{color:#dc2626}.rec-title.noc{color:#6b7280}
+.dots{display:inline-flex;gap:3px}.dots span{width:5px;height:5px;border-radius:50%;background:#1d4ed8;animation:dp 1.2s ease-in-out infinite}
+.dots span:nth-child(2){animation-delay:.2s}.dots span:nth-child(3){animation-delay:.4s}
+@keyframes dp{0%,80%,100%{opacity:.3;transform:scale(.8)}40%{opacity:1;transform:scale(1)}}
+.ev-id{font-size:11px;font-weight:600;font-family:monospace;background:#f3f4f6;padding:1px 7px;border-radius:4px;color:#374151}
+.src-type{font-size:11px;padding:1px 7px;border-radius:4px;background:#f3f4f6;color:#6b7280;border:1px solid #e5e7eb}
+.consult-tag{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:4px;font-size:12px;background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;margin:2px}
+@media print{
+  body{background:#fff!important;font-size:12px!important;color:#000!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .app{max-width:100%!important;padding:0!important}
+  .gov,.prog-wrap,.eff-bar,.btn-row,.btn,.btn-p,.btn-ai,.btn-sec,.btn-d{display:none!important}
+  .panel{border:none!important;padding:0.5rem 0!important;margin-bottom:0.5rem!important;box-shadow:none!important;page-break-inside:avoid}
+  .ptitle{font-size:14px!important;border-bottom:1px solid #999!important;padding-bottom:4px!important}
+  .rep-sec{page-break-inside:avoid;margin-bottom:0.75rem!important}
+  .rep-sec h3{font-size:12px!important;color:#000!important;border-bottom:1px solid #ccc!important}
+  .rep-blk{background:#fff!important;border:1px solid #ccc!important;padding:8px!important;font-size:11px!important}
+  .rec-box{border:1px solid #999!important;background:#f9f9f9!important;padding:8px!important;page-break-inside:avoid}
+  .rec-title{font-size:13px!important;color:#000!important}
+  .stbl{font-size:10px!important}
+  .stbl th{background:#eee!important;color:#000!important}
+  .stbl td{padding:4px 6px!important}
+  .sp{font-size:9px!important;border:1px solid #999!important}
+  .wp{font-size:9px!important;border:1px solid #999!important}
+  .vb{font-size:9px!important;border:1px solid #999!important;background:#eee!important;color:#000!important}
+  .lv-critico,.lv-importante,.lv-bajo{border:1px solid #999!important;font-size:11px!important}
+  .al{border:1px solid #ccc!important;background:#f9f9f9!important;color:#000!important}
+  .al-w{background:#fffbeb!important}
+  a{color:#000!important;text-decoration:underline!important}
+  .stat-g{display:none!important}
+  textarea,select,input{border:1px solid #ccc!important;background:#fff!important;font-size:11px!important}
+  .fr label{font-size:11px!important;color:#000!important}
+}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <div class="gov">
+    <span style="font-size:16px;flex-shrink:0">&#x26A0;&#xFE0F;</span>
+    <div><strong>Prototipo academico &mdash; Marco EV-TRACE-MD <span class="vb">v0.7</span></strong> &mdash; Propuesta de estado documental. La resolución final corresponde al responsable de cumplimiento. </div>
+  </div>
+  <div class="prog-wrap"><div class="pb" id="pb"></div><div class="sn" id="sn"></div></div>
+  <div id="ct"></div>
+</div>
+<script>
+'use strict';
+const STEPS=['Inicio','Solicitud','Alcance','Clasificación','Evaluación','Hallazgos','Informe'];
+const SL={'cumple':'Cumple','parcial':'Cumple parcialmente','no-cumple':'No cumple','no-verif':'No verificable','no-aplica':'No aplicable','':"Sin evaluar"};
+const SRC_TYPES=['Página oficial del producto','Documentación técnica oficial','Centro de seguridad o trust center','Política de privacidad, DPA o condiciones contractuales','SLA o página de estado','Repositorio oficial o registro de paquetes','Aviso oficial de seguridad o vulnerabilidad','Certificación, auditoría o declaración de cumplimiento','Evidencia aportada por la organización','Otra fuente publica pendiente de revisión'];
+const ORG_IDS=new Set(['CT.2','CT.3','CS2.1','CS2.2','CS2.3','CS2.4','CS2.5','CS2.6','CS2.7','CS2.8','CS2.9','CS2.10','CS2.11','CS2.12','CS3.5','CS4.1','CS4.2','CS4.6','CS5.3','CS5.5','CS5.6','CS5.9','CS6.1','CS6.8']);
+
+const CT=[
+  {id:'CT.1',c:'Adecuación al uso previsto declarado',t:[],w:'B',s:'Transversal',pv:['La documentación técnica del proveedor describe con claridad el uso previsto.','Las funcionalidades cubren los requisitos que motivaron la solicitud.'],ov:['Comparar el uso previsto declarado por el proveedor con el uso interno.']},
+  {id:'CT.2',c:'Verificación de requisitos funcionales minimos',t:[],w:'B',s:'Transversal',pv:['La herramienta produce los resultados esperados bajo las condiciones de uso definidas.'],ov:['Diseñar y ejecutar pruebas de aceptacion específicas. (criterio organizativo)'],org:true},
+  {id:'CT.3',c:'Reproducibilidad y estabilidad del comportamiento',t:[],w:'B',s:'Transversal',pv:['El proveedor documenta el comportamiento esperado y las limitaciones conocidas.'],ov:['Verificar la reproducibilidad como parte de las pruebas de aceptacion. (criterio organizativo)'],org:true}
+];
+const CS={
+S1:[
+  {id:'CS1.1',c:'Procedencia y canal de distribucion oficial',t:['A6.3'],w:'B',s:'Cadena de suministro (A6)',pv:['Verificar canal oficial (npm, PyPI, Docker Hub oficial) y firma criptográfica del artefacto (SHA-256 o GPG/Sigstore).'],ov:['Registrar el canal de descarga utilizado en el expediente.']},
+  {id:'CS1.2',c:'Actividad y mantenibilidad del componente',t:['A6.1'],w:'B/C',s:'Cadena de suministro (A6)',pv:['Consultar historial de cambios: actividad de mantenimiento en los últimos 12 meses.'],ov:['Evaluar alternativas si no hay actividad reciente.']},
+  {id:'CS1.3',c:'Vulnerabilidades conocidas (SCA)',t:['A6.2'],w:'B',s:'Cadena de suministro (A6)',pv:['Consultar NVD/CVE y avisos de seguridad del registro del paquete para la versión específica.'],ov:['Ejecutar analisis SCA (Dependabot, OWASP Dependency-Check, Snyk).']},
+  {id:'CS1.4',c:'Dependencias transitivas y subcomponentes',t:['A6.6'],w:'C/O',s:'Cadena de suministro (A6)',pv:['Generar árbol de dependencias completo e identificar subcomponentes transitivos.'],ov:['Aplicar CS1.1-CS1.3 a las dependencias transitivas de mayor criticidad.']},
+  {id:'CS1.5',c:'SBOM y política de actualización',t:['A6.4'],w:'C/O',s:'Cadena de suministro (A6)',pv:['Verificar si el proyecto publica un SBOM y si existe política de publicacion de actualizaciónes de seguridad.'],ov:['Generar o mantener internamente el SBOM del producto.']},
+  {id:'CS1.6',c:'Integridad del artefacto descargado',t:['A3.1'],w:'B',s:'Integridad (A3)',pv:['Verificar hash publicado (SHA-256) contra el artefacto descargado. Comprobar firma de procedencia (Sigstore/cosign).'],ov:['Incorporar la verificación de integridad al pipeline CI/CD.']},
+  {id:'CS1.7',c:'Licencia de software y compatibilidad',t:['A7.3'],w:'B',s:'Licencias (A7)',pv:['Identificar la licencia (SPDX) y verificar compatibilidad con la licencia del SaMD.'],ov:['Mantener inventario de licencias. Evaluar impacto de licencias copyleft.']},
+  {id:'CS1.8',c:'Fijacion de versión y control de cambios (pinning)',t:['A4.1'],w:'B',s:'Trazabilidad (A4)',pv:['Verificar que la dependencia esta fijada a una versión concreta en el fichero de definicion.'],ov:['Establecer política de fijacion de versión. Cualquier cambio de versión reinicia la evaluación.']},
+  {id:'CS1.9',c:'Riesgo de discontinuidad del componente',t:['A5.2'],w:'C/O',s:'Disponibilidad (A5)',pv:['Evaluar indicadores de riesgo de abandono: mantenedores activos, patrocinadores, antigüedad sin releases.'],ov:['Para dependencias criticas con alto riesgo de abandono, evaluar alternativas.']},
+  {id:'CS1.10',c:'Comportamiento en ejecución y acceso a datos del entorno',t:['A2.1','A2.3'],w:'C/O',s:'Confidencialidad (A2)',pv:['Revisar si la dependencia accede a variables de entorno, credenciales o datos del proceso. Consultar historial de incidentes.'],ov:['Restringir acceso del componente mediante configuracion del entorno de ejecución.']}
+],
+S2:[
+  {id:'CS2.1',c:'Autenticación multifactor (MFA)',t:['A1.1'],w:'B',s:'Identidad y acceso (A1)',pv:['Verificar que la plataforma soporta MFA y permite hacerlo obligatorio.'],ov:['Activar la obligatoriedad de MFA antes del primer uso productivo. (acción organizativa)'],org:true},
+  {id:'CS2.2',c:'Control de acceso y principio de minimo privilegio',t:['A1.2'],w:'B',s:'Identidad y acceso (A1)',pv:['Verificar que la plataforma permite gestión de roles y permisos granulares por repositorio.'],ov:['Documentar los roles asignados. (acción organizativa)'],org:true},
+  {id:'CS2.3',c:'Gestión de secretos y credenciales',t:['A1.4'],w:'B',s:'Identidad y acceso (A1)',pv:['Verificar que la plataforma dispone de gestión de secretos e impide su exposicion. Comprobar que el escaneo de secretos esta disponible.'],ov:['Establecer política que prohíba credenciales en texto plano. (acción organizativa)'],org:true},
+  {id:'CS2.4',c:'Gestión de accesos del proveedor a los repositorios',t:['A1.3'],w:'B/C',s:'Identidad y acceso (A1)',pv:['Revisar las condiciones de servicio respecto al acceso del personal del proveedor al código fuente alojado.'],ov:['Documentar que información sensible reside en los repositorios. (acción organizativa)'],org:true},
+  {id:'CS2.5',c:'Proteccion de ramas y control de cambios',t:['A3.1'],w:'B',s:'Integridad (A3)',pv:['Verificar que la plataforma permite configurar reglas de protección de ramas: revisión de código, checks CI y prohibicion de push directo.'],ov:['Activar y documentar las reglas de protección de ramas. (acción organizativa)'],org:true},
+  {id:'CS2.6',c:'Integridad del pipeline CI/CD y de los artefactos',t:['A3.2'],w:'B/C',s:'Integridad (A3)',pv:['Verificar si la plataforma soporta la firma de artefactos generados en el pipeline.'],ov:['Configurar el pipeline para generar y verificar hashes de artefactos. (acción organizativa)'],org:true},
+  {id:'CS2.7',c:'Trazabilidad de commits y autoria',t:['A3.3','A4.1'],w:'C/O',s:'Trazabilidad (A4)',pv:['Verificar que la plataforma registra la autoria de todos los commits con identidad verificada.'],ov:['Establecer política de firma de commits. (acción organizativa)'],org:true},
+  {id:'CS2.8',c:'Logs de actividad y exportación de auditoría',t:['A4.3'],w:'B/C',s:'Trazabilidad (A4)',pv:['Verificar que la plataforma genera logs de auditoría exportables y comprobar su periodo de retención.'],ov:['Establecer proceso de revisión periódica de logs. (acción organizativa)'],org:true},
+  {id:'CS2.9',c:'Trazabilidad de requisitos y casos de prueba',t:['A4.2'],w:'C/O',s:'Trazabilidad (A4)',pv:['Evaluar si la plataforma permite vincular commits, pull requests o issues a requisitos.'],ov:['Establecer convencion de etiquetado de commits. (acción organizativa)'],org:true},
+  {id:'CS2.10',c:'Visibilidad de repositorios y exposicion de información sensible',t:['A2.1'],w:'B',s:'Confidencialidad (A2)',pv:['Verificar que la plataforma dispone de escaneo de secretos (secret scanning, code scanning).'],ov:['Auditar periódicamente la visibilidad de los repositorios. (acción organizativa)'],org:true},
+  {id:'CS2.11',c:'SLA, continuidad y plan de contingencia',t:['A5.1','A5.2'],w:'B/C',s:'Disponibilidad (A5)',pv:['Revisar el SLA publicado: disponibilidad minima garantizada, tiempo de respuesta ante incidencias. Verificar el histórico de disponibilidad (status page).'],ov:['Establecer plan de contingencia con capacidad de compilacion local de emergencia. (acción organizativa)'],org:true},
+  {id:'CS2.12',c:'Portabilidad del código y salida del proveedor',t:['A5.4'],w:'C/O',s:'Disponibilidad (A5)',pv:['Verificar que el código fuente puede exportarse en formatos estandar (git bundle).'],ov:['Documentar el procedimiento de migración o exportación del repositorio. (acción organizativa)'],org:true},
+  {id:'CS2.13',c:'Certificaciónes y políticas de seguridad del proveedor',t:['A7.1'],w:'B/C',s:'Cumplimiento (A7)',pv:['Verificar la existencia de certificaciónes del proveedor (ISO/IEC 27001, SOC 2 Type II, ENS).'],ov:['Registrar las certificaciónes verificadas con fecha de emision y vencimiento.']},
+  {id:'CS2.14',c:'Condiciones contractuales y localización de datos',t:['A7.4','A7.5'],w:'B',s:'Cumplimiento (A7)',pv:['Revisar las condiciones de servicio: propiedad del código alojado, jurisdiccion, localización de centros de datos y transferencias internacionales.'],ov:['Verificar compatibilidad con el RGPD y el MDR.']},
+  {id:'CS2.15',c:'Monitorización continua y gestión de incidencias del proveedor',t:['A7.2','A7.6'],w:'C/O',s:'Cumplimiento (A7)',pv:['Verificar si el proveedor dispone de canal oficial de incidencias de seguridad (status page) y proceso formal de gestión de vulnerabilidades.'],ov:['Establecer proceso de seguimiento activo del proveedor.']},
+  {id:'CS2.16',c:'Procedencia e integridad de componentes del pipeline',t:['A6.3','A6.5'],w:'B/C',s:'Cadena de suministro (A6)',pv:['Verificar si el marketplace del CI/CD ofrece verificación del editor y si las acciónes de terceros tienen repositorio fuente accesible.'],ov:['Fijar todas las acciónes de terceros a un commit hash específico. (acción organizativa)']}
+],
+S3:[
+  {id:'CS3.1',c:'Descarga desde canal oficial y verificación de integridad',t:['A6.3','A3.1'],w:'B',s:'Procedencia e integridad (A6/A3)',pv:['Verificar descarga desde sitio oficial. Comprobar firma digital del instalador (Authenticode en Windows, notarization en macOS).'],ov:['Documentar el canal de descarga y la versión instalada.']},
+  {id:'CS3.2',c:'Actividad de mantenimiento y soporte del proveedor',t:['A6.1'],w:'B/C',s:'Procedencia e integridad (A6/A3)',pv:['Verificar versión estable con soporte activo. Consultar política de fin de vida (EOL) y versiónes con soporte de seguridad vigente.'],ov:['No utilizar versiónes EOL en entornos de produccion vinculados al SaMD.']},
+  {id:'CS3.3',c:'Vulnerabilidades conocidas en la versión instalada',t:['A6.2'],w:'B',s:'Procedencia e integridad (A6/A3)',pv:['Consultar NVD/CVE para la versión específica del software instalado. Verificar canal de seguridad del proveedor.'],ov:['Mantener inventario de software instalado con versiónes.']},
+  {id:'CS3.4',c:'Integridad del software instalado',t:['A3.1'],w:'B/C',s:'Integridad (A3)',pv:['Verificar si el proveedor publica hashes de los binarios instalados para verificación post-instalación.'],ov:['Establecer proceso de verificación de integridad del software instalado.']},
+  {id:'CS3.5',c:'Control de instalación en equipos corporativos',t:['A1.2'],w:'B/C',s:'Identidad y acceso (A1)',pv:['Verificar si requiere permisos de administrador y si existen mecanismos de distribucion centralizada (MDM, SCCM).'],ov:['Establecer política de software aprobado para los equipos de desarrollo. (acción organizativa)'],org:true},
+  {id:'CS3.6',c:'Telemetría y envio de datos al proveedor',t:['A2.3'],w:'B/C',s:'Confidencialidad (A2)',pv:['Revisar política de privacidad del proveedor: que datos recoge la herramienta (telemetría, código fuente analizado, diagnósticos). Verificar si existe opcion de desactivar la telemetría.'],ov:['Evaluar si los datos recogidos incluyen información sensible y desactivar la telemetría si es necesario.']},
+  {id:'CS3.7',c:'Cifrado de datos en reposo y en transito',t:['A2.2'],w:'C/O',s:'Confidencialidad (A2)',pv:['Verificar si la herramienta almacena datos localmente y si estan cifrados. Comprobar que las comunicaciónes con servicios externos usan TLS.'],ov:['Asegurarse de que los equipos aplican cifrado de disco completo.']},
+  {id:'CS3.8',c:'Registro de versiónes instaladas y actualizaciónes',t:['A4.1'],w:'C/O',s:'Trazabilidad (A4)',pv:['Verificar si el proveedor documenta el historial de versiónes y los cambios de seguridad en notas de versión públicas.'],ov:['Mantener registro del software instalado con nombre, versión y fecha.']},
+  {id:'CS3.9',c:'Dependencia de licencia y activación online',t:['A5.1','A5.2'],w:'C/O',s:'Disponibilidad (A5)',pv:['Verificar si la herramienta requiere activación online periódica o acceso continuado a un servidor de licencias.'],ov:['Evaluar si la dependencia de activación online representa un riesgo inaceptable.']},
+  {id:'CS3.10',c:'Licencia de uso y condiciones contractuales',t:['A7.3','A7.4'],w:'B/C',s:'Cumplimiento (A7)',pv:['Revisar los términos de la licencia: número de instalaciónes permitidas, uso comercial y restricciones para dispositivos medicos.'],ov:['Verificar que el número de licencias adquiridas cubre las instalaciónes activas.']}
+],
+S4:[
+  {id:'CS4.1',c:'Autenticación y control de acceso (MFA, SSO, roles)',t:['A1.1','A1.2'],w:'B',s:'Identidad y acceso (A1)',pv:['Verificar que el servicio soporta MFA y permite hacerlo obligatorio. Comprobar integración con SSO/SAML/OIDC.'],ov:['Activar MFA o integrar con SSO corporativo antes del primer uso. (acción organizativa)'],org:true},
+  {id:'CS4.2',c:'Gestión de altas, bajas y accesos del proveedor',t:['A1.3'],w:'B',s:'Identidad y acceso (A1)',pv:['Revisar en los términos de servicio o DPA que personal del proveedor puede acceder a los datos de la organización.'],ov:['Establecer procedimiento formal de alta y baja de usuarios. (acción organizativa)'],org:true},
+  {id:'CS4.3',c:'Cifrado en transito y en reposo',t:['A2.2'],w:'B',s:'Confidencialidad (A2)',pv:['Verificar que el servicio utiliza TLS 1.2 o superior. Comprobar si los datos en reposo estan cifrados.'],ov:['Registrar en el expediente el estandar de cifrado declarado por el proveedor.']},
+  {id:'CS4.4',c:'Tratamiento de datos personales y DPA',t:['A2.4'],w:'B',s:'Confidencialidad (A2)',pv:['Verificar si el servicio procesa datos personales. Comprobar la existencia de un DPA disponible y aceptado. Revisar condiciones del DPA: subencargados, localización, transferencias internacionales.'],ov:['Firmar o aceptar el DPA antes de la puesta en produccion.']},
+  {id:'CS4.5',c:'Telemetría, uso de datos y propiedad de los datos',t:['A2.3'],w:'B/C',s:'Confidencialidad (A2)',pv:['Revisar los términos de servicio para identificar si el proveedor puede utilizar los datos de la organización para sus propios fines.'],ov:['Documentar la revisión de los términos.']},
+  {id:'CS4.6',c:'Integridad, trazabilidad y retención de los registros',t:['A3.3','A4.3','A4.4'],w:'B/C',s:'Integridad y trazabilidad (A3/A4)',pv:['[S4.1] Verificar si el servicio genera logs de actividad de usuario exportables. Comprobar el periodo de retención.'],ov:['Establecer proceso de exportación periódica de registros. (acción organizativa)'],org:true},
+  {id:'CS4.7',c:'SLA y disponibilidad garantizada',t:['A5.1'],w:'B/C',s:'Disponibilidad (A5)',pv:['Revisar el SLA del proveedor: disponibilidad minima comprometida, ventanas de mantenimiento y compensaciones. Verificar el histórico de disponibilidad (status page).'],ov:['Establecer plan de contingencia para servicios críticos.']},
+  {id:'CS4.8',c:'Portabilidad de datos y política de salida del proveedor',t:['A5.4'],w:'B/C',s:'Disponibilidad (A5)',pv:['Verificar si el servicio permite la exportación completa de los datos en formato estandar. Comprobar las condiciones de acceso a los datos tras la cancelación.'],ov:['Documentar el procedimiento de exportación de datos.']},
+  {id:'CS4.9',c:'Copias de seguridad gestiónadas por el proveedor',t:['A5.3'],w:'C/O',s:'Disponibilidad (A5)',pv:['Verificar la política de copias de seguridad del proveedor: frecuencia, retención, cifrado y RTO/RPO declarados.'],ov:['Evaluar si la política de copias del proveedor es suficiente para datos críticos.']},
+  {id:'CS4.10',c:'Subencargados y cadena de suministro del proveedor SaaS',t:['A6.5'],w:'C/O',s:'Cadena de suministro (A6)',pv:['[S4.2] Verificar si el servicio utiliza subproveedores y si el DPA o los términos los listan.'],ov:['Evaluar el riesgo introducido por cada subencargado relevante.']},
+  {id:'CS4.11',c:'Viabilidad y continuidad del proveedor SaaS',t:['A6.1'],w:'C/O',s:'Cadena de suministro (A6)',pv:['Evaluar la viabilidad del proveedor: antigüedad, modelo de negocio, financiación, historial de adquisiciones.'],ov:['Para servicios críticos documentar la evaluación de viabilidad del proveedor.']},
+  {id:'CS4.12',c:'Certificaciónes de seguridad del proveedor',t:['A7.1'],w:'B/C',s:'Cumplimiento (A7)',pv:['Verificar la existencia y vigencia de certificaciónes del proveedor (ISO/IEC 27001, SOC 2 Type II, CSA STAR, ENS).'],ov:['Registrar las certificaciónes verificadas con fecha de emision y vencimiento.']},
+  {id:'CS4.13',c:'Localización de datos y transferencias internacionales',t:['A7.5'],w:'B',s:'Cumplimiento (A7)',pv:['Identificar los paises en los que el proveedor almacena y procesa los datos. Verificar si las transferencias fuera del EEE estan amparadas por mecanismos adecuados.'],ov:['Verificar compatibilidad con el RGPD si se procesan datos de pacientes europeos.']},
+  {id:'CS4.14',c:'Monitorización continua del proveedor',t:['A7.6'],w:'C/O',s:'Cumplimiento (A7)',pv:['Verificar si el proveedor dispone de un canal de comunicación de incidencias de seguridad.'],ov:['Establecer proceso de seguimiento del proveedor.']}
+],
+S5:[
+  {id:'CS5.1',c:'Clasificación de riesgo conforme al Reglamento de IA de la UE',t:['A8.1'],w:'B',s:'Gobernanza IA (A8)',pv:['Identificar la clasificación de riesgo de la herramienta IA segun el AI Act. Para herramientas de alto riesgo, verificar si el proveedor ha realizado la evaluación de conformidad.'],ov:['Documentar la clasificación de riesgo determinada y su fundamento.']},
+  {id:'CS5.2',c:'Rol de la organización como desplegador de IA',t:['A8.1'],w:'B/C',s:'Gobernanza IA (A8)',pv:['Verificar si los términos de uso del proveedor reconocen el rol de desplegador conforme al AI Act.'],ov:['Registrar formalmente el rol de la organización como desplegador.']},
+  {id:'CS5.3',c:'Normas internas de uso de IA aprobadas',t:['A8.6'],w:'B',s:'Gobernanza IA (A8)',pv:['No aplica (criterio organizativo).'],ov:['Verificar que la organización dispone de política interna de uso de herramientas IA aprobada. (criterio organizativo)'],org:true},
+  {id:'CS5.4',c:'Política de uso de datos de entrada para entrenamiento del modelo',t:['A8.2','A2.3'],w:'B',s:'Condiciones de uso de datos (A8/A2)',pv:['Revisar los términos de uso para determinar si los datos introducidos son utilizados para el entrenamiento del modelo. Verificar si existe posibilidad de opt-out.'],ov:['Seleccionar un plan o configuracion que excluya el uso de datos para entrenamiento cuando se introduzca información sensible.']},
+  {id:'CS5.5',c:'Datos permitidos para introducir en la herramienta',t:['A8.2','A2.1'],w:'B',s:'Condiciones de uso de datos (A8/A2)',pv:['Revisar si los términos establecen restricciones sobre el tipo de datos que pueden introducirse (datos personales, información de salud, secretos comerciales, código fuente propietario).'],ov:['Establecer en la política interna una clasificación de los datos admisibles. (criterio organizativo)'],org:true},
+  {id:'CS5.6',c:'Supervision humana de los resultados generados',t:['A8.3'],w:'B',s:'Supervision humana (A8)',pv:['Verificar si el proveedor documenta las limitaciones conocidas del modelo y las recomendaciónes de supervision humana.'],ov:['Establecer que ninguna salida IA puede utilizarse directamente en el SaMD sin revisión critica. (criterio organizativo)'],org:true},
+  {id:'CS5.7',c:'Integridad de los artefactos generados e incorporados al SaMD',t:['A3.1','A3.3'],w:'B/C',s:'Integridad de artefactos generados (A3)',pv:['Verificar si el proveedor documenta el proceso de generacion de salidas y si existen mecanismos de trazabilidad entre la salida y el modelo o versión que la produjo.'],ov:['Establecer un proceso de verificación de las salidas antes de su incorporacion al SaMD.']},
+  {id:'CS5.8',c:'Propiedad intelectual de las salidas generadas',t:['A8.3','A7.4'],w:'B/C',s:'Supervision humana (A8)',pv:['Revisar los términos del proveedor respecto a la titularidad del contenido generado.'],ov:['Documentar la revisión de las condiciones de propiedad intelectual.']},
+  {id:'CS5.9',c:'Registro del uso: modelo, versión y finalidad',t:['A8.4','A4.4'],w:'B/C',s:'Registro y trazabilidad (A8/A4)',pv:['Verificar si el proveedor identifica de forma inequivoca el modelo y la versión utilizada en cada interacción.'],ov:['Establecer proceso de registro interno del uso de herramientas IA. (acción organizativa)'],org:true},
+  {id:'CS5.10',c:'Procedencia del modelo y SBOM for AI',t:['A8.5','A6.4'],w:'C/O',s:'Cadena de suministro del modelo (A8/A6)',pv:['Verificar si el proveedor publica información sobre la procedencia del modelo. Verificar si el proveedor publica SBOM for AI.'],ov:['Registrar la información disponible sobre procedencia del modelo en el expediente.']},
+  {id:'CS5.11',c:'Mantenibilidad y soporte activo del modelo o versión utilizada',t:['A6.1','A6.2'],w:'C/O',s:'Cadena de suministro del modelo (A8/A6)',pv:['Verificar si el modelo o versión utilizada sigue teniendo soporte activo del proveedor. Comprobar si el proveedor notifica deprecaciones con antelacion suficiente.'],ov:['Establecer un proceso de seguimiento del ciclo de vida del modelo utilizado.']},
+  {id:'CS5.12',c:'Controles de seguridad del modelo',t:['A8.5','A1.4'],w:'B/C',s:'Cadena de suministro del modelo (A8/A6)',pv:['Verificar si el proveedor implementa controles contra prompt injection y si existen filtros de entrada y salida activos.'],ov:['Evaluar si los controles del proveedor son suficientes para el caso de uso previsto.']},
+  {id:'CS5.13',c:'Cifrado y aislamiento de datos entre clientes',t:['A2.2'],w:'B',s:'Confidencialidad (A2)',pv:['Verificar que el servicio garantiza el aislamiento de datos entre clientes (tenant isolation). Comprobar cifrado de datos en transito y en reposo.'],ov:['Para herramientas IA que manejan información confidencial, seleccionar planes que garanticen el aislamiento.']},
+  {id:'CS5.14',c:'SLA y continuidad del servicio IA',t:['A5.1','A5.2'],w:'C/O',s:'Disponibilidad (A5)',pv:['Revisar el SLA del proveedor para el plan contratado. Comprobar si el proveedor notifica cambios en el modelo o deprecaciones con antelacion suficiente.'],ov:['Evaluar el impacto de una indisponibilidad sobre los procesos del SaMD.']},
+  {id:'CS5.15',c:'DPA, condiciones de uso y certificaciónes del proveedor IA',t:['A7.1','A7.4'],w:'B',s:'Cumplimiento (A7)',pv:['Verificar la existencia de DPA si el servicio procesa datos personales. Comprobar si el proveedor dispone de certificaciónes de seguridad (ISO 27001, SOC 2). Revisar las condiciones de uso respecto a usos prohibidos en el contexto medico.'],ov:['Firmar o aceptar el DPA.']}
+],
+S6:[
+  {id:'CS6.1',c:'Procedencia desde marketplace oficial y verificación del editor',t:['A6.3','A1.3'],w:'B',s:'Procedencia e identidad (A6/A1)',pv:['Verificar que el complemento se instala desde el marketplace oficial. Comprobar que el editor o publisher esta verificado por el marketplace.'],ov:['Documentar el nombre exacto del complemento, el editor verificado, la versión instalada y el marketplace de origen. (acción organizativa)'],org:true},
+  {id:'CS6.2',c:'Actividad de mantenimiento y número de instalaciónes',t:['A6.1'],w:'B/C',s:'Procedencia e identidad (A6/A1)',pv:['Verificar en el marketplace el número de instalaciónes activas, la valoración de la comunidad y la fecha de la ultima actualización.'],ov:['Establecer umbrales minimos de aceptabilidad.']},
+  {id:'CS6.3',c:'Repositorio fuente accesible y licencia',t:['A6.3','A7.3'],w:'C/O',s:'Procedencia e identidad (A6/A1)',pv:['Verificar si el complemento tiene repositorio fuente público accesible. Comprobar la licencia del software y la actividad del repositorio.'],ov:['Documentar la licencia aplicable y cualquier restriccion relevante.']},
+  {id:'CS6.4',c:'Revisión de permisos declarados por el complemento',t:['A1.2','A2.1'],w:'B',s:'Permisos de ejecución (A1/A2/A3)',pv:['Revisar la lista de permisos que solicita el complemento durante la instalación o que declara en su manifiesto (sistema de archivos, red, portapapeles). Evaluar si los permisos son proporciónales a la funcionalidad declarada.'],ov:['Rechazar complementos que soliciten permisos desproporciónados.']},
+  {id:'CS6.5',c:'Acceso al código fuente y al portapapeles',t:['A2.1','A3.1'],w:'B',s:'Permisos de ejecución (A1/A2/A3)',pv:['Identificar si el complemento puede acceder al código fuente abierto en el IDE o al portapapeles del sistema. Evaluar si puede transmitir dicho contenido a servicios externos.'],ov:['Evaluar si la transmisión de datos al proveedor es aceptable. Si no lo es, rechazar el complemento.']},
+  {id:'CS6.6',c:'Integridad del código fuente y evidencias accesibles desde el complemento',t:['A3.1','A3.3'],w:'B',s:'Integridad (A3)',pv:['Evaluar si el complemento tiene capacidad técnica de modificar ficheros del proyecto o del workspace activo. Revisar las funciones de escritura del complemento si el repositorio fuente esta disponible.'],ov:['Para complementos con permisos de escritura, exigir revisión de código antes de confirmar en el repositorio.']},
+  {id:'CS6.7',c:'Comunicaciónes de red del complemento',t:['A2.1','A2.3'],w:'B/C',s:'Permisos de ejecución (A1/A2/A3)',pv:['Verificar si el complemento realiza comunicaciónes de red y con que destinos.'],ov:['Verificar que los destinos de las comunicaciónes de red son conocidos y esperados.']},
+  {id:'CS6.8',c:'Inventario de complementos instalados por equipo',t:['A4.1'],w:'B/C',s:'Trazabilidad (A4)',pv:['No aplica (criterio organizativo).'],ov:['Mantener un inventario actualizado de los complementos instalados. (criterio organizativo)'],org:true},
+  {id:'CS6.9',c:'Política de privacidad y tratamiento de datos del complemento',t:['A7.4','A2.4'],w:'B/C',s:'Cumplimiento (A7)',pv:['Verificar si el complemento dispone de política de privacidad publicada y si declara que datos recoge y como los utiliza.'],ov:['Registrar la revisión de la política de privacidad.']}
+]};
+
+const SQ=[{o:1,q:'Los fallos del software podrian afectar a la seguridad o a la calidad del SaMD?'},{o:2,q:'Podría verse afectada la conformidad del SaMD si el software no funciona correctamente?'},{o:3,q:'El software automatiza o ejecuta una actividad exigida por los requisitos regulatorios?'}];
+const CQ=[{o:1,q:'Un fallo o interrupción podría causar un impacto severo en la operativa?',yes:'crítico'},{o:2,q:'Un fallo o interrupción podría causar un incumplimiento legal?',yes:'crítico'},{o:3,q:'El proveedor tratará datos sensibles, reservados o confidenciales?',yes:'importante'},{o:4,q:'Existen proveedores alternativos que ofrezcan el mismo servicio?',yes:'c5'},{o:5,q:'El proveedor tratará datos de carácter personal sin llegar a ser sensibles?',yes:'importante'},{o:6,q:'Un fallo podría influir en la operativa pero no afectar al servicio diario?',yes:'importante',no:'bajo'}];
+
+let ST={step:0,form:{via:'activa',dep:'',sol:'',resp:'',herr:'',prov:'',url:'',ver:'',lic:'',desc:'',uso:'',proc:'',tar:'',dp:false,ce:false,cs:false,samd:false,ia:false,ext:false,fecha_val:''},scope:{ans:{},res:'',just:''},cls:{fam:'S4.1',s5:false,s6:false,ca:{},nivel:''},crit:{},open:{},evaluating:false,evalProgress:0,evalTotal:0,resolucion:'',obs_informe:'',report_mode:'resumen'};
+
+function wc(w){return w==='B'?'wB':w==='C'?'wC':w==='O'?'wO':w==='B/C'?'wBC':'wCO';}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function gst(id){return(ST.crit[id]||{}).status||'';}
+function spill(s){const m={'cumple':'<span class="sp sp-c">Cumple</span>','parcial':'<span class="sp sp-p">Cumple parcialmente</span>','no-cumple':'<span class="sp sp-nc">No cumple</span>','no-verif':'<span class="sp sp-nv">No verificable</span>','no-aplica':'<span class="sp sp-na">No aplicable</span>','':"<span style='font-size:11px;color:#9ca3af'>Sin evaluar</span>"};return m[s]||m[''];}
+function getActive(){let r=[...CT];const fk=ST.cls.fam.startsWith('S4')?'S4':ST.cls.fam;if(CS[fk])r=r.concat(CS[fk]);if(ST.cls.s5&&fk!=='S5')r=r.concat(CS.S5);if(ST.cls.s6&&fk!=='S6')r=r.concat(CS.S6);return r;}
+function evId(id,n){return'EV-'+id+'-'+String(n).padStart(2,'0');}
+function today(){return new Date().toISOString().split('T')[0];}
+
+function render(){
+  const pb=document.getElementById('pb'),sn2=document.getElementById('sn');if(!pb||!sn2)return;
+  pb.innerHTML=STEPS.map((s,i)=>'<div class="sd '+(i<ST.step?'done':i===ST.step?'active':'')+'" onclick="go('+i+')" title="'+s+'">'+(i<ST.step?'&#x2713;':i+1)+'</div>'+(i<STEPS.length-1?'<div class="sc"></div>':'')).join('');
+  sn2.innerHTML=STEPS.map((s,i)=>'<div class="snm '+(i===ST.step?'active':i<ST.step?'done':'')+'" >'+s+'</div>').join('');
+  document.getElementById('ct').innerHTML=[p0,p1,p2,p3,p4,p5,p6][ST.step]();
+}
+function go(n){if(n<=ST.step+1){ST.step=n;render();}}
+function nx(){ST.step=Math.min(ST.step+1,6);render();}
+function pv(){ST.step=Math.max(ST.step-1,0);render();}
+/* sf: para checkboxes, radios y selects — sí dispara render */
+function sf(k,v){ST.form[k]=v;render();}
+/* sfQ: para inputs/textareas de texto — actualiza estado SIN render, evita pérdida de foco */
+function sfQ(k,v){ST.form[k]=v;}
+/* sCritQ: igual para campos de texto dentro de criterios */
+function sCritQ(id,f,v){if(!ST.crit[id])ST.crit[id]={};ST.crit[id][f]=v;}
+function sCF(k,v){ST.cls[k]=v;if(k==='fam')ST.cls.ca={};render();}
+function sCrit(id,f,v){if(!ST.crit[id])ST.crit[id]={};ST.crit[id][f]=v;render();}
+function tog(id){ST.open[id]=!ST.open[id];render();}
+function sAns(o,v){ST.scope.ans[o]=v;if(v==='si')ST.scope.res='dentro';if(o===3&&v==='no')ST.scope.res='fuera';if(v==='no'&&o<3){delete ST.scope.ans[o+1];if(o<2)delete ST.scope.ans[o+2];ST.scope.res='';}render();}
+function sCA(o,v){const yr={1:'crítico',2:'crítico',3:'importante',5:'importante',6:'importante'};ST.cls.ca[o]=v;if(v==='si'){if(yr[o])ST.cls.nivel=yr[o];else if(o===4)ST.cls.nivel='';}else{if(o===6)ST.cls.nivel='bajo';else if(o===4){for(let i=5;i<=6;i++)delete ST.cls.ca[i];ST.cls.nivel='';}else{for(let i=o+1;i<=6;i++)delete ST.cls.ca[i];ST.cls.nivel='';}}render();}
+/* sJust: para el textarea de justificación de alcance */
+function sJust(v){ST.scope.just=v;}
+
+function p0(){
+  return '<div class="panel">'
+    +'<div class="ptitle">EV-TRACE-MD Assistant <span class="vb">v0.7 &mdash; Evaluación autónoma con IA</span></div>'
+    +'<div class="al al-i">Catálogo integrado: <strong>77 criterios</strong> (3 transversales + 74 específicos) &middot; 6 familias S1&ndash;S6 &middot; 8 dimensiones de riesgo A1&ndash;A8</div>'
+    +'<p style="font-size:14px;margin-bottom:1rem;color:#374151">Para cada criterio aplicable, el agente busca y lee activamente las fuentes públicas del proveedor: <strong>políticas de privacidad, términos de servicio, changelogs, páginas de seguridad, DPA público, NVD/CVE, status page, repositorio fuente</strong>, entre otras. Los criterios organizativos (que dependen de evidencia interna) se identifican automáticamente como no verificables autónomamente.</p>'
+    +'<div class="al al-w"><strong>Tres estados autónomos:</strong> &nbsp;<span class="sp sp-auto-c">&#x2713; Autónomo: Cumple</span> evidencia publica encontrada que respalda el criterio &nbsp;&middot;&nbsp; <span class="sp sp-auto-nc">&#x2717; Autónomo: No cumple</span> evidencia que lo contradice &nbsp;&middot;&nbsp; <span class="sp sp-auto-nv">&#x25CC; No verificable autónomamente</span> sin evidencia publica suficiente o criterio organizativo. Todos los resultados autónomos son editables manualmente para corregir alucinaciones o completar con evidencia interna.</div>'
+    +'<div class="btn-row"><button class="btn btn-sec" onclick="loadDemo()">&#x25B6; Cargar demo &mdash; Claude Code (S3 + S5, Crítico)</button><div class="spacer"></div><button class="btn btn-p" onclick="nx()">Iniciar evaluación &rarr;</button></div></div>';
+}
+
+function p1(){
+  const f=ST.form;if(!f.fecha_val)ST.form.fecha_val=today();
+  const cons=[];if(f.dp||f.ce)cons.push('DPO');if(f.cs)cons.push('Responsable de seguridad');if(f.samd)cons.push('QA / RA');
+  const isTec=(f.via==='técnica');
+  let html='<div class="panel"><div class="ptitle">Paso 1 &mdash; Solicitud y control documental</div>'
+    +'<div class="al al-i"><strong>Fecha de validación del expediente</strong> &mdash; Se aplica como fecha de referencia a todo el expediente.</div>'
+    +'<div class="g2"><div class="fr"><label>Fecha de validación *</label><input type="date" value="'+esc(f.fecha_val||today())+'" onchange="sf(\'fecha_val\',this.value)"></div>'
+    +'<div class="fr"><label>Vía de activación</label><div class="rb-g">'+['activa','técnica','reactiva'].map(v=>'<div class="rb '+(f.via===v?'sel':'')+'" onclick="sf(\'via\',\''+v+'\')">'+v.charAt(0).toUpperCase()+v.slice(1)+'</div>').join('')+'</div></div></div>';
+  if(isTec)html+='<div class="al al-s" style="margin-top:0.5rem"><strong>Vía técnica:</strong> formulario reducido para dependencias, librerías y componentes open source. Los campos de departamento, solicitante y procesos se omiten.</div>';
+  if(!isTec){
+    html+='<div class="g2"><div class="fr"><label>Departamento solicitante</label><input value="'+esc(f.dep)+'" onblur="sfQ(\'dep\',this.value)" placeholder="Ej.: Área de Sistemas"></div>'
+    +'<div class="fr"><label>Solicitante</label><input value="'+esc(f.sol)+'" onblur="sfQ(\'sol\',this.value)" placeholder="Nombre y apellidos"></div></div>'
+    +'<div class="fr"><label>Responsable de implementación</label><input value="'+esc(f.resp)+'" onblur="sfQ(\'resp\',this.value)" placeholder="Nombre y rol"></div>';
+  }
+  html+='<div class="g2"><div class="fr"><label>Nombre de la herramienta / componente *</label><input value="'+esc(f.herr)+'" onblur="sfQ(\'herr\',this.value)" placeholder="'+(isTec?'Ej.: lodash, express, numpy, docker/node':'Ej.: Claude Code, GitHub, Jira')+'"></div>'
+    +'<div class="fr"><label>Proveedor <span style="font-size:11px;color:#9ca3af">(se detecta automáticamente si se deja vacío)</span></label><input value="'+esc(f.prov)+'" onblur="sfQ(\'prov\',this.value)" placeholder="'+(isTec?'Se detecta del registro del paquete':'Nombre del fabricante o editor')+'"></div></div>'
+    +'<div class="g2"><div class="fr"><label>URL oficial o repositorio</label><input value="'+esc(f.url)+'" onblur="sfQ(\'url\',this.value)" placeholder="Pendiente de verificar"></div>'
+    +'<div class="fr"><label>Versión evaluada</label><input value="'+esc(f.ver)+'" onblur="sfQ(\'ver\',this.value)" placeholder="'+(isTec?'Ej.: 4.17.21, ^3.0.0':'Ej.: claude-code-cli 0.2.x, plan Pro')+'"></div></div>'
+    +'<div class="fr"><label>Tipo de licencia</label><input value="'+esc(f.lic)+'" onblur="sfQ(\'lic\',this.value)" placeholder="'+(isTec?'Ej.: MIT, Apache-2.0, GPL-3.0, ISC':'Ej.: Plan Pro/Max/Team, Propietaria anual')+'"></div>';
+  if(!isTec){
+    html+='<div class="fr"><label>Descripción de la herramienta</label><textarea onblur="sfQ(\'desc\',this.value)">'+esc(f.desc)+'</textarea></div>'
+    +'<div class="fr"><label>Uso previsto dentro de la organización</label><textarea onblur="sfQ(\'uso\',this.value)">'+esc(f.uso)+'</textarea></div>'
+    +'<div class="g2"><div class="fr"><label>Procesos afectados</label><textarea style="min-height:48px" onblur="sfQ(\'proc\',this.value)">'+esc(f.proc)+'</textarea></div>'
+    +'<div class="fr"><label>Tareas que realizará o automatizará</label><textarea style="min-height:48px" onblur="sfQ(\'tar\',this.value)">'+esc(f.tar)+'</textarea></div></div>';
+  }else{
+    html+='<div class="fr"><label>Descripción breve del componente</label><textarea onblur="sfQ(\'desc\',this.value)" style="min-height:48px" placeholder="Ej.: Librería de utilidades JavaScript usada como dependencia en el backend del SaMD.">'+esc(f.desc)+'</textarea></div>';
+  }
+  html+='<div class="fr"><label>Características relevantes</label><div style="margin-top:7px">'
+    +'<label class="ck"><input type="checkbox" '+(f.dp?'checked':'')+' onchange="sf(\'dp\',this.checked)"> Tratará datos personales (RGPD) &rarr; consulta recomendada al DPO</label>'
+    +'<label class="ck"><input type="checkbox" '+(f.ce?'checked':'')+' onchange="sf(\'ce\',this.checked)"> Incluye categorías especiales de datos (art. 9 RGPD)</label>'
+    +'<label class="ck"><input type="checkbox" '+(f.cs?'checked':'')+' onchange="sf(\'cs\',this.checked)"> Accede o trata código fuente del SaMD, secretos o información confidencial &rarr; consulta al responsable de seguridad</label>'
+    +'<label class="ck"><input type="checkbox" '+(f.samd?'checked':'')+' onchange="sf(\'samd\',this.checked)"> Se integra con el SaMD o interviene en su proceso de fabricación o validacion &rarr; consulta a QA/RA</label>'
+    +'<label class="ck"><input type="checkbox" '+(f.ia?'checked':'')+' onchange="sf(\'ia\',this.checked)"> Incorpora capacidades de inteligencia artificial &rarr; se añadira modulo S5</label>'
+    +'<label class="ck"><input type="checkbox" '+(f.ext?'checked':'')+' onchange="sf(\'ext\',this.checked)"> Es un complemento o extensión de otra herramienta &rarr; se añadira modulo S6</label></div></div>'
+    +(cons.length?'<div class="al al-i"><strong>Consultas recomendadas:</strong> '+cons.map(c=>'<span class="consult-tag">'+c+'</span>').join('')+'</div>':'')
+    +'<div class="btn-row"><button class="btn" onclick="pv()">&larr; Anterior</button><div class="spacer"></div><button class="btn btn-p" onclick="nx()">Continuar &rarr;</button></div></div>';
+  return html;
+}
+
+function p2(){
+  const ans=ST.scope.ans;
+  let html='<div class="panel"><div class="ptitle">Paso 2 &mdash; Determinación de alcance</div>'
+    +'<p style="font-size:13px;color:#6b7280;margin-bottom:1rem">Árbol de decision &mdash; Nivel 1 (Figura 4 del TFM).</p>';
+  SQ.forEach(qi=>{
+    const vis=qi.o===1||(qi.o===2&&ans[1]==='no')||(qi.o===3&&ans[2]==='no');
+    if(!vis)return;
+    html+='<div class="qcard"><div style="font-size:14px;font-weight:500;margin-bottom:0.625rem">'+qi.o+'. '+qi.q+'</div>'
+      +'<div class="rb-g"><div class="rb '+(ans[qi.o]==='si'?'sel':'')+'" onclick="sAns('+qi.o+',\'si\')">Si</div>'
+      +'<div class="rb '+(ans[qi.o]==='no'?'sel':'')+'" onclick="sAns('+qi.o+',\'no\')">No</div></div></div>';
+  });
+  if(ST.scope.res==='dentro')html+='<div class="out-in">&#x2713; Dentro del alcance &mdash; continuar a clasificación</div>';
+  if(ST.scope.res==='fuera')html+='<div class="out-out">&#x2717; Fuera del alcance obligatorio. Valorar registro en inventario de activos.</div>';
+  html+='<div class="fr" style="margin-top:1rem"><label>Justificación / notas del evaluador</label>'
+    +'<textarea style="min-height:48px" onblur="sJust(this.value)">'+esc(ST.scope.just)+'</textarea></div>'
+    +'<div class="btn-row"><button class="btn" onclick="pv()">&larr; Anterior</button><div class="spacer"></div><button class="btn btn-p" onclick="nx()">Continuar &rarr;</button></div></div>';
+  return html;
+}
+
+function p3(){
+  const cl=ST.cls,ans=cl.ca;
+  const fams=[{k:'S1',l:'S1 Dependencias'},{k:'S2',l:'S2 Repos/CI-CD'},{k:'S3',l:'S3 Herramientas instalables'},{k:'S4.1',l:'S4.1 SaaS interno'},{k:'S4.2',l:'S4.2 SaaS en SaMD'}];
+  function vis(o){if(o===1)return true;if(o===2)return ans[1]==='no';if(o===3)return ans[1]==='no'&&ans[2]==='no';if(o===4)return ans[1]==='no'&&ans[2]==='no'&&ans[3]==='no';if(o===5)return ans[1]==='no'&&ans[2]==='no'&&ans[3]==='no'&&ans[4]==='si';if(o===6)return ans[1]==='no'&&ans[2]==='no'&&ans[3]==='no'&&ans[4]==='si'&&ans[5]==='no';return false;}
+  const active=getActive();const nOrg=active.filter(c=>c.org||ORG_IDS.has(c.id)).length;
+  let html='<div class="panel"><div class="ptitle">Paso 3 &mdash; Clasificación y criticidad</div>'
+    +'<div class="fr"><label>Familia principal (Nivel 2)</label><div class="rb-g" style="flex-wrap:wrap">'
+    +fams.map(fm=>'<div class="rb '+(cl.fam===fm.k?'sel':'')+'" onclick="sCF(\'fam\',\''+fm.k+'\')">'+fm.l+'</div>').join('')+'</div></div>'
+    +'<div class="fr"><label>Módulos adicionales</label><div style="margin-top:6px">'
+    +'<label class="ck"><input type="checkbox" '+(cl.s5||ST.form.ia?'checked':'')+' onchange="sCF(\'s5\',this.checked)"> Añadir modulo S5 &mdash; la herramienta incorpora capacidades de IA</label>'
+    +'<label class="ck"><input type="checkbox" '+(cl.s6||ST.form.ext?'checked':'')+' onchange="sCF(\'s6\',this.checked)"> Añadir modulo S6 &mdash; es un complemento o extensión de otra herramienta</label></div></div>'
+    +'<p style="font-size:13px;color:#6b7280;margin:0.75rem 0">Árbol de decision &mdash; Nivel 3: criticidad (Figura 5 del TFM)</p>';
+  CQ.forEach(qi=>{
+    if(!vis(qi.o))return;
+    html+='<div class="qcard"><div style="font-size:14px;font-weight:500;margin-bottom:0.625rem">'+qi.o+'. '+qi.q+'</div>'
+      +'<div class="rb-g"><div class="rb '+(ans[qi.o]==='si'?'sel':'')+'" onclick="sCA('+qi.o+',\'si\')">Si</div>'
+      +'<div class="rb '+(ans[qi.o]==='no'?'sel':'')+'" onclick="sCA('+qi.o+',\'no\')">No</div></div></div>';
+  });
+  if(cl.nivel)html+='<div style="margin-top:0.75rem;padding:10px 14px;background:#f9fafb;border-radius:8px;border:1px solid #e5e7eb"><strong style="font-size:13px">Nivel resultante:</strong> <span class="lv-'+cl.nivel+'">'+cl.nivel.charAt(0).toUpperCase()+cl.nivel.slice(1)+'</span> <span style="font-size:13px;color:#6b7280;margin-left:8px">'+(cl.nivel==='crítico'?'Revisión semestral':cl.nivel==='importante'?'Revisión anual':'Revisión trienal')+'</span></div>';
+  if(active.length)html+='<div class="al al-i" style="margin-top:1rem">Criterios aplicables: <strong>'+active.length+'</strong> &nbsp;&middot;&nbsp; Criterios organizativos (sin busqueda IA): <strong>'+nOrg+'</strong> &nbsp;&middot;&nbsp; Criterios a evaluar con IA: <strong>'+(active.length-nOrg)+'</strong></div>';
+  html+='<div class="btn-row"><button class="btn" onclick="pv()">&larr; Anterior</button><div class="spacer"></div><button class="btn btn-p" onclick="nx()">Continuar a evaluación autónoma &rarr;</button></div></div>';
+  return html;
+}
+
+function p4(){
+  const crits=getActive();const secs={};crits.forEach(c=>{if(!secs[c.s])secs[c.s]=[];secs[c.s].push(c);});
+  const nOrg=crits.filter(c=>c.org||ORG_IDS.has(c.id)).length;
+  const herr=ST.form.herr||'la herramienta';
+  let cnt={cumple:0,parcial:0,'no-cumple':0,'no-verif':0,'no-aplica':0,'':0};
+  crits.forEach(c=>{cnt[gst(c.id)]=(cnt[gst(c.id)]||0)+1;});
+  const evaluated=crits.length-(cnt['']||0);
+  const pct=evaluated>0?Math.round((evaluated/crits.length)*100):0;
+  let html='<div class="panel"><div class="ptitle">Paso 4 &mdash; Evaluación autónoma y revisión manual</div>'
+    +'<div class="stat-g"><div class="stat"><div class="n">'+crits.length+'</div><div class="l">Total criterios</div></div>'
+    +'<div class="stat sc"><div class="n">'+(cnt.cumple||0)+'</div><div class="l">Cumplen</div></div>'
+    +'<div class="stat sw"><div class="n">'+(cnt.parcial||0)+'</div><div class="l">Parciales</div></div>'
+    +'<div class="stat sd2"><div class="n">'+(cnt['no-cumple']||0)+'</div><div class="l">No cumplen</div></div>'
+    +'<div class="stat si"><div class="n">'+(cnt['no-verif']||0)+'</div><div class="l">No verificable</div></div></div>';
+  if(evaluated>0)html+='<div style="width:100%;height:5px;background:#e5e7eb;border-radius:3px;margin:6px 0;overflow:hidden"><div style="height:100%;background:#3b82f6;border-radius:3px;width:'+pct+'%"></div></div><p style="font-size:12px;color:#6b7280;margin-bottom:0.75rem">'+pct+'% evaluado ('+evaluated+' de '+crits.length+' criterios)</p>';
+  if(ST.evaluating)html+='<div class="al al-i"><span style="display:inline-flex;align-items:center;gap:6px"><span class="dots"><span></span><span></span><span></span></span> Leyendo fuentes públicas de <strong>'+esc(herr)+'</strong> &mdash; criterio '+ST.evalProgress+' de '+ST.evalTotal+'...</span></div>';
+  else html+='<div class="al al-i">Pulsa <strong>"Iniciar evaluación autónoma"</strong> para que el agente lea las fuentes públicas del proveedor (política de privacidad, términos de servicio, changelogs, páginas de seguridad, NVD/CVE, etc.) y evalue cada criterio de <strong>'+esc(herr)+'</strong>. Los '+nOrg+' criterios organizativos se marcan automáticamente.</div>';
+  html+='<div class="btn-row" style="margin-bottom:1rem">'
+    +'<button class="btn btn-ai" onclick="startAutoEval()" '+(ST.evaluating?'disabled':'')+'>'+(ST.evaluating?'Evaluando...':'&#x1F50D; '+(evaluated>0?'Re-evaluar autónomamente':'Iniciar evaluación autónoma'))+'</button>'
+    +'<button class="btn btn-sec" onclick="markOrgOnly()">Marcar criterios organizativos</button></div>';
+  html+='<div class="al al-w" style="margin-bottom:1rem">Los estados de cada criterio pueden editarse manualmente. Los criterios con peso B/C o C/O requieren interpretación conforme a la regla definitiva de pesos (pendiente de normalización).</div>';
+  Object.entries(secs).forEach(function(entry){
+    html+='<div class="fam-sec"><div class="fam-tit">'+entry[0]+'</div>'+entry[1].map(function(c){return rCrit(c);}).join('')+'</div>';
+  });
+  html+='<div class="btn-row"><button class="btn" onclick="pv()">&larr; Anterior</button><div class="spacer"></div><button class="btn btn-p" onclick="nx()">Ver hallazgos &rarr;</button></div></div>';
+  return html;
+}
+
+function p5(){
+  const crits=getActive();
+  const ac=crits.filter(c=>gst(c.id)==='cumple');
+  const anc=crits.filter(c=>gst(c.id)==='no-cumple');
+  const anv=crits.filter(c=>gst(c.id)==='no-verif');
+  const ap=crits.filter(c=>gst(c.id)==='parcial');
+  const niv=ST.cls.nivel;
+  let html='<div class="panel"><div class="ptitle">Paso 5 &mdash; Hallazgos y propuesta de estado</div>'
+    +'<div class="stat-g"><div class="stat sc"><div class="n">'+ac.length+'</div><div class="l">Cumplen</div></div>'
+    +'<div class="stat sd2"><div class="n">'+anc.length+'</div><div class="l">No cumplen</div></div>'
+    +'<div class="stat sw"><div class="n">'+ap.length+'</div><div class="l">Parciales</div></div>'
+    +'<div class="stat si"><div class="n">'+anv.length+'</div><div class="l">No verificable</div></div></div>';
+  if(anc.length){
+    html+='<div class="rep-sec"><h3>Criterios que no cumplen</h3><table class="stbl"><tr><th>ID</th><th>Criterio</th><th>Peso</th><th>Evidencia</th></tr>'
+    +anc.map(function(c){var ev=ST.crit[c.id]||{};return '<tr><td>'+c.id+'</td><td style="font-size:12px">'+c.c+'</td><td><span class="wp '+wc(c.w)+'">'+c.w+'</span></td><td style="font-size:12px">'+esc(ev.ai_reasoning||ev.hall||'-')+'</td></tr>';}).join('')
+    +'</table></div>';
+  }
+  if(anv.length){
+    html+='<div class="rep-sec"><h3>Criterios no verificables</h3><div class="al al-w">Estos criterios requieren evidencia interna o acción organizativa.</div><table class="stbl"><tr><th>ID</th><th>Criterio</th><th>Acción requerida</th></tr>'
+    +anv.map(function(c){var ev=ST.crit[c.id]||{};return '<tr><td>'+c.id+'</td><td style="font-size:12px">'+c.c+'</td><td style="font-size:12px">'+esc(ev.acc||ev.ai_reasoning||'-')+'</td></tr>';}).join('')
+    +'</table></div>';
+  }
+  html+='<div class="rep-sec"><h3>Frecuencia de seguimiento</h3><div class="rep-blk">'+(niv?'<strong>'+niv.charAt(0).toUpperCase()+niv.slice(1)+'</strong>: '+(niv==='crítico'?'Revisión semestral.':niv==='importante'?'Revisión anual.':'Revisión trienal.')+' Revalidación anticipada ante: nueva versión mayor &middot; modificación de condiciones de servicio o DPA &middot; vulnerabilidad CVSS alta o crítica sin parche &middot; incidente de seguridad &middot; cambio del uso previsto.':'Nivel de criticidad no determinado.')+'</div></div>'
+  +'<div class="rep-sec"><h3>Propuesta de estado documental</h3><div class="al al-w"><strong>Pendiente de revisión humana.</strong> Los resultados autónomos han sido generados mediante lectura de fuentes públicas y están sujetos a error. La resolución final corresponde al responsable de cumplimiento.</div></div>';
+  html+='<div class="btn-row"><button class="btn" onclick="pv()">&larr; Anterior</button><div class="spacer"></div><button class="btn btn-p" onclick="nx()">Generar informe &rarr;</button></div></div>';
+  return html;
+}
+
+function rCrit(c){
+  const ev=ST.crit[c.id]||{};const open=ST.open[c.id];const st=gst(c.id);
+  const isOrg=c.org||ORG_IDS.has(c.id);const needsInterp=c.w==='B/C'||c.w==='C/O';
+  let html='<div class="crit-card"><div class="crit-hdr" onclick="tog(\''+c.id+'\')">'
+    +'<span class="cid">'+c.id+'</span><span class="cnm">'+c.c+'</span>';
+  if(c.t&&c.t.length)html+='<span style="display:flex;gap:2px;flex-shrink:0">'+c.t.slice(0,2).map(t=>'<span class="ttag">'+t+'</span>').join('')+'</span>';
+  html+='<span class="wp '+wc(c.w)+'">'+c.w+'</span>';
+  if(needsInterp)html+='<span style="font-size:10px;color:#9ca3af;flex-shrink:0">interp.</span>';
+  if(isOrg)html+='<span style="font-size:10px;padding:1px 5px;border-radius:3px;background:#fffbeb;color:#d97706;border:1px solid #fde68a;flex-shrink:0">Org.</span>';
+  if(ev.ai_reasoning)html+='<span style="font-size:10px;padding:1px 5px;border-radius:3px;background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;flex-shrink:0">IA</span>';
+  html+=spill(st)+'<span style="font-size:11px;color:#6b7280;flex-shrink:0">'+(open?'&#x25B2;':'&#x25BC;')+'</span></div>';
+  html+='<div class="crit-body '+(open?'open':'')+'">';
+  if(ev.ai_reasoning){
+    var aiCls=st==='cumple'?'al-s':st==='no-cumple'?'al-d':'al-i';
+    html+='<div class="al '+aiCls+'" style="margin-bottom:9px"><strong>Resultado autónomo</strong> &mdash; '+esc(ev.ai_reasoning)
+      +(ev.ai_evidence?'<br><span style="font-size:12px;color:#6b7280">Fuente: '+esc(ev.ai_evidence)+'</span>':'')
+      +'<br><span style="font-size:11px;color:#d97706">&#x26A0; Resultado generado mediante lectura de fuentes públicas. Verifica y corrige si es necesario.</span></div>';
+  }
+  if(isOrg)html+='<div class="ev-org"><strong>Evidencia organizativa</strong> &mdash; Este criterio depende de pruebas de aceptacion, configuraciones internas, contratos firmados o decisiones organizativas. El evaluador debe incorporar la evidencia interna correspondiente.</div>';
+  if(needsInterp)html+='<div class="ev-pend">Criterio con peso <strong>'+c.w+'</strong>. Requiere interpretación conforme a la regla definitiva de pesos (pendiente de normalización).</div>';
+  html+='<div class="vsec"><h4>Verificación del proveedor (P)</h4><ul class="vlist">'+c.pv.map(v=>'<li>'+v+'</li>').join('')+'</ul></div>';
+  html+='<div class="vsec"><h4>Medidas de la organización (O)</h4><ul class="vlist">'+c.ov.map(v=>'<li>'+v+'</li>').join('')+'</ul></div>';
+  html+='<div style="margin-top:10px;padding-top:10px;border-top:1px solid #f3f4f6">'
+    +'<div class="g2"><div class="fr"><label>Resultado</label>'
+    +'<select onchange="sCrit(\''+c.id+'\',\'status\',this.value)">'
+    +'<option value="">Sin evaluar</option>'
+    +'<option value="cumple" '+(st==='cumple'?'selected':'')+'>Cumple</option>'
+    +'<option value="parcial" '+(st==='parcial'?'selected':'')+'>Cumple parcialmente</option>'
+    +'<option value="no-cumple" '+(st==='no-cumple'?'selected':'')+'>No cumple</option>'
+    +'<option value="no-verif" '+(st==='no-verif'?'selected':'')+'>No verificable por falta de evidencia</option>'
+    +'<option value="no-aplica" '+(st==='no-aplica'?'selected':'')+'>No aplicable</option>'
+    +'</select></div>'
+    +'<div class="fr"><label>ID de evidencia</label><input value="'+esc(ev.eid||evId(c.id,1))+'" onblur="sCritQ(\''+c.id+'\',\'eid\',this.value)" placeholder="'+evId(c.id,1)+'"></div></div>'
+    +'<div class="g2"><div class="fr"><label>URL de la fuente</label><input value="'+esc(ev.fuente||'')+'" onblur="sCritQ(\''+c.id+'\',\'fuente\',this.value)" placeholder="https://..."></div>'
+    +'<div class="fr"><label>Tipo de fuente</label><select onchange="sCrit(\''+c.id+'\',\'tipo\',this.value)"><option value="">Seleccionar</option>'
+    +SRC_TYPES.map(t=>'<option value="'+t+'" '+((ev.tipo||'')===t?'selected':'')+'>'+t+'</option>').join('')+'</select></div></div>'
+    +'<div class="fr"><label>Hallazgo / justificación</label><textarea style="min-height:44px" onblur="sCritQ(\''+c.id+'\',\'hall\',this.value)">'+esc(ev.hall||'')+'</textarea></div>'
+    +'<div class="fr"><label>Acción requerida / medida organizativa</label><input value="'+esc(ev.acc||'')+'" onblur="sCritQ(\''+c.id+'\',\'acc\',this.value)" placeholder="Ej.: Activar MFA - Responsable: DevOps - Fecha: 2025-09-30"></div>'
+    +'<button class="btn btn-sec" style="margin-top:6px;font-size:12px;padding:4px 12px" onclick="reEvalSingle(\''+c.id+'\')">&#x1F504; Re-evaluar este criterio con IA</button>'
+    +'</div></div></div>';
+  return html;
+}
+
+function p6(){
+  const f=ST.form,cl=ST.cls,crits=getActive();
+  const niv=cl.nivel||'-';
+  const fams2={S1:'S1 Dependencias',S2:'S2 Repos/CI-CD',S3:'S3 Herramientas instalables','S4.1':'S4.1 SaaS interno','S4.2':'S4.2 SaaS en SaMD',S5:'S5 IA',S6:'S6 Complementos'};
+  const fam=fams2[cl.fam]||cl.fam;const mods=[cl.s5?'S5 (IA)':'',cl.s6?'S6 (Complemento)':''].filter(Boolean);
+  const cnt={};['cumple','parcial','no-cumple','no-verif','no-aplica',''].forEach(s=>cnt[s]=crits.filter(c=>gst(c.id)===s).length);
+  const ev2=crits.length-(cnt['']||0);const cons=[f.dp||f.ce?'DPO':'',f.cs?'Responsable de seguridad':'',f.samd?'QA / RA':''].filter(Boolean);
+  const nOrg=crits.filter(c=>c.org||ORG_IDS.has(c.id)).length;
+  var full=(ST.report_mode==='completo');
+  function rtab(cs){
+    if(!cs.length)return'<p style="font-size:13px;color:#9ca3af">Sin criterios.</p>';
+    const shown=cs.filter(c=>gst(c.id)!=='no-aplica'&&gst(c.id)!=='');const hidden=cs.filter(c=>gst(c.id)==='no-aplica'||gst(c.id)==='');
+    if(!full){
+      return'<table class="stbl"><thead><tr><th>ID</th><th>Criterio</th><th>Peso</th><th>Resultado</th><th>Origen</th><th>Hallazgo / evidencia</th></tr></thead><tbody>'
+        +shown.map(c=>{const ev=ST.crit[c.id]||{};const st=gst(c.id);const origen=ev.ai_reasoning?'IA':'Manual';const hall=ev.hall||ev.ai_reasoning||'-';return'<tr><td>'+c.id+'</td><td style="font-size:12px">'+c.c+'</td><td><span class="wp '+wc(c.w)+'">'+c.w+'</span></td><td>'+spill(st)+'</td><td><span style="font-size:10px;padding:1px 5px;border-radius:3px;background:'+(origen==='IA'?'#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe':'#fffbeb;color:#d97706;border:1px solid #fde68a')+'">'+origen+'</span></td><td style="font-size:12px">'+esc(String(hall).substring(0,150))+(String(hall).length>150?'...':'')+'</td></tr>';}).join('')
+        +'</tbody></table>'+(hidden.length?'<p style="font-size:12px;color:#9ca3af;margin-top:4px">'+hidden.length+' criterio(s) sin evaluar o marcados como No aplicable.</p>':'');
+    }else{
+      return'<table class="stbl"><thead><tr><th>ID</th><th>Criterio</th><th>Peso</th><th>Resultado</th><th>Razonamiento del agente</th><th>Fuente consultada</th><th>Acción requerida</th></tr></thead><tbody>'
+        +shown.map(c=>{const ev=ST.crit[c.id]||{};const st=gst(c.id);return'<tr><td>'+c.id+'</td><td style="font-size:12px">'+c.c+'</td><td><span class="wp '+wc(c.w)+'">'+c.w+'</span></td><td>'+spill(st)+'</td><td style="font-size:11px">'+esc(ev.ai_reasoning||ev.hall||'-')+'</td><td style="font-size:11px">'+esc(ev.ai_evidence||ev.fuente||'-')+'</td><td style="font-size:11px">'+esc(ev.acc||'-')+'</td></tr>';}).join('')
+        +'</tbody></table>'+(hidden.length?'<p style="font-size:12px;color:#9ca3af;margin-top:4px">'+hidden.length+' criterio(s) sin evaluar o marcados como No aplicable.</p>':'');
+    }
+  }
+  let html='<div class="panel"><div class="ptitle">Informe de preevaluación</div>'
+    +'<div style="display:flex;gap:6px;margin-bottom:1rem"><button class="btn '+(full?'btn-sec':'btn-p')+'" onclick="ST.report_mode=\'resumen\';render()">Informe resumido</button><button class="btn '+(full?'btn-p':'btn-sec')+'" onclick="ST.report_mode=\'completo\';render()">Informe completo</button></div>'
+    +'<div class="al al-w"><strong>Propuesta de estado documental &mdash; requiere revisión humana.</strong> La resolución final corresponde al responsable de cumplimiento.</div>'
+    +'<div class="rep-sec"><h3>0. Control documental</h3><div class="rep-blk"><strong>Marco:</strong> EV-TRACE-MD <span class="vb">v0.7</span><br><strong>Fecha de validacion del expediente:</strong> <strong>'+esc(f.fecha_val||today())+'</strong><br><strong>Via de activación:</strong> '+esc(f.via||'-')+'<br><strong>Estado:</strong> Propuesta de estado documental &mdash; pendiente de resolución formal.</div></div>'
+    +'<div class="rep-sec"><h3>1. Identificación de la herramienta</h3><div class="rep-blk"><strong>Herramienta:</strong> '+esc(f.herr||'-')+' &nbsp;&middot;&nbsp; <strong>Proveedor:</strong> '+esc(f.prov||'-')+'<br><strong>URL:</strong> '+(f.url?'<a href="'+esc(f.url)+'">'+esc(f.url)+'</a>':'Pendiente de verificar')+' &nbsp;&middot;&nbsp; <strong>Versión / plan:</strong> '+esc(f.ver||'-')+'<br><strong>Licencia / contratación:</strong> '+esc(f.lic||'-')+'<br><strong>Descripción:</strong> '+esc(f.desc||'-')+'</div></div>'
+    +'<div class="rep-sec"><h3>2. Uso previsto y alcance</h3><div class="rep-blk"><strong>Uso previsto:</strong> '+esc(f.uso||'-')+'<br><strong>Procesos afectados:</strong> '+esc(f.proc||'-')+'<br><strong>Datos personales:</strong> '+(f.dp?'Si':'No')+' &nbsp;&middot;&nbsp; <strong>Categorías especiales:</strong> '+(f.ce?'Si':'No')+'<br><strong>Código / secretos:</strong> '+(f.cs?'Si':'No')+' &nbsp;&middot;&nbsp; <strong>Integración con el SaMD:</strong> '+(f.samd?'Si':'No')+'<br><strong>Determinación de alcance:</strong> '+(ST.scope.res==='dentro'?'Dentro del alcance obligatorio':ST.scope.res==='fuera'?'Fuera del alcance obligatorio':'-')+(ST.scope.just?'<br><strong>Justificación:</strong> '+esc(ST.scope.just):'')+'</div></div>'
+    +'<div class="rep-sec"><h3>3. Clasificación y criticidad</h3><div class="rep-blk"><strong>Familia principal:</strong> '+fam+(mods.length?' &middot; Módulos: '+mods.join(', '):'')+'<br><strong>Nivel de criticidad:</strong> <span class="lv-'+(niv==='crítico'||niv==='importante'||niv==='bajo'?niv:'bajo')+'">'+niv.charAt(0).toUpperCase()+niv.slice(1)+'</span> &nbsp;&middot;&nbsp; <strong>Frecuencia de revisión:</strong> '+(niv==='crítico'?'Semestral':niv==='importante'?'Anual':niv==='bajo'?'Trienal':'-')+'<br><strong>Consultas recomendadas:</strong> '+(cons.join(', ')||'Ninguna')+'</div></div>'
+    +'<div class="rep-sec"><h3>4. Resumen de evaluación</h3><div class="rep-blk">Criterios aplicables: <strong>'+crits.length+'</strong> &nbsp;&middot;&nbsp; Evaluados: <strong>'+ev2+'</strong><br>Cumplen: <strong>'+(cnt.cumple||0)+'</strong> &nbsp;&middot;&nbsp; Parciales: <strong>'+(cnt.parcial||0)+'</strong> &nbsp;&middot;&nbsp; No cumplen: <strong>'+(cnt['no-cumple']||0)+'</strong> &nbsp;&middot;&nbsp; No verificables: <strong>'+(cnt['no-verif']||0)+'</strong><br>Pendientes de evidencia interna u organizativa: <strong>'+nOrg+'</strong></div></div>'
+    +'<div class="rep-sec"><h3>5. Propuesta de estado documental</h3><div class="al al-w"><strong>Pendiente de revisión humana.</strong> Los resultados marcados como IA han sido generados mediante lectura de fuentes públicas del proveedor y están sujetos a error. La resolución final (Aprobado / Aprobado condicionado / Rechazado) corresponde al responsable de cumplimiento.</div></div>'
+    +'<div class="rep-sec"><h3>6. Evaluación de criterios transversales (CT)</h3>'+rtab(CT)+'</div>'
+    +'<div class="rep-sec"><h3>7. Evaluación de criterios específicos</h3>'+rtab(crits.filter(c=>c.id.startsWith('CS')))+'</div>'
+    +'<div class="rep-sec"><h3>8. Fuentes consultadas por el agente</h3><div class="rep-blk">';
+  var srcs=crits.filter(c=>(ST.crit[c.id]||{}).ai_evidence).map(c=>'<strong>'+c.id+':</strong> '+esc((ST.crit[c.id]||{}).ai_evidence||'-'));
+  html+=(srcs.length?srcs.join('<br>'):'Sin fuentes públicas registradas por el agente.')+'</div></div>'
+    +'<div class="rep-sec"><h3>9. Resolución formal humana</h3><div class="rep-blk">'
+    +'<p style="font-size:12px;color:#6b7280;margin-bottom:8px">Este campo es editable. Registre aquí la resolución del responsable de cumplimiento.</p>'
+    +'<div class="fr"><label>Estado de resolución</label><select onchange="ST.resolucion=this.value" style="max-width:320px">'
+    +'<option value="" '+(ST.resolucion===''?'selected':'')+'>— Pendiente de resolución —</option>'
+    +'<option value="aprobado" '+(ST.resolucion==='aprobado'?'selected':'')+'>Aprobado</option>'
+    +'<option value="condicionado" '+(ST.resolucion==='condicionado'?'selected':'')+'>Aprobado condicionado</option>'
+    +'<option value="rechazado" '+(ST.resolucion==='rechazado'?'selected':'')+'>Rechazado</option>'
+    +'</select></div>'
+    +'<div class="fr"><label>Observaciones de la resolución (responsable, fecha, justificación)</label>'
+    +'<textarea style="min-height:80px" onblur="ST.obs_informe=this.value">'+esc(ST.obs_informe||'')+'</textarea></div>'
+    +'</div></div>'
+    +'<div class="rep-sec"><h3>10. Seguimiento y revalidación</h3><div class="rep-blk"><strong>Frecuencia de revisión periódica:</strong> '+(niv==='crítico'?'Semestral':niv==='importante'?'Anual':niv==='bajo'?'Trienal':'-')+'<br><br>Revalidación anticipada ante: nueva versión mayor con cambios de arquitectura &middot; modificación de condiciones de servicio, política de privacidad o DPA &middot; vulnerabilidad CVSS alta o crítica sin parche disponible &middot; incidente de seguridad &middot; cambio del uso previsto.</div></div>'
+    +'<div class="btn-row" style="flex-wrap:wrap;gap:8px">'
+    +'<button class="btn" onclick="pv()">&larr; Anterior</button>'
+    +'<button class="btn btn-sec" onclick="expJSON()">Exportar JSON</button>'
+    +'<button class="btn btn-sec" onclick="copyMD()">Copiar / Descargar Markdown</button>'
+    +'<button class="btn btn-sec" onclick="downloadReportHTML()">Descargar informe HTML</button>'
+    +'<button class="btn btn-sec" onclick="printReport()">Imprimir / PDF</button>'
+    +'<div class="spacer"></div>'
+    +'<button class="btn btn-d" onclick="resetCase()">Restablecer caso</button>'
+    +'</div></div>';
+  return html;
+}
+
+async function callAPI(prompt,sys){
+  const resp=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,tools:[{type:'web_search_20250305',name:'web_search'}],system:sys,messages:[{role:'user',content:prompt}]})});
+  if(!resp.ok)throw new Error('API error '+resp.status);
+  const data=await resp.json();const text=data.content.filter(b=>b.type==='text').map(b=>b.text).join('').trim();
+  const m=text.match(/\{[\s\S]*\}|\[[\s\S]*\]/);if(!m)throw new Error('Sin JSON válido en la respuesta');return JSON.parse(m[0]);
+}
+
+function markOrgOnly(){
+  var crits=getActive();
+  crits.forEach(function(c){
+    if((c.org||ORG_IDS.has(c.id))&&!gst(c.id)){
+      if(!ST.crit[c.id])ST.crit[c.id]={};
+      ST.crit[c.id].status='no-verif';
+      ST.crit[c.id].ai_reasoning='Criterio organizativo: depende de evidencia interna o acción de la organización. No verificable mediante fuentes públicas.';
+      var ov=c.ov.join(' ');ST.crit[c.id].acc=ov.length>120?ov.substring(0,120)+'...':ov;
+      ST.crit[c.id].hall='Criterio organizativo. Requiere evidencia interna.';
+    }
+  });
+  render();
+}
+
+async function detectProvider(){
+  if(ST.form.prov||!ST.form.herr)return;
+  try{
+    var result=await callAPI('¿Cuál es la empresa o autor que desarrolla y publica "'+ST.form.herr+'"? Busca en fuentes públicas. Responde SOLO en JSON: {"provider":"nombre de la empresa o autor","url":"URL oficial del producto o repositorio"}','Eres un investigador. Identifica el proveedor o autor de un software buscando en fuentes públicas. Responde ÚNICAMENTE en JSON válido sin texto adicional.');
+    if(result.provider){ST.form.prov=result.provider;render();}
+    if(result.url&&!ST.form.url){ST.form.url=result.url;render();}
+  }catch(e){}
+}
+
+async function startAutoEval(){
+  if(!ST.form.herr){alert('Introduce el nombre de la herramienta antes de iniciar la evaluación.');return;}
+  if(!ST.form.prov){await detectProvider();}
+  var crits=getActive();
+  ST.evaluating=true;ST.evalProgress=0;ST.evalTotal=crits.length;render();
+  for(var i=0;i<crits.length;i++){
+    var c=crits[i];
+    ST.evalProgress=i+1;
+    if(!ST.crit[c.id])ST.crit[c.id]={};
+    if(c.org||ORG_IDS.has(c.id)){
+      ST.crit[c.id].status='no-verif';
+      ST.crit[c.id].ai_reasoning='Criterio organizativo: depende de evidencia interna o acción de la organización. No verificable mediante fuentes públicas.';
+      continue;
+    }
+    var prompt='Herramienta: '+ST.form.herr+'\nProveedor: '+(ST.form.prov||'no específicado')+'\nURL oficial: '+(ST.form.url||'no específicada')+'\nVersión / plan: '+(ST.form.ver||'no específicada')+'\nFamilia: '+ST.cls.fam+'\n'+(ST.crit[c.id].hall?'Contexto del evaluador: '+ST.crit[c.id].hall+'\n':'')+'\nCriterio a evaluar: '+c.id+' - '+c.c+'\nDimensiones de amenaza: '+(c.t.join(', ')||'N/A')+'\n\nQue debe verificar del proveedor:\n'+c.pv.map(function(v,j){return (j+1)+'. '+v;}).join('\n')+'\n\nBusca evidencias públicas sobre este criterio para "'+ST.form.herr+'" y responde en JSON.';
+    try{
+      var result=await callAPI(prompt,SYS_EVAL);
+      ST.crit[c.id].status=result.status||'no-verif';
+      ST.crit[c.id].ai_reasoning=result.reasoning||'Sin razonamiento disponible.';
+      ST.crit[c.id].ai_evidence=result.evidence||'';
+      if(result.evidence&&!ST.crit[c.id].fuente)ST.crit[c.id].fuente=result.evidence;
+      if(result.reasoning&&!ST.crit[c.id].hall)ST.crit[c.id].hall=result.reasoning;
+      if(result.evidence){if(!ST.crit[c.id].tipo){var u=result.evidence.toLowerCase();ST.crit[c.id].tipo=u.includes('privacy')||u.includes('privacidad')?SRC_TYPES[3]:u.includes('trust')||u.includes('security')||u.includes('seguridad')?SRC_TYPES[2]:u.includes('docs.')||u.includes('documentation')||u.includes('/docs')?SRC_TYPES[1]:u.includes('status.')?SRC_TYPES[4]:u.includes('nvd.nist')||u.includes('cve')||u.includes('advisory')?SRC_TYPES[6]:u.includes('github.com')||u.includes('npm')||u.includes('pypi')?SRC_TYPES[5]:u.includes('iso')||u.includes('soc')||u.includes('compliance')?SRC_TYPES[7]:SRC_TYPES[0];}}
+      if(!ST.crit[c.id].acc&&c.ov&&c.ov.length){var ov=c.ov.join(' ');ST.crit[c.id].acc=ov.length>200?ov.substring(0,200)+'...':ov;}
+    }catch(err){
+      ST.crit[c.id].status='no-verif';
+      ST.crit[c.id].ai_reasoning='Error al evaluar: '+err.message;
+    }
+    if(i%3===0||i===crits.length-1)render();
+    await new Promise(function(r){setTimeout(r,300);});
+  }
+  ST.evaluating=false;render();
+}
+
+async function reEvalSingle(id){
+  var crits=getActive();var c=crits.find(function(x){return x.id===id;});
+  if(!c)return;
+  if(!ST.form.herr){alert('Introduce el nombre de la herramienta primero.');return;}
+  if(c.org||ORG_IDS.has(c.id)){alert('Este criterio es organizativo y no puede evaluarse con fuentes públicas.');return;}
+  if(!ST.crit[id])ST.crit[id]={};
+  var savedHall=ST.crit[id].hall||'';
+  var prompt='Herramienta: '+ST.form.herr+'\nProveedor: '+(ST.form.prov||'no específicado')+'\nURL oficial: '+(ST.form.url||'no específicada')+'\nVersión / plan: '+(ST.form.ver||'no específicada')+'\nFamilia: '+ST.cls.fam+'\n'+(savedHall?'Contexto del evaluador: '+savedHall+'\n':'')+'\nCriterio a evaluar: '+c.id+' - '+c.c+'\nDimensiones de amenaza: '+(c.t.join(', ')||'N/A')+'\n\nQue debe verificar del proveedor:\n'+c.pv.map(function(v,j){return (j+1)+'. '+v;}).join('\n')+'\n\nBusca evidencias públicas sobre este criterio para "'+ST.form.herr+'" y responde en JSON.';
+  try{
+    var result=await callAPI(prompt,SYS_EVAL);
+    ST.crit[id].status=result.status||'no-verif';
+    ST.crit[id].ai_reasoning=result.reasoning||'Sin razonamiento disponible.';
+    ST.crit[id].ai_evidence=result.evidence||'';
+    if(result.evidence&&!ST.crit[id].fuente)ST.crit[id].fuente=result.evidence;
+    if(result.reasoning)ST.crit[id].hall=result.reasoning;
+    if(result.evidence){var u=result.evidence.toLowerCase();ST.crit[id].tipo=u.includes('privacy')||u.includes('privacidad')?SRC_TYPES[3]:u.includes('trust')||u.includes('security')||u.includes('seguridad')?SRC_TYPES[2]:u.includes('docs.')||u.includes('documentation')||u.includes('/docs')?SRC_TYPES[1]:u.includes('status.')?SRC_TYPES[4]:u.includes('nvd.nist')||u.includes('cve')||u.includes('advisory')?SRC_TYPES[6]:u.includes('github.com')||u.includes('npm')||u.includes('pypi')?SRC_TYPES[5]:u.includes('iso')||u.includes('soc')||u.includes('compliance')?SRC_TYPES[7]:SRC_TYPES[0];}
+  }catch(err){
+    ST.crit[id].status='no-verif';
+    ST.crit[id].ai_reasoning='Error al evaluar: '+err.message;
+  }
+  render();
+}
+
+var SYS_EVAL='Eres un evaluador de seguridad y cumplimiento normativo especializado en herramientas software para fabricantes de Software como Producto Sanitario (SaMD) bajo regulación europea (MDR EU 2017/745, ISO 13485, IEC 62304, RGPD, AI Act).\n\nTu metodología de evaluación autónoma es la siguiente:\n1. Para cada criterio, DEBES buscar y leer activamente las fuentes públicas del proveedor relevantes para ese criterio específico.\n2. Fuentes prioritarias por tipo de criterio:\n   - Localización de datos, transferencias internacionales, subencargados: LEER política de privacidad del proveedor y DPA público\n   - Telemetría, uso de datos, entrenamiento de modelos: LEER política de privacidad y términos de servicio\n   - Cambios recientes, vulnerabilidades, versiones soportadas: LEER changelog / release notes / security advisories\n   - Certificaciones de seguridad (ISO 27001, SOC 2, ENS): LEER trust center / página de seguridad\n   - Disponibilidad y SLA: LEER status page y términos de servicio\n   - Acceso del proveedor a datos del cliente: LEER DPA público y términos de servicio\n   - Portabilidad de datos: LEER términos de servicio sección portabilidad\n   - Licencias, uso permitido: LEER EULA / términos de licencia\n   - Vulnerabilidades CVE: BUSCAR en NVD (nvd.nist.gov) y OSV (osv.dev)\n   - Procedencia y canal oficial: LEER página de descargas oficial y verificar checksum/firma\n3. Cita SIEMPRE la URL exacta o el nombre del documento que consultaste.\n4. Responde ÚNICAMENTE en JSON válido sin texto adicional ni bloques de código markdown:\n{"status":"cumple|parcial|no-cumple|no-verif","reasoning":"explicación concisa en español de máximo 180 palabras con los hechos verificados","evidence":"URL exacta o nombre del documento consultado"}\n\nReglas de asignación de estado — LEE CON ATENCIÓN:\n- "cumple": el proveedor cumple el criterio según la evidencia pública encontrada. Que existan medidas organizativas adicionales como capa extra de control NO convierte un cumplimiento del proveedor en parcial. Si el proveedor ofrece la funcionalidad, la documenta, o la garantiza, el estado es CUMPLE aunque la organización deba además activarla o configurarla.\n- "parcial": existen DUDAS REALES sobre el cumplimiento del proveedor — la evidencia encontrada es ambigua, incompleta o sugiere que el proveedor solo cubre parte del criterio, pero existe una medida organizativa razonable que puede mitigar esa desviación específica.\n- "no-cumple": encontraste evidencia pública clara de una carencia GRAVE del proveedor que NO puede compensarse con medidas organizativas. Reserva este estado únicamente para incumplimientos severos sin mitigación posible.\n- "no-verif": no encontraste evidencia pública suficiente, el criterio es organizativo, o requiere información no pública.\n\nEJEMPLOS:\n- El proveedor ofrece MFA pero la organización debe activarlo → "cumple" (el proveedor lo ofrece)\n- El proveedor menciona cifrado pero no especifica el estándar → "parcial" (duda del proveedor)\n- El proveedor no ofrece exportación de datos en ningún formato → "no-cumple" (carencia grave)\n- No encuentras información sobre el tema → "no-verif"\n\n- Si la verificación del proveedor dice "No aplica (criterio organizativo)", devuelve siempre "no-verif".\n- Sé conservador ante la duda: usa "no-verif" en lugar de fabricar información.\n- NO INVENTES URLs ni afirmes hechos que no hayas podido verificar mediante búsqueda.';
+
+function loadDemo(){
+  ST.form={via:'activa',dep:'Area de Desarrollo de Software',sol:'Paula Jimenez Ramos',resp:'Carlos Ruiz (Tech Lead)',herr:'Claude Code',prov:'Anthropic, PBC',url:'https://docs.anthropic.com/en/docs/claude-code',ver:'claude-code CLI - plan Pro/Max/Team',lic:'Incluido en suscripción Claude Pro, Max o Team.',desc:'Herramienta de línea de comandos (CLI) para programación agéntica. Se instala localmente en el equipo de desarrollo. Opera sobre el código fuente del repositorio local, puede leer y modificar ficheros, ejecutar comandos de terminal y proporciónar asistencia en tareas de desarrollo asistida por IA.',uso:'Apoyo al desarrollo del código fuente del SaMD: revisión de código, generacion de tests unitarios, refactorización y documentación técnica asistida por IA.',proc:'Desarrollo de software del SaMD, revisión de código, generacion de documentación técnica.',tar:'Revisión y sugerencia de mejoras en código fuente, generacion de tests unitarios, asistencia en refactorización, creacion de documentación técnica.',dp:false,ce:false,cs:true,samd:true,ia:true,ext:false,fecha_val:today()};
+  ST.scope={ans:{1:'si'},res:'dentro',just:'Claude Code accede y puede modificar el código fuente del SaMD. Un comportamiento incorrecto o una filtración de código podría comprometer la integridad del producto sanitario y su conformidad regulatoria.'};
+  ST.cls={fam:'S3',s5:true,s6:false,ca:{1:'si'},nivel:'crítico'};
+  ST.crit={};ST.evaluating=false;ST.evalProgress=0;ST.evalTotal=0;
+  ST.step=4;render();
+}
+
+function expJSON(){
+  try{
+    const data={meta:{marco:'EV-TRACE-MD',version:'0.7',fecha_validacion:ST.form.fecha_val||today(),generado:new Date().toISOString(),herramienta:ST.form.herr,proveedor:ST.form.prov,nivel:ST.cls.nivel,resolucion:ST.resolucion||'pendiente',aviso:'Propuesta de estado documental. Resolucion formal: responsable de cumplimiento.'},solicitud:ST.form,alcance:ST.scope,clasificacion:ST.cls,criterios:ST.crit,resolucion_formal:{estado:ST.resolucion,observaciones:ST.obs_informe}};
+    const json=JSON.stringify(data,null,2);
+    const b=new Blob([json],{type:'application/json'});
+    const url=URL.createObjectURL(b);
+    const a=document.createElement('a');
+    a.href=url;
+    a.download='ev_trace_md_v07_'+(ST.form.herr||'herramienta').replace(/[^a-zA-Z0-9]/g,'_').toLowerCase()+'_'+(ST.form.fecha_val||today())+'.json';
+    a.style.display='none';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function(){document.body.removeChild(a);URL.revokeObjectURL(url);},200);
+  }catch(err){alert('Error al exportar JSON: '+err.message);}
+}
+
+function copyMD(){
+  const crits=getActive(),f=ST.form,cl=ST.cls;
+  let md='# Informe de preevaluación EV-TRACE-MD v0.7\n\n> Propuesta de estado documental.\n\n**Herramienta:** '+(f.herr||'—')+' | **Proveedor:** '+(f.prov||'—')+' | **Familia:** '+cl.fam+' | **Criticidad:** '+(cl.nivel||'—')+'\n**Fecha de validación:** '+(f.fecha_val||today())+'\n\n';
+  md+='## Criterios aplicables\n| ID | Criterio | Peso | Resultado | Origen | Hallazgo |\n|---|---|---|---|---|---|\n';
+  crits.forEach(c=>{const ev=ST.crit[c.id]||{};const origen=ev.ai_reasoning?'IA':'Manual';md+='| '+c.id+' | '+c.c+' | '+c.w+' | '+(SL[gst(c.id)]||'—')+' | '+origen+' | '+(ev.hall||ev.ai_reasoning||'—')+' |\n';});
+  md+='\n## Resolución formal humana\nEspacio reservado para la resolución del responsable de cumplimiento.\n';
+  try{
+    var ta=document.createElement('textarea');ta.value=md;ta.style.cssText='position:fixed;left:-9999px';
+    document.body.appendChild(ta);ta.select();
+    var ok=document.execCommand('copy');
+    document.body.removeChild(ta);
+    if(ok){try{alert('Informe Markdown copiado al portapapeles.');}catch(e){}return;}
+  }catch(e){}
+  var b=new Blob([md],{type:'text/markdown'});
+  var url=URL.createObjectURL(b);
+  var a=document.createElement('a');a.href=url;
+  a.download='informe_ev_trace_md_v07_'+(f.herr||'herramienta').replace(/[^a-zA-Z0-9]/g,'_').toLowerCase()+'.md';
+  a.style.display='none';document.body.appendChild(a);a.click();
+  setTimeout(function(){document.body.removeChild(a);URL.revokeObjectURL(url);},200);
+}
+
+function resetCase(){
+  if(!confirm('Restablecer el caso? Se perderán todos los datos y resultados de la evaluación.'))return;
+  ST={step:0,form:{via:'activa',dep:'',sol:'',resp:'',herr:'',prov:'',url:'',ver:'',lic:'',desc:'',uso:'',proc:'',tar:'',dp:false,ce:false,cs:false,samd:false,ia:false,ext:false,fecha_val:today()},scope:{ans:{},res:'',just:''},cls:{fam:'S4.1',s5:false,s6:false,ca:{},nivel:''},crit:{},open:{},evaluating:false,evalProgress:0,evalTotal:0,resolucion:'',obs_informe:'',report_mode:'resumen'};
+  render();
+}
+
+function printReport(){
+  var prevStep=ST.step;ST.step=6;render();
+  setTimeout(function(){
+    try{
+      var w=window.open('','_blank');
+      if(w){
+        var rpt=document.getElementById('ct').innerHTML;
+        w.document.write('<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>Informe EV-TRACE-MD v0.7 — '+esc(ST.form.herr||'')+'</title><style>');
+        w.document.write('body{font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;font-size:13px;color:#1a1a1a;line-height:1.7;max-width:860px;margin:0 auto;padding:2rem 1.5rem}');
+        w.document.write('.btn-row,.btn,.btn-p,.btn-ai,.btn-sec,.btn-d{display:none!important}');
+        w.document.write('.panel{border:none;padding:0}.rep-sec{margin-bottom:1rem}.rep-sec h3{font-size:13px;font-weight:600;border-bottom:1px solid #ccc;padding-bottom:3px;margin-bottom:6px}');
+        w.document.write('.rep-blk{background:#f9f9f9;border:1px solid #ddd;border-radius:6px;padding:10px;font-size:12px;line-height:1.7}');
+        w.document.write('.al{padding:8px 12px;border-radius:6px;font-size:12px;margin-bottom:8px;border:1px solid #ddd;background:#f9f9f9}');
+        w.document.write('.al-w{background:#fffbeb;border-color:#fde68a;color:#78350f}');
+        w.document.write('.stbl{width:100%;border-collapse:collapse;font-size:11px}.stbl th{background:#f3f3f3;padding:6px 8px;text-align:left;font-weight:600;border:1px solid #ddd}.stbl td{padding:5px 8px;border:1px solid #ddd;vertical-align:top}');
+        w.document.write('.sp{font-size:10px;padding:2px 6px;border-radius:3px;font-weight:600;border:1px solid #999}');
+        w.document.write('.sp-c{background:#f0fdf4;color:#15803d}.sp-p{background:#fffbeb;color:#d97706}.sp-nc{background:#fef2f2;color:#dc2626}.sp-nv{background:#f3f3f3;color:#666}');
+        w.document.write('.wp{font-size:10px;padding:2px 6px;border-radius:3px;font-weight:600;border:1px solid #999}');
+        w.document.write('.wB{background:#fef2f2;color:#dc2626}.wC{background:#fffbeb;color:#d97706}.wO{background:#f0fdf4;color:#15803d}.wBC{background:#fff7ed;color:#c2410c}.wCO{background:#f0fdf4;color:#15803d}');
+        w.document.write('.vb{font-size:10px;padding:1px 6px;border-radius:3px;background:#eee;color:#333;border:1px solid #ccc}');
+        w.document.write('.lv-cr\\EDtico,.lv-importante,.lv-bajo{font-size:11px;padding:2px 8px;border-radius:12px;border:1px solid #999}');
+        w.document.write('.rec-box{border:1px solid #ccc;border-radius:8px;padding:10px;margin-bottom:10px;background:#f9f9f9}');
+        w.document.write('.rec-title{font-size:13px;font-weight:600}');
+        w.document.write('.stat-g,.eff-bar,.prog-wrap,.gov,.ptitle{display:none}');
+        w.document.write('textarea,select,input{border:1px solid #ccc;padding:4px 6px;font-size:11px;font-family:inherit;border-radius:4px}');
+        w.document.write('.fr label{font-size:11px;font-weight:500;color:#374151;margin-bottom:2px;display:block}');
+        w.document.write('.ev-id{font-size:10px;font-family:monospace;background:#eee;padding:1px 5px;border-radius:3px}');
+        w.document.write('</style></head><body>');
+        w.document.write('<h1 style="font-size:18px;margin-bottom:0.5rem">Informe de preevaluación EV-TRACE-MD v0.7</h1>');
+        w.document.write('<p style="font-size:12px;color:#666;margin-bottom:1rem">Herramienta: '+esc(ST.form.herr||'')+' — Proveedor: '+esc(ST.form.prov||'')+' — Fecha: '+esc(ST.form.fecha_val||today())+'</p>');
+        w.document.write(rpt);
+        w.document.write('</body></html>');
+        w.document.close();
+        setTimeout(function(){try{w.print();}catch(e){}},600);
+      }else{throw new Error('popup');}
+    }catch(e){
+      downloadReportHTML();
+    }
+    ST.step=prevStep;render();
+  },300);
+}
+
+function downloadReportHTML(){
+  var prevStep=ST.step;ST.step=6;render();
+  var rpt=document.getElementById('ct').innerHTML;
+  var html='<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>Informe EV-TRACE-MD v0.7</title>';
+  html+='<style>body{font-family:-apple-system,sans-serif;font-size:13px;color:#1a1a1a;line-height:1.7;max-width:860px;margin:0 auto;padding:2rem 1.5rem}';
+  html+='.btn-row,.btn{display:none!important}.panel{border:none;padding:0}.rep-sec{margin-bottom:1rem}.rep-sec h3{font-size:13px;font-weight:600;border-bottom:1px solid #ccc;padding-bottom:3px;margin-bottom:6px}';
+  html+='.rep-blk{background:#f9f9f9;border:1px solid #ddd;border-radius:6px;padding:10px;font-size:12px;line-height:1.7}';
+  html+='.al{padding:8px 12px;border-radius:6px;font-size:12px;margin-bottom:8px;border:1px solid #ddd}.al-w{background:#fffbeb;border-color:#fde68a;color:#78350f}';
+  html+='.stbl{width:100%;border-collapse:collapse;font-size:11px}.stbl th{background:#f3f3f3;padding:6px 8px;text-align:left;font-weight:600;border:1px solid #ddd}.stbl td{padding:5px 8px;border:1px solid #ddd;vertical-align:top}';
+  html+='.sp{font-size:10px;padding:2px 6px;border-radius:3px;font-weight:600;border:1px solid #999}';
+  html+='.sp-c{background:#f0fdf4;color:#15803d}.sp-p{background:#fffbeb;color:#d97706}.sp-nc{background:#fef2f2;color:#dc2626}.sp-nv{background:#f3f3f3;color:#666}.sp-na{background:#f3f3f3;color:#999}';
+  html+='.wp{font-size:10px;padding:2px 6px;border-radius:3px;font-weight:600;border:1px solid #999}';
+  html+='.wB{background:#fef2f2;color:#dc2626}.wC{background:#fffbeb;color:#d97706}.wO{background:#f0fdf4;color:#15803d}.wBC{background:#fff7ed;color:#c2410c}.wCO{background:#f0fdf4;color:#15803d}';
+  html+='.vb{font-size:10px;padding:1px 6px;border-radius:3px;background:#eee;color:#333;border:1px solid #ccc}';
+  html+='.rec-box{border:1px solid #ccc;border-radius:8px;padding:10px;margin-bottom:10px;background:#f9f9f9}.rec-title{font-size:13px;font-weight:600}';
+  html+='.stat-g,.eff-bar,.prog-wrap,.gov,.ptitle{display:none}';
+  html+='.ev-id{font-size:10px;font-family:monospace;background:#eee;padding:1px 5px;border-radius:3px}';
+  html+='textarea,select,input{border:1px solid #ccc;padding:4px 6px;font-size:11px;font-family:inherit;border-radius:4px}.fr label{font-size:11px;font-weight:500;display:block}';
+  html+='</style></head><body>';
+  html+='<h1 style="font-size:18px;margin-bottom:0.5rem">Informe de preevaluación EV-TRACE-MD v0.7</h1>';
+  html+='<p style="font-size:12px;color:#666;margin-bottom:1rem">Herramienta: '+esc(ST.form.herr||'')+' — Proveedor: '+esc(ST.form.prov||'')+' — Fecha: '+esc(ST.form.fecha_val||today())+'</p>';
+  html+=rpt+'</body></html>';
+  var b=new Blob([html],{type:'text/html'});
+  var url=URL.createObjectURL(b);
+  var a=document.createElement('a');
+  a.href=url;a.download='informe_ev_trace_md_v07_'+(ST.form.herr||'herramienta').replace(/[^a-zA-Z0-9]/g,'_').toLowerCase()+'_'+(ST.form.fecha_val||today())+'.html';
+  a.style.display='none';document.body.appendChild(a);a.click();
+  setTimeout(function(){document.body.removeChild(a);URL.revokeObjectURL(url);},200);
+  ST.step=prevStep;render();
+}
+
+render();
+</script>
+</body>
+</html>
