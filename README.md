@@ -4,7 +4,7 @@
 
 > Artefacto del Trabajo de Fin de Máster en Ciberseguridad · UNIR, 2026  
 > Autora: María del Pilar Jalón Pascual
-> Estado: prototipo de investigación · v0.6
+> Estado: prototipo de investigación · v0.7
 
 ---
 
@@ -28,8 +28,8 @@ detección, clasificación, evaluación y decisión/registro/seguimiento.
 
 | Fichero | Descripción |
 |---|---|
-| `ev_trace_md_v06.html` | Herramienta interactiva (EV-TRACE-MD Assistant v0.6) |
-| `02_catalogo_estructurado_marco_validacion.json` | Catálogo de criterios estructurado para el agente |
+| `ev_trace_md_v06.html` | Herramienta interactiva (EV-TRACE-MD Assistant v0.7) |
+| `02_catalogo_marco_validacion.json` | Catálogo de criterios estructurado para el agente |
 | `01_base_conocimiento_agente.md` | Base de conocimiento del agente de evaluación |
 
 ---
@@ -57,7 +57,7 @@ introduce en la propia interfaz. No se almacena ninguna clave en el repositorio.
 
 ## Uso
 
-1. Descargar `ev_trace_md_v06.html`.
+1. Descargar `ev_trace_md_v07.html`.
 2. Abrirlo en un navegador moderno (Chrome, Firefox, Edge).
 3. Introducir la clave de API de Anthropic cuando se solicite.
 4. Seguir las etapas E1–E4 del asistente.
@@ -74,6 +74,7 @@ introduce en la propia interfaz. No se almacena ninguna clave en el repositorio.
 Este repositorio se publica bajo licencia **Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)**.
 
 Puedes consultar el texto completo en https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode.
+![License: CC BY-NC-ND 4.0](https://licensebuttons.net/l/by-nc-nd/4.0/88x31.png)
 
 **Está expresamente prohibido** el uso comercial, la redistribución de versiones 
 modificadas y la integración en productos o servicios sin autorización escrita de la autora.
