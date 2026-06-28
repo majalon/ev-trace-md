@@ -1,20 +1,21 @@
 # INFORME DE VALIDACIÓN EV-TRACE-MD
 
+**Marco:** EV-TRACE-MD (Evaluation and Traceability for Regulated Medical Devices)
+
+**Advertencia:** este informe constituye una propuesta de evaluación asistida generada por el EV-TRACE-MD Assistant. La resolución definitiva corresponde al responsable de cumplimiento designado por la organización.
+
+**Modo de informe:** resumido (tabla compacta) o completo (con razonamiento del agente, fuente consultada y acción requerida por criterio).
+
+---
+
 ## 0. Control documental
 
 | Campo | Información |
 | --- | --- |
-| Identificador del expediente | [VAL-AAAA-XXX] |
-| Versión del informe | [v1.0] |
-| Fecha de inicio | [dd/mm/aaaa] |
-| Fecha de cierre | [dd/mm/aaaa] |
-| Estado del expediente | [En evaluación / Pendiente de evidencia / Cerrado — EV-TRACE-MD v0.7] |
-| Elaborado con apoyo de IA | [Sí/No] |
-| Revisión y decisión humana | [Nombre, cargo y fecha] |
-
-**Marco:** EV-TRACE-MD (Evaluation and Traceability for Regulated Medical Devices)
-
-**Advertencia:** este informe constituye una propuesta de evaluación asistida generada por el EV-TRACE-MD Assistant. La resolución definitiva corresponde al responsable de cumplimiento designado por la organización.
+| Marco | EV-TRACE-MD [versión] |
+| Fecha de validación del expediente | [dd/mm/aaaa] |
+| Vía de activación | [Activa / Técnica / Reactiva] |
+| Estado | Propuesta de estado documental — pendiente de resolución formal |
 
 ---
 
@@ -22,157 +23,128 @@
 
 | Campo | Información |
 | --- | --- |
-| Nombre comercial |  |
-| Proveedor o mantenedor |  |
-| Versión, plan o edición evaluada |  |
-| URL oficial o repositorio |  |
-| Tipo de licencia o contratación |  |
-| Familia principal | [S1/S2/S3/S4.1/S4.2/S5/S6] |
-| Familias complementarias |  |
-| Vía de activación | [Activa / Técnica / Reactiva] |
-| Departamento solicitante |  |
-| Solicitante |  |
-| Responsable de implementación |  |
+| Herramienta | |
+| Proveedor | [Se detecta automáticamente si se deja vacío] |
+| URL oficial o repositorio | [Se completa automáticamente si la investigación la identifica. Pendiente de verificar si no se encuentra] |
+| Versión / plan evaluado | |
+| Licencia / contratación | |
+| Descripción | |
 
 ---
 
 ## 2. Uso previsto y alcance
 
-**Proceso o procesos afectados:**
-[Describir.]
-
-**Uso previsto dentro de la organización:**
-[Describir tareas, automatizaciones, integraciones y usuarios.]
-
-**Datos e información tratados:**
-
-- Datos personales: [Sí/No. Tipología.]
-- Datos de categorías especiales: [Sí/No. Tipología.]
-- Código fuente, credenciales o secretos: [Sí/No.]
-- Información de calidad, trazabilidad o evidencias regulatorias: [Sí/No.]
-
-**Resultado de la determinación de alcance:**
-[Incluida / Fuera del alcance obligatorio / Requiere evaluación adicional.]
-
-**Justificación:**
-[Describir.]
+| Campo | Información |
+| --- | --- |
+| Uso previsto | |
+| Procesos afectados | |
+| Datos personales | [Sí / No] |
+| Categorías especiales (art. 9 RGPD) | [Sí / No] |
+| Código fuente, secretos o información confidencial | [Sí / No] |
+| Integración con el SaMD | [Sí / No] |
+| Determinación de alcance | [Dentro del alcance obligatorio / Fuera del alcance obligatorio] |
+| Justificación | |
 
 ---
 
-## 3. Clasificación y nivel de criticidad
+## 3. Clasificación y criticidad
 
-| Parámetro | Resultado | Justificación |
-| --- | --- | --- |
-| Familia principal |  |  |
-| Familias adicionales |  |  |
-| Criticidad del proceso afectado | [Crítico / Importante / Bajo] |  |
-| Sensibilidad de los datos |  |  |
-| Nivel de riesgo asignado | [Crítico / Importante / Bajo] |  |
-| Roles de consulta requeridos | [QA/RA / Seguridad / DPO / Otros] |  |
+| Campo | Información |
+| --- | --- |
+| Familia principal | [S1 / S2 / S3 / S4.1 / S4.2] |
+| Módulos adicionales | [S5 (IA) / S6 (Complemento) / Ninguno] |
+| Nivel de criticidad | [Crítico / Importante / Bajo] |
+| Frecuencia de revisión | [Semestral / Anual / Trienal] |
+| Consultas recomendadas | [DPO / Responsable de seguridad / QA-RA / Ninguna] |
 
 ---
 
-## 4. Fuentes y evidencias examinadas
+## 4. Resumen de evaluación
 
-| ID evidencia | Tipo | Descripción | Fuente o ubicación | Fecha de consulta | Evaluador |
+| Indicador | Resultado |
+| --- | --- |
+| Criterios aplicables | |
+| Criterios evaluados | |
+| Cumplen | |
+| Cumplen parcialmente | |
+| No cumplen | |
+| No verificables por falta de evidencia | |
+| Pendientes de evidencia interna u organizativa | |
+
+---
+
+## 5. Propuesta de estado documental
+
+**Pendiente de revisión humana.** Los resultados marcados como IA han sido generados mediante lectura de fuentes públicas del proveedor y están sujetos a error. La resolución final (Aprobado / Aprobado condicionado / Rechazado) corresponde al responsable de cumplimiento.
+
+---
+
+## 6. Evaluación de criterios transversales (CT)
+
+### Modo resumido
+
+| ID | Criterio | Peso | Resultado | Origen | Hallazgo / evidencia |
 | --- | --- | --- | --- | --- | --- |
-| EV-01 | Documentación pública |  |  |  |  |
-| EV-02 | Contrato, DPA o SLA |  |  |  |  |
-| EV-03 | Captura de configuración |  |  |  |  |
-| EV-04 | Prueba de aceptación |  |  |  |  |
-| EV-05 | Evidencia interna |  |  |  |  |
+| CT.1 | Adecuación al uso previsto declarado | B | [cumple / parcial / no-cumple / no-verif / no-aplica] | [IA / Manual] | |
+| CT.2 | Verificación de requisitos funcionales mínimos | B | [cumple / parcial / no-cumple / no-verif / no-aplica] | [IA / Manual] | |
+| CT.3 | Reproducibilidad y estabilidad del comportamiento | B | [cumple / parcial / no-cumple / no-verif / no-aplica] | [IA / Manual] | |
 
----
+### Modo completo
 
-## 5. Evaluación de criterios transversales
-
-| ID | Criterio | Resultado | Evidencia | Hallazgo / justificación | Acción requerida | Peso efectivo |
+| ID | Criterio | Peso | Resultado | Razonamiento del agente | Fuente consultada | Acción requerida |
 | --- | --- | --- | --- | --- | --- | --- |
-| CT.1 | Adecuación al uso previsto |  |  |  |  | B |
-| CT.2 | Requisitos funcionales mínimos |  |  |  |  | B |
-| CT.3 | Reproducibilidad y estabilidad |  |  |  |  | B |
+| CT.1 | Adecuación al uso previsto declarado | B | | | | |
+| CT.2 | Verificación de requisitos funcionales mínimos | B | | | | |
+| CT.3 | Reproducibilidad y estabilidad del comportamiento | B | | | | |
 
 ---
 
-## 6. Evaluación de criterios específicos
+## 7. Evaluación de criterios específicos
 
-Aplicar únicamente los criterios correspondientes a la familia o familias clasificadas.
+Aplicar únicamente los criterios correspondientes a la familia o familias clasificadas en la sección 3.
 
-**Modo de informe:** resumido (tabla compacta) o completo (con razonamiento del agente, fuente consultada y acción requerida por criterio).
+### Modo resumido
 
-| ID | Criterio | Amenaza | Resultado | Evidencia | Hallazgo / justificación | Medida organizativa | Peso efectivo |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| CSX.X |  |  | [cumple / parcial / no-cumple / no-verif / no-aplica] | [EV-XX] |  |  |  |
+| ID | Criterio | Peso | Resultado | Origen | Hallazgo / evidencia |
+| --- | --- | --- | --- | --- | --- |
+| CSX.X | | | [cumple / parcial / no-cumple / no-verif / no-aplica] | [IA / Manual] | |
+
+### Modo completo
+
+| ID | Criterio | Peso | Resultado | Razonamiento del agente | Fuente consultada | Acción requerida |
+| --- | --- | --- | --- | --- | --- | --- |
+| CSX.X | | | [cumple / parcial / no-cumple / no-verif / no-aplica] | | | |
+
+Los criterios sin evaluar o marcados como «no-aplica» no se incluyen en las tablas.
 
 ---
 
-## 7. Hallazgos, riesgos y medidas de mitigación
+## 8. Fuentes consultadas por el agente
 
-| ID | Hallazgo | Criterios afectados | Riesgo asociado | Clasificación | Medida de mitigación | Responsable | Fecha límite | Evidencia de cierre |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| H-01 |  |  |  | [B/C/O] |  |  |  |  |
+Registro de las URLs y documentos públicos consultados por el EV-TRACE-MD Assistant durante la evaluación autónoma.
 
----
-
-## 8. Resultado de la evaluación
-
-| Tipo de resultado | Número |
+| Criterio | Fuente consultada |
 | --- | --- |
-| Criterios cumplidos |  |
-| Criterios parcialmente cumplidos |  |
-| Criterios no cumplidos |  |
-| Criterios no verificables |  |
-| Criterios no aplicables |  |
-| Incumplimientos bloqueantes abiertos |  |
-| Medidas condicionantes pendientes |  |
+| CSX.X | [URL o nombre del documento] |
+
+Si no se ejecutó la evaluación autónoma, esta sección permanece vacía.
 
 ---
 
-## 9. Propuesta de resolución del agente
-
-**Propuesta:**
-[Pendiente de evidencia / Favorable / Favorable con condiciones / No favorable / No concluyente por evidencia insuficiente.]
-
-**Justificación estructurada:**
-[Explicar la relación entre los criterios no conformes, su peso efectivo, las evidencias disponibles y las mitigaciones.]
-
-**Condiciones previas al uso, cuando proceda:**
-
-1. [Medida.]
-2. [Medida.]
-
----
-
-## 10. Resolución formal
+## 9. Resolución formal humana
 
 | Campo | Información |
 | --- | --- |
-| Resolución final | [Aprobado / Aprobado condicionado / Rechazado] |
-| Responsable de cumplimiento |  |
-| Fecha |  |
-| Firma o aprobación electrónica |  |
-| Observaciones |  |
+| Estado de resolución | [Pendiente de resolución / Aprobado / Aprobado condicionado / Rechazado] |
+| Observaciones | [Responsable, fecha, justificación] |
+
+Este campo es editable por el responsable de cumplimiento. La resolución del assistant es orientativa y no constituye una resolución formal.
 
 ---
 
-## 11. Seguimiento y revalidación
+## 10. Seguimiento y revalidación
 
 | Campo | Información |
 | --- | --- |
-| Periodicidad de revisión | [Semestral / Anual / Trienal] |
-| Próxima fecha de revisión |  |
-| Eventos de revalidación aplicables | [Nueva versión mayor, vulnerabilidad alta/crítica, cambio contractual, incidente, cambio de uso previsto, cambio de proveedor.] |
-| Responsable del seguimiento |  |
-| Registro en inventario | [Identificador y ubicación] |
-
----
-
-## Anexo I. Evidencias
-
-[Incluir capturas, extractos contractuales, resultados de pruebas, informes SCA, exportaciones de logs y demás evidencias identificadas.]
-
----
-
-## Anexo II. Registro de consultas y fuentes públicas
-
-[Incluir URL, fecha de consulta, contenido relevante y limitaciones de cada fuente.]
+| Frecuencia de revisión periódica | [Semestral / Anual / Trienal] |
+| Eventos de revalidación anticipada | Nueva versión mayor con cambios de arquitectura · Modificación de condiciones de servicio, política de privacidad o DPA · Vulnerabilidad CVSS alta o crítica sin parche disponible · Incidente de seguridad · Cambio del uso previsto |
