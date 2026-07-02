@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EV-TRACE-MD Assistant v0.7</title>
+<title>EV-TRACE-MD Assistant v0.8</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:15px;color:#1a1a1a;background:#f0f2f5;line-height:1.6}
@@ -118,7 +118,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
 <div class="app" id="app">
   <div class="gov">
     <span style="font-size:16px;flex-shrink:0">&#x26A0;&#xFE0F;</span>
-    <div><strong>Prototipo academico &mdash; Marco EV-TRACE-MD <span class="vb">v0.7</span></strong> &mdash; Propuesta de estado documental. La resolución final corresponde al responsable de cumplimiento. </div>
+    <div><strong>Prototipo academico &mdash; Marco EV-TRACE-MD <span class="vb">v0.8</span></strong> &mdash; Propuesta de estado documental. La resolución final corresponde al responsable de cumplimiento. </div>
   </div>
   <div class="prog-wrap"><div class="pb" id="pb"></div><div class="sn" id="sn"></div></div>
   <div id="ct"></div>
@@ -238,7 +238,7 @@ function today(){return new Date().toISOString().split('T')[0];}
 
 function render(){
   const pb=document.getElementById('pb'),sn2=document.getElementById('sn');if(!pb||!sn2)return;
-  pb.innerHTML=STEPS.map((s,i)=>'<div class="sd '+(i<ST.step?'done':i===ST.step?'active':'')+'" onclick="go('+i+')" title="'+s+'">'+(i<ST.step?'&#x2713;':i+1)+'</div>'+(i<STEPS.length-1?'<div class="sc"></div>':'')).join('');
+  pb.innerHTML=STEPS.map((s,i)=>'<div class="sd '+(i<ST.step?'done':i===ST.step?'active':'')+'" onclick="go('+i+')" title="'+s+'">'+(i<ST.step?'&#x2713;':i)+'</div>'+(i<STEPS.length-1?'<div class="sc"></div>':'')).join('');
   sn2.innerHTML=STEPS.map((s,i)=>'<div class="snm '+(i===ST.step?'active':i<ST.step?'done':'')+'" >'+s+'</div>').join('');
   document.getElementById('ct').innerHTML=[p0,p1,p2,p3,p4,p5,p6][ST.step]();
 }
@@ -261,7 +261,7 @@ function sJust(v){ST.scope.just=v;}
 
 function p0(){
   return '<div class="panel">'
-    +'<div class="ptitle">EV-TRACE-MD Assistant <span class="vb">v0.7 &mdash; Evaluación autónoma con IA</span></div>'
+    +'<div class="ptitle">EV-TRACE-MD Assistant <span class="vb">v0.8 &mdash; Evaluación autónoma con IA</span></div>'
     +'<div class="al al-i">Catálogo integrado: <strong>77 criterios</strong> (3 transversales + 74 específicos) &middot; 6 familias S1&ndash;S6 &middot; 8 dimensiones de riesgo A1&ndash;A8</div>'
     +'<p style="font-size:14px;margin-bottom:1rem;color:#374151">Para cada criterio aplicable, el agente busca y lee activamente las fuentes públicas del proveedor: <strong>políticas de privacidad, términos de servicio, changelogs, páginas de seguridad, DPA público, NVD/CVE, status page, repositorio fuente</strong>, entre otras. Los criterios organizativos (que dependen de evidencia interna) se identifican automáticamente como no verificables autónomamente.</p>'
     +'<div class="al al-w"><strong>Tres estados autónomos:</strong> &nbsp;<span class="sp sp-auto-c">&#x2713; Autónomo: Cumple</span> evidencia publica encontrada que respalda el criterio &nbsp;&middot;&nbsp; <span class="sp sp-auto-nc">&#x2717; Autónomo: No cumple</span> evidencia que lo contradice &nbsp;&middot;&nbsp; <span class="sp sp-auto-nv">&#x25CC; No verificable autónomamente</span> sin evidencia publica suficiente o criterio organizativo. Todos los resultados autónomos son editables manualmente para corregir alucinaciones o completar con evidencia interna.</div>'
@@ -474,7 +474,7 @@ function p6(){
   let html='<div class="panel"><div class="ptitle">Informe de preevaluación</div>'
     +'<div style="display:flex;gap:6px;margin-bottom:1rem"><button class="btn '+(full?'btn-sec':'btn-p')+'" onclick="ST.report_mode=\'resumen\';render()">Informe resumido</button><button class="btn '+(full?'btn-p':'btn-sec')+'" onclick="ST.report_mode=\'completo\';render()">Informe completo</button></div>'
     +'<div class="al al-w"><strong>Propuesta de estado documental &mdash; requiere revisión humana.</strong> La resolución final corresponde al responsable de cumplimiento.</div>'
-    +'<div class="rep-sec"><h3>0. Control documental</h3><div class="rep-blk"><strong>Marco:</strong> EV-TRACE-MD <span class="vb">v0.7</span><br><strong>Fecha de validacion del expediente:</strong> <strong>'+esc(f.fecha_val||today())+'</strong><br><strong>Via de activación:</strong> '+esc(f.via||'-')+'<br><strong>Estado:</strong> Propuesta de estado documental &mdash; pendiente de resolución formal.</div></div>'
+    +'<div class="rep-sec"><h3>0. Control documental</h3><div class="rep-blk"><strong>Marco:</strong> EV-TRACE-MD <span class="vb">v0.8</span><br><strong>Fecha de validacion del expediente:</strong> <strong>'+esc(f.fecha_val||today())+'</strong><br><strong>Via de activación:</strong> '+esc(f.via||'-')+'<br><strong>Estado:</strong> Propuesta de estado documental &mdash; pendiente de resolución formal.</div></div>'
     +'<div class="rep-sec"><h3>1. Identificación de la herramienta</h3><div class="rep-blk"><strong>Herramienta:</strong> '+esc(f.herr||'-')+' &nbsp;&middot;&nbsp; <strong>Proveedor:</strong> '+esc(f.prov||'-')+'<br><strong>URL:</strong> '+(f.url?'<a href="'+esc(f.url)+'">'+esc(f.url)+'</a>':'Pendiente de verificar')+' &nbsp;&middot;&nbsp; <strong>Versión / plan:</strong> '+esc(f.ver||'-')+'<br><strong>Licencia / contratación:</strong> '+esc(f.lic||'-')+'<br><strong>Descripción:</strong> '+esc(f.desc||'-')+'</div></div>'
     +'<div class="rep-sec"><h3>2. Uso previsto y alcance</h3><div class="rep-blk"><strong>Uso previsto:</strong> '+esc(f.uso||'-')+'<br><strong>Procesos afectados:</strong> '+esc(f.proc||'-')+'<br><strong>Datos personales:</strong> '+(f.dp?'Si':'No')+' &nbsp;&middot;&nbsp; <strong>Categorías especiales:</strong> '+(f.ce?'Si':'No')+'<br><strong>Código / secretos:</strong> '+(f.cs?'Si':'No')+' &nbsp;&middot;&nbsp; <strong>Integración con el SaMD:</strong> '+(f.samd?'Si':'No')+'<br><strong>Determinación de alcance:</strong> '+(ST.scope.res==='dentro'?'Dentro del alcance obligatorio':ST.scope.res==='fuera'?'Fuera del alcance obligatorio':'-')+(ST.scope.just?'<br><strong>Justificación:</strong> '+esc(ST.scope.just):'')+'</div></div>'
     +'<div class="rep-sec"><h3>3. Clasificación y criticidad</h3><div class="rep-blk"><strong>Familia principal:</strong> '+fam+(mods.length?' &middot; Módulos: '+mods.join(', '):'')+'<br><strong>Nivel de criticidad:</strong> <span class="lv-'+(niv==='crítico'||niv==='importante'||niv==='bajo'?niv:'bajo')+'">'+niv.charAt(0).toUpperCase()+niv.slice(1)+'</span> &nbsp;&middot;&nbsp; <strong>Frecuencia de revisión:</strong> '+(niv==='crítico'?'Semestral':niv==='importante'?'Anual':niv==='bajo'?'Trienal':'-')+'<br><strong>Consultas recomendadas:</strong> '+(cons.join(', ')||'Ninguna')+'</div></div>'
@@ -608,13 +608,13 @@ function loadDemo(){
 
 function expJSON(){
   try{
-    const data={meta:{marco:'EV-TRACE-MD',version:'0.7',fecha_validacion:ST.form.fecha_val||today(),generado:new Date().toISOString(),herramienta:ST.form.herr,proveedor:ST.form.prov,nivel:ST.cls.nivel,resolucion:ST.resolucion||'pendiente',aviso:'Propuesta de estado documental. Resolucion formal: responsable de cumplimiento.'},solicitud:ST.form,alcance:ST.scope,clasificacion:ST.cls,criterios:ST.crit,resolucion_formal:{estado:ST.resolucion,observaciones:ST.obs_informe}};
+    const data={meta:{marco:'EV-TRACE-MD',version:'0.8',fecha_validacion:ST.form.fecha_val||today(),generado:new Date().toISOString(),herramienta:ST.form.herr,proveedor:ST.form.prov,nivel:ST.cls.nivel,resolucion:ST.resolucion||'pendiente',aviso:'Propuesta de estado documental. Resolucion formal: responsable de cumplimiento.'},solicitud:ST.form,alcance:ST.scope,clasificacion:ST.cls,criterios:ST.crit,resolucion_formal:{estado:ST.resolucion,observaciones:ST.obs_informe}};
     const json=JSON.stringify(data,null,2);
     const b=new Blob([json],{type:'application/json'});
     const url=URL.createObjectURL(b);
     const a=document.createElement('a');
     a.href=url;
-    a.download='ev_trace_md_v07_'+(ST.form.herr||'herramienta').replace(/[^a-zA-Z0-9]/g,'_').toLowerCase()+'_'+(ST.form.fecha_val||today())+'.json';
+    a.download='ev_trace_md_v08_'+(ST.form.herr||'herramienta').replace(/[^a-zA-Z0-9]/g,'_').toLowerCase()+'_'+(ST.form.fecha_val||today())+'.json';
     a.style.display='none';
     document.body.appendChild(a);
     a.click();
@@ -624,7 +624,7 @@ function expJSON(){
 
 function copyMD(){
   const crits=getActive(),f=ST.form,cl=ST.cls;
-  let md='# Informe de preevaluación EV-TRACE-MD v0.7\n\n> Propuesta de estado documental.\n\n**Herramienta:** '+(f.herr||'—')+' | **Proveedor:** '+(f.prov||'—')+' | **Familia:** '+cl.fam+' | **Criticidad:** '+(cl.nivel||'—')+'\n**Fecha de validación:** '+(f.fecha_val||today())+'\n\n';
+  let md='# Informe de preevaluación EV-TRACE-MD v0.8\n\n> Propuesta de estado documental.\n\n**Herramienta:** '+(f.herr||'—')+' | **Proveedor:** '+(f.prov||'—')+' | **Familia:** '+cl.fam+' | **Criticidad:** '+(cl.nivel||'—')+'\n**Fecha de validación:** '+(f.fecha_val||today())+'\n\n';
   md+='## Criterios aplicables\n| ID | Criterio | Peso | Resultado | Origen | Hallazgo |\n|---|---|---|---|---|---|\n';
   crits.forEach(c=>{const ev=ST.crit[c.id]||{};const origen=ev.ai_reasoning?'IA':'Manual';md+='| '+c.id+' | '+c.c+' | '+c.w+' | '+(SL[gst(c.id)]||'—')+' | '+origen+' | '+(ev.hall||ev.ai_reasoning||'—')+' |\n';});
   md+='\n## Resolución formal humana\nEspacio reservado para la resolución del responsable de cumplimiento.\n';
@@ -638,7 +638,7 @@ function copyMD(){
   var b=new Blob([md],{type:'text/markdown'});
   var url=URL.createObjectURL(b);
   var a=document.createElement('a');a.href=url;
-  a.download='informe_ev_trace_md_v07_'+(f.herr||'herramienta').replace(/[^a-zA-Z0-9]/g,'_').toLowerCase()+'.md';
+  a.download='informe_ev_trace_md_v08_'+(f.herr||'herramienta').replace(/[^a-zA-Z0-9]/g,'_').toLowerCase()+'.md';
   a.style.display='none';document.body.appendChild(a);a.click();
   setTimeout(function(){document.body.removeChild(a);URL.revokeObjectURL(url);},200);
 }
@@ -656,7 +656,7 @@ function printReport(){
       var w=window.open('','_blank');
       if(w){
         var rpt=document.getElementById('ct').innerHTML;
-        w.document.write('<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>Informe EV-TRACE-MD v0.7 — '+esc(ST.form.herr||'')+'</title><style>');
+        w.document.write('<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>Informe EV-TRACE-MD v0.8 — '+esc(ST.form.herr||'')+'</title><style>');
         w.document.write('body{font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;font-size:13px;color:#1a1a1a;line-height:1.7;max-width:860px;margin:0 auto;padding:2rem 1.5rem}');
         w.document.write('.btn-row,.btn,.btn-p,.btn-ai,.btn-sec,.btn-d{display:none!important}');
         w.document.write('.panel{border:none;padding:0}.rep-sec{margin-bottom:1rem}.rep-sec h3{font-size:13px;font-weight:600;border-bottom:1px solid #ccc;padding-bottom:3px;margin-bottom:6px}');
@@ -677,7 +677,7 @@ function printReport(){
         w.document.write('.fr label{font-size:11px;font-weight:500;color:#374151;margin-bottom:2px;display:block}');
         w.document.write('.ev-id{font-size:10px;font-family:monospace;background:#eee;padding:1px 5px;border-radius:3px}');
         w.document.write('</style></head><body>');
-        w.document.write('<h1 style="font-size:18px;margin-bottom:0.5rem">Informe de preevaluación EV-TRACE-MD v0.7</h1>');
+        w.document.write('<h1 style="font-size:18px;margin-bottom:0.5rem">Informe de preevaluación EV-TRACE-MD v0.8</h1>');
         w.document.write('<p style="font-size:12px;color:#666;margin-bottom:1rem">Herramienta: '+esc(ST.form.herr||'')+' — Proveedor: '+esc(ST.form.prov||'')+' — Fecha: '+esc(ST.form.fecha_val||today())+'</p>');
         w.document.write(rpt);
         w.document.write('</body></html>');
@@ -694,7 +694,7 @@ function printReport(){
 function downloadReportHTML(){
   var prevStep=ST.step;ST.step=6;render();
   var rpt=document.getElementById('ct').innerHTML;
-  var html='<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>Informe EV-TRACE-MD v0.7</title>';
+  var html='<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>Informe EV-TRACE-MD v0.8</title>';
   html+='<style>body{font-family:-apple-system,sans-serif;font-size:13px;color:#1a1a1a;line-height:1.7;max-width:860px;margin:0 auto;padding:2rem 1.5rem}';
   html+='.btn-row,.btn{display:none!important}.panel{border:none;padding:0}.rep-sec{margin-bottom:1rem}.rep-sec h3{font-size:13px;font-weight:600;border-bottom:1px solid #ccc;padding-bottom:3px;margin-bottom:6px}';
   html+='.rep-blk{background:#f9f9f9;border:1px solid #ddd;border-radius:6px;padding:10px;font-size:12px;line-height:1.7}';
@@ -710,13 +710,13 @@ function downloadReportHTML(){
   html+='.ev-id{font-size:10px;font-family:monospace;background:#eee;padding:1px 5px;border-radius:3px}';
   html+='textarea,select,input{border:1px solid #ccc;padding:4px 6px;font-size:11px;font-family:inherit;border-radius:4px}.fr label{font-size:11px;font-weight:500;display:block}';
   html+='</style></head><body>';
-  html+='<h1 style="font-size:18px;margin-bottom:0.5rem">Informe de preevaluación EV-TRACE-MD v0.7</h1>';
+  html+='<h1 style="font-size:18px;margin-bottom:0.5rem">Informe de preevaluación EV-TRACE-MD v0.8</h1>';
   html+='<p style="font-size:12px;color:#666;margin-bottom:1rem">Herramienta: '+esc(ST.form.herr||'')+' — Proveedor: '+esc(ST.form.prov||'')+' — Fecha: '+esc(ST.form.fecha_val||today())+'</p>';
   html+=rpt+'</body></html>';
   var b=new Blob([html],{type:'text/html'});
   var url=URL.createObjectURL(b);
   var a=document.createElement('a');
-  a.href=url;a.download='informe_ev_trace_md_v07_'+(ST.form.herr||'herramienta').replace(/[^a-zA-Z0-9]/g,'_').toLowerCase()+'_'+(ST.form.fecha_val||today())+'.html';
+  a.href=url;a.download='informe_ev_trace_md_v08_'+(ST.form.herr||'herramienta').replace(/[^a-zA-Z0-9]/g,'_').toLowerCase()+'_'+(ST.form.fecha_val||today())+'.html';
   a.style.display='none';document.body.appendChild(a);a.click();
   setTimeout(function(){document.body.removeChild(a);URL.revokeObjectURL(url);},200);
   ST.step=prevStep;render();

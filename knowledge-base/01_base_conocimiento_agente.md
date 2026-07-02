@@ -4,7 +4,7 @@
 
 Este documento consolida la información operativa del marco **EV-TRACE-MD** (Evaluation and Traceability for Regulated Medical Devices) para evaluar, aprobar y seguir herramientas software de terceros empleadas en el ciclo de vida de un SaMD o en procesos del sistema de gestión de calidad. Está preparado para usarse como corpus de conocimiento del **EV-TRACE-MD Assistant**, mientras que el fichero JSON asociado aporta la misma información con estructura reutilizable por un flujo conversacional o un sistema RAG.
 
-**Estado:** operativo (v0.7). Pendiente: normalización definitiva de la regla de pesos.
+**Estado:** operativo (v0.8). Pendiente: normalización definitiva de la regla de pesos.
 
 **Estadísticas del catálogo:** 6 familias (S1-S6), con S4 dividida en dos subfamilias; 8 dimensiones de riesgo; 3 criterios transversales; 74 criterios específicos; 77 criterios en total; 39 anclajes normativos y regulatorios.
 
@@ -1125,7 +1125,7 @@ Los siguientes campos no modifican el marco, pero permiten que el agente aplique
 
 Para cada CT o CS, conservar: identificador; estado (`cumple`, `parcial`, `no-cumple`, `no-verif` o `no-aplica`); peso efectivo; evidencias; brecha o riesgo; acción organizativa; responsable y fecha objetivo, cuando proceda.
 
-### Reglas de asignación de estado (lógica del EV-TRACE-MD Assistant v0.7)
+### Reglas de asignación de estado (lógica del EV-TRACE-MD Assistant v0.8)
 
 - **cumple**: el proveedor cumple el criterio según la evidencia pública encontrada. Que existan medidas organizativas adicionales como capa extra de control NO convierte un cumplimiento del proveedor en parcial. Si el proveedor ofrece la funcionalidad, la documenta o la garantiza, el estado es «cumple» aunque la organización deba además activarla o configurarla.
 - **parcial**: existen dudas reales sobre el cumplimiento del proveedor — la evidencia encontrada es ambigua, incompleta o sugiere que el proveedor solo cubre parte del criterio, pero existe una medida organizativa razonable que puede mitigar esa desviación específica.
@@ -1188,10 +1188,9 @@ Los siguientes elementos son las referencias de apoyo seleccionadas en el marco.
 ## 15. Trazabilidad de los archivos del paquete
 
 - `01_base_conocimiento_agente.md`: corpus legible del marco EV-TRACE-MD, utilizable como documento de conocimiento del assistant.
-- `02_catalogo_estructurado_marco_validacion.json`: datos normalizados del catálogo de 77 criterios para el EV-TRACE-MD Assistant.
+- `02_catalogo_marco_validacion.json`: datos normalizados del catálogo de 77 criterios para el EV-TRACE-MD Assistant.
 - `03_informe_validacion_herramienta.md`: plantilla del informe de validación generado por el assistant.
-- `03_catalogo_editable_marco_validacion.xlsx`: versión editable de las tablas maestras para revisión y mantenimiento.
-- `ev_trace_md_v07.html`: aplicación standalone del EV-TRACE-MD Assistant (v0.7).
+- `ev_trace_md_v08.html`: aplicación standalone del EV-TRACE-MD Assistant (v0.8).
 
 ## 16. Salvaguardas de calidad
 

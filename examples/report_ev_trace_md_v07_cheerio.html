@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Informe EV-TRACE-MD v0.7</title>
+    <style>
+        body {
+            font-family: -apple-system, sans-serif;
+            font-size: 13px;
+            color: #1a1a1a;
+            line-height: 1.7;
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem
+        }
+
+        .btn-row,
+        .btn {
+            display: none !important
+        }
+
+        .panel {
+            border: none;
+            padding: 0
+        }
+
+        .rep-sec {
+            margin-bottom: 1rem
+        }
+
+        .rep-sec h3 {
+            font-size: 13px;
+            font-weight: 600;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 3px;
+            margin-bottom: 6px
+        }
+
+        .rep-blk {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 10px;
+            font-size: 12px;
+            line-height: 1.7
+        }
+
+        .al {
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            margin-bottom: 8px;
+            border: 1px solid #ddd
+        }
+
+        .al-w {
+            background: #fffbeb;
+            border-color: #fde68a;
+            color: #78350f
+        }
+
+        .stbl {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px
+        }
+
+        .stbl th {
+            background: #f3f3f3;
+            padding: 6px 8px;
+            text-align: left;
+            font-weight: 600;
+            border: 1px solid #ddd
+        }
+
+        .stbl td {
+            padding: 5px 8px;
+            border: 1px solid #ddd;
+            vertical-align: top
+        }
+
+        .sp {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+            border: 1px solid #999
+        }
+
+        .sp-c {
+            background: #f0fdf4;
+            color: #15803d
+        }
+
+        .sp-p {
+            background: #fffbeb;
+            color: #d97706
+        }
+
+        .sp-nc {
+            background: #fef2f2;
+            color: #dc2626
+        }
+
+        .sp-nv {
+            background: #f3f3f3;
+            color: #666
+        }
+
+        .sp-na {
+            background: #f3f3f3;
+            color: #999
+        }
+
+        .wp {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+            border: 1px solid #999
+        }
+
+        .wB {
+            background: #fef2f2;
+            color: #dc2626
+        }
+
+        .wC {
+            background: #fffbeb;
+            color: #d97706
+        }
+
+        .wO {
+            background: #f0fdf4;
+            color: #15803d
+        }
+
+        .wBC {
+            background: #fff7ed;
+            color: #c2410c
+        }
+
+        .wCO {
+            background: #f0fdf4;
+            color: #15803d
+        }
+
+        .vb {
+            font-size: 10px;
+            padding: 1px 6px;
+            border-radius: 3px;
+            background: #eee;
+            color: #333;
+            border: 1px solid #ccc
+        }
+
+        .rec-box {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+            background: #f9f9f9
+        }
+
+        .rec-title {
+            font-size: 13px;
+            font-weight: 600
+        }
+
+        .stat-g,
+        .eff-bar,
+        .prog-wrap,
+        .gov,
+        .ptitle {
+            display: none
+        }
+
+        .ev-id {
+            font-size: 10px;
+            font-family: monospace;
+            background: #eee;
+            padding: 1px 5px;
+            border-radius: 3px
+        }
+
+        textarea,
+        select,
+        input {
+            border: 1px solid #ccc;
+            padding: 4px 6px;
+            font-size: 11px;
+            font-family: inherit;
+            border-radius: 4px
+        }
+
+        .fr label {
+            font-size: 11px;
+            font-weight: 500;
+            display: block
+        }
+    </style>
+</head>
+
+<body>
+    <h1 style="font-size:18px;margin-bottom:0.5rem">Informe de preevaluación EV-TRACE-MD v0.7</h1>
+    <p style="font-size:12px;color:#666;margin-bottom:1rem">Herramienta: cheerio — Proveedor: Matt Mueller (autor
+        original) / cheeriojs (organización mantenedora en GitHub, mantenido actualmente por Felix Boehm) — Fecha:
+        2026-06-28</p>
+    <div class="panel">
+        <div class="ptitle">Informe de preevaluación</div>
+        <div style="display:flex;gap:6px;margin-bottom:1rem"><button class="btn btn-p"
+                onclick="ST.report_mode='resumen';render()">Informe resumido</button><button class="btn btn-sec"
+                onclick="ST.report_mode='completo';render()">Informe completo</button></div>
+        <div class="al al-w"><strong>Propuesta de estado documental — requiere revisión humana.</strong> La resolución
+            final corresponde al responsable de cumplimiento.</div>
+        <div class="rep-sec">
+            <h3>0. Control documental</h3>
+            <div class="rep-blk"><strong>Marco:</strong> EV-TRACE-MD <span class="vb">v0.7</span><br><strong>Fecha de
+                    validacion del expediente:</strong> <strong>2026-06-28</strong><br><strong>Via de
+                    activación:</strong> técnica<br><strong>Estado:</strong> Propuesta de estado documental — pendiente
+                de resolución formal.</div>
+        </div>
+        <div class="rep-sec">
+            <h3>1. Identificación de la herramienta</h3>
+            <div class="rep-blk"><strong>Herramienta:</strong> cheerio &nbsp;·&nbsp; <strong>Proveedor:</strong> Matt
+                Mueller (autor original) / cheeriojs (organización mantenedora en GitHub, mantenido actualmente por
+                Felix Boehm)<br><strong>URL:</strong> <a
+                    href="https://registry.npmjs.org/cheerio/-/cheerio-1.1.2.tgz">https://registry.npmjs.org/cheerio/-/cheerio-1.1.2.tgz</a>
+                &nbsp;·&nbsp; <strong>Versión / plan:</strong> 1.1.2<br><strong>Licencia / contratación:</strong>
+                MIT<br><strong>Descripción:</strong> -</div>
+        </div>
+        <div class="rep-sec">
+            <h3>2. Uso previsto y alcance</h3>
+            <div class="rep-blk"><strong>Uso previsto:</strong> -<br><strong>Procesos afectados:</strong>
+                -<br><strong>Datos personales:</strong> No &nbsp;·&nbsp; <strong>Categorías especiales:</strong>
+                No<br><strong>Código / secretos:</strong> Si &nbsp;·&nbsp; <strong>Integración con el SaMD:</strong>
+                No<br><strong>Determinación de alcance:</strong> Dentro del alcance
+                obligatorio<br><strong>Justificación:</strong> Dependencia dentro del código fuente del SaMD.</div>
+        </div>
+        <div class="rep-sec">
+            <h3>3. Clasificación y criticidad</h3>
+            <div class="rep-blk"><strong>Familia principal:</strong> S1 Dependencias<br><strong>Nivel de
+                    criticidad:</strong> <span class="lv-crítico">Crítico</span> &nbsp;·&nbsp; <strong>Frecuencia de
+                    revisión:</strong> Semestral<br><strong>Consultas recomendadas:</strong> Responsable de seguridad
+            </div>
+        </div>
+        <div class="rep-sec">
+            <h3>4. Resumen de evaluación</h3>
+            <div class="rep-blk">Criterios aplicables: <strong>13</strong> &nbsp;·&nbsp; Evaluados:
+                <strong>13</strong><br>Cumplen: <strong>3</strong> &nbsp;·&nbsp; Parciales: <strong>4</strong>
+                &nbsp;·&nbsp; No cumplen: <strong>2</strong> &nbsp;·&nbsp; No verificables:
+                <strong>4</strong><br>Pendientes de evidencia interna u organizativa: <strong>2</strong></div>
+        </div>
+        <div class="rep-sec">
+            <h3>5. Propuesta de estado documental</h3>
+            <div class="al al-w"><strong>Pendiente de revisión humana.</strong> Los resultados marcados como IA han sido
+                generados mediante lectura de fuentes públicas del proveedor y están sujetos a error. La resolución
+                final (Aprobado / Aprobado condicionado / Rechazado) corresponde al responsable de cumplimiento.</div>
+        </div>
+        <div class="rep-sec">
+            <h3>6. Evaluación de criterios transversales (CT)</h3>
+            <table class="stbl">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Criterio</th>
+                        <th>Peso</th>
+                        <th>Resultado</th>
+                        <th>Origen</th>
+                        <th>Hallazgo / evidencia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CT.1</td>
+                        <td style="font-size:12px">Adecuación al uso previsto declarado</td>
+                        <td><span class="wp wB">B</span></td>
+                        <td><span class="sp sp-c">Cumple</span></td>
+                        <td><span
+                                style="font-size:10px;padding:1px 5px;border-radius:3px;background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe">IA</span>
+                        </td>
+                        <td style="font-size:12px">El uso previsto de cheerio está documentado con claridad en múltiples
+                            fuentes públicas oficiales del proveedor. El README en npm (https://www.npmjs.co...</td>
+                    </tr>
+                    <tr>
+                        <td>CT.2</td>
+                        <td style="font-size:12px">Verificación de requisitos funcionales minimos</td>
+                        <td><span class="wp wB">B</span></td>
+                        <td><span class="sp sp-nv">No verificable</span></td>
+                        <td><span
+                                style="font-size:10px;padding:1px 5px;border-radius:3px;background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe">IA</span>
+                        </td>
+                        <td style="font-size:12px">Criterio organizativo: depende de evidencia interna o acción de la
+                            organización. No verificable mediante fuentes públicas.</td>
+                    </tr>
+                    <tr>
+                        <td>CT.3</td>
+                        <td style="font-size:12px">Reproducibilidad y estabilidad del comportamiento</td>
+                        <td><span class="wp wB">B</span></td>
+                        <td><span class="sp sp-nv">No verificable</span></td>
+                        <td><span
+                                style="font-size:10px;padding:1px 5px;border-radius:3px;background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe">IA</span>
+                        </td>
+                        <td style="font-size:12px">Criterio organizativo: depende de evidencia interna o acción de la
+                            organización. No verificable mediante fuentes públicas.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="rep-sec">
+            <h3>7. Evaluación de criterios específicos</h3>
+            <table class="stbl">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Criterio</th>
+                        <th>Peso</th>
+                        <th>Resultado</th>
+                        <th>Origen</th>
+                        <th>Hallazgo / evidencia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CS1.1</td>
+                        <td style="font-size:12px">Procedencia y canal de distribucion oficial</td>
+                        <td><span class="wp wB">B</span></td>
+                        <td><span class="sp sp-p">Cumple parcialmente</span></td>
+                        <td><span
+                                style="font-size:10px;padding:1px 5px;border-radius:3px;background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe">IA</span>
+                        </td>
+                        <td style="font-size:12px">cheerio 1.1.2 está publicado en el canal oficial registry.npmjs.org
+                            (https://registry.npmjs.org/cheerio/-/cheerio-1.1.2.tgz) y el registro npm proporc...</td>
+                    </tr>
+                    <tr>
+                        <td>CS1.2</td>
+                        <td style="font-size:12px">Actividad y mantenibilidad del componente</td>
+                        <td><span class="wp wBC">B/C</span></td>
+                        <td><span class="sp sp-p">Cumple parcialmente</span></td>
+                        <td><span
+                                style="font-size:10px;padding:1px 5px;border-radius:3px;background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe">IA</span>
+                        </td>
+                        <td style="font-size:12px">El proyecto cheerio está activo: la versión 1.0.0 se publicó en
+                            agosto de 2024 (cheerio.js.org/blog/cheerio-1.0/) y la última versión en npm es la 1.2...
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>CS1.3</td>
+                        <td style="font-size:12px">Vulnerabilidades conocidas (SCA)</td>
+                        <td><span class="wp wB">B</span></td>
+                        <td><span class="sp sp-nc">No cumple</span></td>
+                        <td><span
+                                style="font-size:10px;padding:1px 5px;border-radius:3px;background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe">IA</span>
+                        </td>
+                        <td style="font-size:12px">cheerio 1.1.2 no presenta CVEs directos conocidos (Snyk confirma 'no
+                            direct vulnerabilities'). Sin embargo, la versión 1.1.2 incorpora undici como dep...</td>
+                    </tr>
+                    <tr>
+                        <td>CS1.4</td>
+                        <td style="font-size:12px">Dependencias transitivas y subcomponentes</td>
+                        <td><span class="wp wCO">C/O</span></td>
+                        <td><span class="sp sp-nv">No verificable</span></td>
+                        <td><span
+                                style="font-size:10px;padding:1px 5px;border-radius:3px;background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe">IA</span>
+                        </td>
+                        <td style="font-size:12px">La generación del árbol de dependencias transitivas completo de
+                            cheerio 1.1.2 es un proceso organizativo que requiere ejecutar herramientas locales (n...
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>CS1.5</td>
+                        <td style="font-size:12px">SBOM y política de actualización</td>
+                        <td><span class="wp wCO">C/O</span></td>
+                        <td><span class="sp sp-nc">No cumple</span></td>
+                        <td><span
+                                style="font-size:10px;padding:1px 5px;border-radius:3px;background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe">IA</span>
+                        </td>
+                        <td style="font-size:12px">cheerio (cheeriojs) no publica ningún SBOM formal (SPDX, CycloneDX o
+                            equivalente) como artefacto de release en su repositorio GitHub ni en el registro...</td>
+                    </tr>
+                    <tr>
+                        <td>CS1.6</td>
+                        <td style="font-size:12px">Integridad del artefacto descargado</td>
+                        <td><span class="wp wB">B</span></td>
+                        <td><span class="sp sp-p">Cumple parcialmente</span></td>
+                        <td><span
+                                style="font-size:10px;padding:1px 5px;border-radius:3px;background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe">IA</span>
+                        </td>
+                        <td style="font-size:12px">cheerio 1.1.2 está publicado en el registro oficial npm
+                            (registry.npmjs.org). El registro publica un campo 'dist.integrity' con hash SHA-512 (no
+                            SHA-2...</td>
+                    </tr>
+                    <tr>
+                        <td>CS1.7</td>
+                        <td style="font-size:12px">Licencia de software y compatibilidad</td>
+                        <td><span class="wp wB">B</span></td>
+                        <td><span class="sp sp-c">Cumple</span></td>
+                        <td><span
+                                style="font-size:10px;padding:1px 5px;border-radius:3px;background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe">IA</span>
+                        </td>
+                        <td style="font-size:12px">cheerio 1.1.2 está publicado bajo licencia MIT (identificador SPDX:
+                            MIT), confirmado en múltiples fuentes primarias: el fichero LICENSE del repositori...</td>
+                    </tr>
+                    <tr>
+                        <td>CS1.8</td>
+                        <td style="font-size:12px">Fijacion de versión y control de cambios (pinning)</td>
+                        <td><span class="wp wB">B</span></td>
+                        <td><span class="sp sp-nv">No verificable</span></td>
+                        <td><span
+                                style="font-size:10px;padding:1px 5px;border-radius:3px;background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe">IA</span>
+                        </td>
+                        <td style="font-size:12px">El criterio CS1.8 evalúa si la dependencia está fijada a una versión
+                            concreta en el fichero de definición del proyecto que la consume (package.json, p...</td>
+                    </tr>
+                    <tr>
+                        <td>CS1.9</td>
+                        <td style="font-size:12px">Riesgo de discontinuidad del componente</td>
+                        <td><span class="wp wCO">C/O</span></td>
+                        <td><span class="sp sp-p">Cumple parcialmente</span></td>
+                        <td><span
+                                style="font-size:10px;padding:1px 5px;border-radius:3px;background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe">IA</span>
+                        </td>
+                        <td style="font-size:12px">La versión evaluada (1.1.2) está desactualizada y sin soporte activo:
+                            la versión actual en npm es 1.2.0 (publicada hace ~5 meses) y la 1.0.0 se lanzó ...</td>
+                    </tr>
+                    <tr>
+                        <td>CS1.10</td>
+                        <td style="font-size:12px">Comportamiento en ejecución y acceso a datos del entorno</td>
+                        <td><span class="wp wCO">C/O</span></td>
+                        <td><span class="sp sp-c">Cumple</span></td>
+                        <td><span
+                                style="font-size:10px;padding:1px 5px;border-radius:3px;background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe">IA</span>
+                        </td>
+                        <td style="font-size:12px">La evidencia pública disponible indica que cheerio 1.1.2 es una
+                            librería de parseo y manipulación de HTML/XML de propósito específico. Según la docume...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="rep-sec">
+            <h3>8. Fuentes consultadas por el agente</h3>
+            <div class="rep-blk"><strong>CT.1:</strong> https://www.npmjs.com/package/cheerio |
+                https://github.com/cheeriojs/cheerio | https://cheerio.js.org/<br><strong>CS1.1:</strong>
+                https://registry.npmjs.org/cheerio (packument oficial con campos dist.integrity y dist.shasum);
+                https://docs.npmjs.com/generating-provenance-statements/ (documentación provenance Sigstore npm);
+                https://github.com/cheeriojs/cheerio (repositorio oficial cheeriojs)<br><strong>CS1.2:</strong>
+                https://www.npmjs.com/package/cheerio — https://snyk.io/advisor/npm-package/cheerio —
+                https://github.com/cheeriojs/cheerio/releases —
+                https://cheerio.js.org/blog/cheerio-1.0/<br><strong>CS1.3:</strong>
+                https://security.snyk.io/package/npm/cheerio (Snyk, sin CVEs directos); https://nvd.nist.gov
+                (CVE-2026-6733, CVE-2026-6734 undici); https://security.snyk.io/vuln/SNYK-JS-UNDICI-8641354
+                (CVE-2025-22150 undici); https://advisories.gitlab.com/pkg/npm/undici/CVE-2026-1527/ (CVE-2026-1527
+                undici); https://securityonline.info/undici-vulnerabilities/ (CVE-2026-12151, CVE-2026-9675
+                undici)<br><strong>CS1.4:</strong> https://registry.npmjs.org/cheerio/-/cheerio-1.1.2.tgz (tarball
+                oficial); árbol de dependencias directas inferido de
+                https://registry.yarnpkg.com/cheerio/-/cheerio-1.1.0.tgz y
+                https://github.com/cheeriojs/cheerio/blob/main/package.json; Snyk dependency graph:
+                https://security.snyk.io/package/npm/cheerio<br><strong>CS1.5:</strong>
+                https://github.com/cheeriojs/cheerio/blob/main/SECURITY.md |
+                https://github.com/cheeriojs/cheerio/releases |
+                https://www.npmjs.com/package/cheerio<br><strong>CS1.6:</strong> https://registry.npmjs.org/cheerio
+                (dist.integrity / dist.signatures); https://docs.npmjs.com/verifying-registry-signatures/;
+                https://www.npmjs.com/package/cheerio (ausencia de badge de provenance);
+                https://github.com/cheeriojs/cheerio/releases<br><strong>CS1.7:</strong>
+                https://github.com/cheeriojs/cheerio/blob/main/LICENSE |
+                https://github.com/cheeriojs/cheerio/blob/main/package.json | https://www.npmjs.com/package/cheerio |
+                https://cdnjs.com/libraries/cheerio<br><strong>CS1.8:</strong> https://www.npmjs.com/package/cheerio
+                (versión latest 1.2.0 confirmada); https://registry.npmjs.org/cheerio/-/cheerio-1.1.2.tgz (artefacto de
+                versión exacta disponible en registro oficial)<br><strong>CS1.9:</strong>
+                https://www.npmjs.com/package/cheerio (versión 1.2.0, 5 meses); https://github.com/cheeriojs/cheerio
+                (commit Jun 26 2026); https://security.snyk.io/package/npm/cheerio (37.658.036 descargas/semana,
+                mantenimiento 'Healthy'); https://github.com/sponsors/cheeriojs;
+                https://opencollective.com/cheerio<br><strong>CS1.10:</strong> https://github.com/cheeriojs/cheerio
+                (README oficial), https://socket.dev/npm/package/cheerio, https://security.snyk.io/package/npm/cheerio,
+                https://www.npmjs.com/package/cheerio</div>
+        </div>
+        <div class="rep-sec">
+            <h3>9. Resolución formal humana</h3>
+            <div class="rep-blk">
+                <p style="font-size:12px;color:#6b7280;margin-bottom:8px">Este campo es editable. Registre aquí la
+                    resolución del responsable de cumplimiento.</p>
+                <div class="fr"><label>Estado de resolución</label><select onchange="ST.resolucion=this.value"
+                        style="max-width:320px">
+                        <option value="" selected="">— Pendiente de resolución —</option>
+                        <option value="aprobado">Aprobado</option>
+                        <option value="condicionado">Aprobado condicionado</option>
+                        <option value="rechazado">Rechazado</option>
+                    </select></div>
+                <div class="fr"><label>Observaciones de la resolución (responsable, fecha,
+                        justificación)</label><textarea style="min-height:80px"
+                        onblur="ST.obs_informe=this.value"></textarea></div>
+            </div>
+        </div>
+        <div class="rep-sec">
+            <h3>10. Seguimiento y revalidación</h3>
+            <div class="rep-blk"><strong>Frecuencia de revisión periódica:</strong> Semestral<br><br>Revalidación
+                anticipada ante: nueva versión mayor con cambios de arquitectura · modificación de condiciones de
+                servicio, política de privacidad o DPA · vulnerabilidad CVSS alta o crítica sin parche disponible ·
+                incidente de seguridad · cambio del uso previsto.</div>
+        </div>
+        <div class="btn-row" style="flex-wrap:wrap;gap:8px"><button class="btn" onclick="pv()">←
+                Anterior</button><button class="btn btn-sec" onclick="expJSON()">Exportar JSON</button><button
+                class="btn btn-sec" onclick="copyMD()">Copiar / Descargar Markdown</button><button class="btn btn-sec"
+                onclick="downloadReportHTML()">Descargar informe HTML</button><button class="btn btn-sec"
+                onclick="printReport()">Imprimir / PDF</button>
+            <div class="spacer"></div><button class="btn btn-d" onclick="resetCase()">Restablecer caso</button>
+        </div>
+    </div>
+</body>
+
+</html>

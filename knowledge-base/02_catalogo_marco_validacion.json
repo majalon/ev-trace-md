@@ -3,9 +3,9 @@
     "title": "Catálogo estructurado del marco EV-TRACE-MD para evaluación de herramientas software en desarrollo de SaMD",
     "short_title": "Catálogo EV-TRACE-MD para el EV-TRACE-MD Assistant",
     "language": "es-ES",
-    "version": "0.7",
-    "status": "Operativo (v0.7). Pendiente: normalización definitiva de la regla de pesos.",
-    "source_document": "Entrega-3-B-TFM.docx",
+    "version": "0.8",
+    "status": "Operativo (v0.8). Pendiente: normalización definitiva de la regla de pesos.",
+    "source_document": "TFM.docx",
     "source_date_in_document": "24/06/2026",
     "scope": "Organización fabricante de software como producto sanitario (SaMD) en el marco regulatorio europeo.",
     "statistics": {
