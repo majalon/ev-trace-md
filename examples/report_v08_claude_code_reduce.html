@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Informe EV-TRACE-MD v0.8</title>
+    <style>
+        body {
+            font-family: -apple-system, sans-serif;
+            font-size: 13px;
+            color: #1a1a1a;
+            line-height: 1.7;
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem
+        }
+
+        .btn-row,
+        .btn {
+            display: none !important
+        }
+
+        .panel {
+            border: none;
+            padding: 0
+        }
+
+        .rep-sec {
+            margin-bottom: 1rem
+        }
+
+        .rep-sec h3 {
+            font-size: 13px;
+            font-weight: 600;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 3px;
+            margin-bottom: 6px
+        }
+
+        .rep-blk {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 10px;
+            font-size: 12px;
+            line-height: 1.7
+        }
+
+        .al {
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            margin-bottom: 8px;
+            border: 1px solid #ddd
+        }
+
+        .al-w {
+            background: #fffbeb;
+            border-color: #fde68a;
+            color: #78350f
+        }
+
+        .stbl {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px
+        }
+
+        .stbl th {
+            background: #f3f3f3;
+            padding: 6px 8px;
+            text-align: left;
+            font-weight: 600;
+            border: 1px solid #ddd
+        }
+
+        .stbl td {
+            padding: 5px 8px;
+            border: 1px solid #ddd;
+            vertical-align: top
+        }
+
+        .sp {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+            border: 1px solid #999
+        }
+
+        .sp-c {
+            background: #f0fdf4;
+            color: #15803d
+        }
+
+        .sp-p {
+            background: #fffbeb;
+            color: #d97706
+        }
+
+        .sp-nc {
+            background: #fef2f2;
+            color: #dc2626
+        }
+
+        .sp-nv {
+            background: #f3f3f3;
+            color: #666
+        }
+
+        .sp-na {
+            background: #f3f3f3;
+            color: #999
+        }
+
+        .wp {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+            border: 1px solid #999
+        }
+
+        .wB {
+            background: #fef2f2;
+            color: #dc2626
+        }
+
+        .wC {
+            background: #fffbeb;
+            color: #d97706
+        }
+
+        .wO {
+            background: #f0fdf4;
+            color: #15803d
+        }
+
+        .wBC {
+            background: #fff7ed;
+            color: #c2410c
+        }
+
+        .wCO {
+            background: #f0fdf4;
+            color: #15803d
+        }
+
+        .vb {
+            font-size: 10px;
+            padding: 1px 6px;
+            border-radius: 3px;
+            background: #eee;
+            color: #333;
+            border: 1px solid #ccc
+        }
+
+        .rec-box {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+            background: #f9f9f9
+        }
+
+        .rec-title {
+            font-size: 13px;
+            font-weight: 600
+        }
+
+        .stat-g,
+        .eff-bar,
+        .prog-wrap,
+        .gov,
+        .ptitle {
+            display: none
+        }
+
+        .ev-id {
+            font-size: 10px;
+            font-family: monospace;
+            background: #eee;
+            padding: 1px 5px;
+            border-radius: 3px
+        }
+
+        textarea,
+        select,
+        input {
+            border: 1px solid #ccc;
+            padding: 4px 6px;
+            font-size: 11px;
+            font-family: inherit;
+            border-radius: 4px
+        }
+
+        .fr label {
+            font-size: 11px;
+            font-weight: 500;
+            display: block
+        }
+    </style>
+</head>
+
+<body>
+    <h1 style="font-size:18px;margin-bottom:0.5rem">Informe de preevaluación EV-TRACE-MD v0.8</h1>
+    <p style="font-size:12px;color:#666;margin-bottom:1rem">Herramienta: Claude Code — Proveedor: Anthropic, PBC —
+        Fecha: 2026-07-08</p>
+    <div class="panel">
+        <div class="ptitle">Informe de preevaluación</div>
+        <div style="display:flex;gap:6px;margin-bottom:1rem"><button class="btn btn-sec"
+                onclick="ST.report_mode='resumen';render()">Informe resumido</button><button class="btn btn-p"
+                onclick="ST.report_mode='completo';render()">Informe completo</button></div>
+        <div class="al al-w"><strong>Propuesta de estado documental — requiere revisión humana.</strong> La resolución
+            final corresponde al responsable de cumplimiento.</div>
+        <div class="rep-sec">
+            <h3>0. Control documental</h3>
+            <div class="rep-blk"><strong>Marco:</strong> EV-TRACE-MD <span class="vb">v0.8</span><br><strong>Fecha de
+                    validacion del expediente:</strong> <strong>2026-07-08</strong><br><strong>Via de
+                    activación:</strong> activa<br><strong>Estado:</strong> Propuesta de estado documental — pendiente
+                de resolución formal.</div>
+        </div>
+        <div class="rep-sec">
+            <h3>1. Identificación de la herramienta</h3>
+            <div class="rep-blk"><strong>Herramienta:</strong> Claude Code &nbsp;·&nbsp; <strong>Proveedor:</strong>
+                Anthropic, PBC<br><strong>URL:</strong> <a
+                    href="https://docs.anthropic.com/en/docs/claude-code">https://docs.anthropic.com/en/docs/claude-code</a>
+                &nbsp;·&nbsp; <strong>Versión / plan:</strong> claude-code CLI - plan Pro/Max/Team<br><strong>Licencia /
+                    contratación:</strong> Incluido en suscripción Claude Pro, Max o
+                Team.<br><strong>Descripción:</strong> Herramienta de línea de comandos (CLI) para programación
+                agéntica. Se instala localmente en el equipo de desarrollo. Opera sobre el código fuente del repositorio
+                local, puede leer y modificar ficheros, ejecutar comandos de terminal y proporciónar asistencia en
+                tareas de desarrollo asistida por IA.</div>
+        </div>
+        <div class="rep-sec">
+            <h3>2. Uso previsto y alcance</h3>
+            <div class="rep-blk"><strong>Uso previsto:</strong> Apoyo al desarrollo del código fuente del SaMD: revisión
+                de código, generacion de tests unitarios, refactorización y documentación técnica asistida por
+                IA.<br><strong>Procesos afectados:</strong> Desarrollo de software del SaMD, revisión de código,
+                generacion de documentación técnica.<br><strong>Datos personales:</strong> No &nbsp;·&nbsp;
+                <strong>Categorías especiales:</strong> No<br><strong>Código / secretos:</strong> Si &nbsp;·&nbsp;
+                <strong>Integración con el SaMD:</strong> Si<br><strong>Determinación de alcance:</strong> Dentro del
+                alcance obligatorio<br><strong>Justificación:</strong> Claude Code accede y puede modificar el código
+                fuente del SaMD. Un comportamiento incorrecto o una filtración de código podría comprometer la
+                integridad del producto sanitario y su conformidad regulatoria.</div>
+        </div>
+        <div class="rep-sec">
+            <h3>3. Clasificación y criticidad</h3>
+            <div class="rep-blk"><strong>Familia principal:</strong> S3 Herramientas instalables · Módulos: S5
+                (IA)<br><strong>Nivel de criticidad:</strong> <span class="lv-crítico">Crítico</span> &nbsp;·&nbsp;
+                <strong>Frecuencia de revisión:</strong> Semestral<br><strong>Consultas recomendadas:</strong>
+                Responsable de seguridad, QA / RA</div>
+        </div>
+        <div class="rep-sec">
+            <h3>4. Resumen de evaluación</h3>
+            <div class="rep-blk">Criterios aplicables: <strong>28</strong> &nbsp;·&nbsp; Evaluados:
+                <strong>28</strong><br>Cumplen: <strong>7</strong> &nbsp;·&nbsp; Parciales: <strong>12</strong>
+                &nbsp;·&nbsp; No cumplen: <strong>2</strong> &nbsp;·&nbsp; No verificables:
+                <strong>7</strong><br>Pendientes de evidencia interna u organizativa: <strong>7</strong></div>
+        </div>
+        <div class="rep-sec">
+            <h3>5. Propuesta de estado documental</h3>
+            <div class="al al-w"><strong>Pendiente de revisión humana.</strong> Los resultados marcados como IA han sido
+                generados mediante lectura de fuentes públicas del proveedor y están sujetos a error. La resolución
+                final (Aprobado / Aprobado condicionado / Rechazado) corresponde al responsable de cumplimiento.</div>
+        </div>
+        <div class="rep-sec">
+            <h3>6. Evaluación de criterios transversales (CT)</h3>
+            <table class="stbl">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Criterio</th>
+                        <th>Peso</th>
+                        <th>Resultado</th>
+                        <th>Razonamiento del agente</th>
+                        <th>Fuente consultada</th>
+                        <th>Acción requerida</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CT.1</td>
+                        <td style="font-size:12px">Adecuación al uso previsto declarado</td>
+                        <td><span class="wp wB">B</span></td>
+                        <td><span class="sp sp-c">Cumple</span></td>
+                        <td style="font-size:11px">Anthropic documenta con claridad el uso previsto de Claude Code en su
+                            documentación oficial pública. Según code.claude.com/docs/en/overview, Claude Code es «una
+                            herramienta de codificación agéntica que lee el código fuente, edita archivos, ejecuta
+                            comandos e integra con herramientas de desarrollo», disponible en terminal, IDE, escritorio
+                            y navegador. Su uso previsto cubre explícitamente: construcción de funcionalidades,
+                            corrección de errores, automatización de tareas de desarrollo, gestión de flujos git
+                            (commits, ramas, pull requests) y ejecución de tareas rutinarias como escritura de tests,
+                            resolución de conflictos de fusión o actualización de dependencias. La página de producto
+                            (claude.com/product/claude-code) confirma disponibilidad en planes Pro/Max/Team. La
+                            herramienta está descrita como asistente de codificación impulsado por IA para
+                            desarrolladores de software, con capacidades multi-archivo y comprensión de bases de código
+                            completas. El uso previsto declarado por el proveedor es coherente y técnicamente detallado.
+                            No se identifica ninguna ambigüedad relevante sobre el alcance funcional desde la
+                            perspectiva del proveedor.</td>
+                        <td style="font-size:11px">https://code.claude.com/docs/en/overview —
+                            https://claude.com/product/claude-code — https://github.com/anthropics/claude-code</td>
+                        <td style="font-size:11px">Comparar el uso previsto declarado por el proveedor con el uso
+                            interno.</td>
+                    </tr>
+                    <tr>
+                        <td>CT.2</td>
+                        <td style="font-size:12px">Verificación de requisitos funcionales minimos</td>
+                        <td><span class="wp wB">B</span></td>
+                        <td><span class="sp sp-nv">No verificable</span></td>
+                        <td style="font-size:11px">Criterio organizativo: depende de evidencia interna o acción de la
+                            organización. No verificable mediante fuentes públicas.</td>
+                        <td style="font-size:11px">-</td>
+                        <td style="font-size:11px">-</td>
+                    </tr>
+                    <tr>
+                        <td>CT.3</td>
+                        <td style="font-size:12px">Reproducibilidad y estabilidad del comportamiento</td>
+                        <td><span class="wp wB">B</span></td>
+                        <td><span class="sp sp-nv">No verificable</span></td>
+                        <td style="font-size:11px">Criterio organizativo: depende de evidencia interna o acción de la
+                            organización. No verificable mediante fuentes públicas.</td>
+                        <td style="font-size:11px">-</td>
+                        <td style="font-size:11px">-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="rep-sec">
+            <h3>7. Evaluación de criterios específicos</h3>
+            <table class="stbl">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Criterio</th>
+                        <th>Peso</th>
+                        <th>Resultado</th>
+                        <th>Razonamiento del agente</th>
+                        <th>Fuente consultada</th>
+                        <th>Acción requerida</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CS3.1</td>
+                        <td style="font-size:12px">Descarga desde canal oficial y verificación de integridad</td>
+                        <td><span class="wp wB">B</span></td>
+                        <td><span class="sp sp-c">Cumple</span></td>
+                        <td style="font-size:11px">Anthropic ofrece canales de descarga oficiales claramente
+                            documentados: instalador nativo vía https://claude.ai/install.sh (Linux/macOS) y
+                            https://claude.ai/install.ps1 (Windows), Homebrew (cask claude-code), WinGet
+                            (Anthropic.ClaudeCode) y npm (@anthropic-ai/claude-code en npmjs.com). La documentación
+                            oficial detalla un mecanismo robusto de verificación de integridad: cada release publica un
+                            manifest.json con checksums SHA256 por plataforma, firmado con una clave GPG de Anthropic
+                            (security@anthropic.com), disponible en https://downloads.claude.ai/keys/claude-code.asc.
+                            Respecto a firma nativa de plataforma: el binario macOS está 'signed by Anthropic PBC and
+                            notarized by Apple' (verificable con codesign --verify); el binario Windows está 'signed by
+                            Anthropic, PBC' (verificable con Get-AuthenticodeSignature); en Linux los binarios nativos
+                            no están firmados individualmente, pero los repositorios apt/dnf/apk sí usan firma de
+                            repositorio verificada por el gestor de paquetes. Las firmas de manifiesto están disponibles
+                            desde la versión 2.1.89. Existe un issue abierto sobre binarios unsigned en el paquete
+                            @anthropic-ai/claude-agent-sdk (JetBrains plugin), pero no afecta al binario principal de
+                            Claude Code CLI.</td>
+                        <td style="font-size:11px">https://code.claude.com/docs/en/setup (sección 'Verify binary
+                            integrity' y 'Platform-native code signatures')</td>
+                        <td style="font-size:11px">Documentar el canal de descarga y la versión instalada.</td>
+                    </tr>
+                    <tr>
+                        <td>CS3.2</td>
+                        <td style="font-size:12px">Actividad de mantenimiento y soporte del proveedor</td>
+                        <td><span class="wp wBC">B/C</span></td>
+                        <td><span class="sp sp-c">Cumple</span></td>
+                        <td style="font-size:11px">Claude Code CLI mantiene actividad de mantenimiento y soporte activos
+                            y verificables. La versión estable más reciente en npm es la 2.1.204 (publicada el 8 de
+                            julio de 2026), con un ritmo de publicación de múltiples releases por semana desde su
+                            lanzamiento en GA (v1.0.0, mayo 2025). El repositorio oficial en GitHub
+                            (anthropics/claude-code) dispone de un CHANGELOG.md público y detallado, actualizado en
+                            tiempo real. Anthropic ofrece dos canales diferenciados: 'latest' (cada release
+                            inmediatamente) y 'stable' (aproximadamente una semana de retraso, omitiendo regresiones
+                            críticas). La política de ciclo de vida de modelos subyacentes está documentada en
+                            docs.anthropic.com/en/docs/about-claude/model-deprecations, con preaviso mínimo de 60 días
+                            antes de retiro. No existe documentación pública de una política formal de EOL específica
+                            para el CLI, pero el soporte activo es evidente por la cadencia de releases y la corrección
+                            continua de vulnerabilidades de seguridad (ej. fix de seguridad MCP en versiones recientes).
+                        </td>
+                        <td style="font-size:11px">https://www.npmjs.com/package/@anthropic-ai/claude-code |
+                            https://github.com/anthropics/claude-code/releases |
+                            https://code.claude.com/docs/en/changelog |
+                            https://docs.anthropic.com/en/docs/about-claude/model-deprecations |
+                            https://code.claude.com/docs/en/setup</td>
+                        <td style="font-size:11px">No utilizar versiónes EOL en entornos de produccion vinculados al
+                            SaMD.</td>
+                    </tr>
+                    <tr>
+                        <td>CS3.3</td>
+                        <td style="font-size:12px">Vulnerabilidades conocidas en la versión instalada</td>
+                        <td><span class="wp wB">B</span></td>
+                        <td><span class="sp sp-p">Cumple parcialmente</span></td>
+                        <td style="font-size:11px">Claude Code tiene un historial CVE documentado y activo. El
+                            repositorio oficial en GitHub (github.com/anthropics/claude-code/security/advisories)
+                            publica avisos de seguridad con severidades High y Moderate, siendo los más recientes de
+                            2026: GHSA-fg94-h982-f3mm (Jun 2026, Moderate), GHSA-5p5x-5294-qhp3 y GHSA-3rwf-2g6p-c2f9
+                            (May 2026, High), GHSA-5cwg-9f6j-9jvx (Abr 2026, High). Se han identificado más de 28 CVEs
+                            en NVD incluyendo dos con CVSS 10.0 (CVE-2026-39861 sandbox escape, CVE-2026-25725) y una
+                            exfiltración de claves API antes de confirmación de confianza (CVE-2026-21852). Anthropic
+                            parchea en general con rapidez y la herramienta dispone de auto-update, pero se ha
+                            documentado al menos un caso en que un parche crítico se publicó sin mención en las release
+                            notes (SOCKS5 bypass, v2.1.90). El estado es 'parcial' porque la cadencia de
+                            vulnerabilidades es alta y la verificación de la versión exacta instalada vs. CVEs
+                            aplicables requiere gestión activa por parte de la organización, especialmente si no usa
+                            auto-update.</td>
+                        <td style="font-size:11px">https://github.com/anthropics/claude-code/security/advisories |
+                            https://github.com/advisories/GHSA-jh7p-qr78-84p7 |
+                            https://nvd.nist.gov/vuln/detail/CVE-2026-21852 |
+                            https://cybersecuritynews.com/claude-codes-network-sandbox-vulnerability/ |
+                            https://pulse.adyog.com/insights/claude-code-28-cves-ai-coding-tools-attack-surface-cve-2026-46406
+                        </td>
+                        <td style="font-size:11px">Mantener inventario de software instalado con versiónes.</td>
+                    </tr>
+                    <tr>
+                        <td>CS3.4</td>
+                        <td style="font-size:12px">Integridad del software instalado</td>
+                        <td><span class="wp wBC">B/C</span></td>
+                        <td><span class="sp sp-c">Cumple</span></td>
+                        <td style="font-size:11px">Anthropic publica mecanismos robustos de verificación de integridad
+                            post-instalación para Claude Code, documentados en https://code.claude.ai/docs/en/setup.
+                            Para cada release se publica un manifest.json con checksums SHA-256 para todos los binarios
+                            por plataforma, firmado con clave GPG de Anthropic ('Anthropic Claude Code Release Signing
+                            &lt;security@anthropic.com&gt;'). Esta firma transitiva cubre todos los binarios listados.
+                            Adicionalmente: macOS cuenta con firma de código 'Anthropic PBC' y notarización Apple
+                            (verificable con codesign); Windows tiene firma Authenticode verificable con
+                            Get-AuthenticodeSignature; Linux usa repositorios apt/dnf/apk con firma de repositorio
+                            verificada automáticamente por el gestor de paquetes. Los manifiestos firmados están
+                            disponibles desde v2.1.89; versiones anteriores publicaban checksums sin firma. La propia
+                            infraestructura interna del instalador verifica el checksum tras la descarga, como
+                            evidencian los issues públicos donde se detectan y rechazan binarios con checksum
+                            incorrecto.</td>
+                        <td style="font-size:11px">https://code.claude.ai/docs/en/setup (sección 'Verifying binary
+                            integrity' / 'Manifest signatures')</td>
+                        <td style="font-size:11px">Establecer proceso de verificación de integridad del software
+                            instalado.</td>
+                    </tr>
+                    <tr>
+                        <td>CS3.5</td>
+                        <td style="font-size:12px">Control de instalación en equipos corporativos</td>
+                        <td><span class="wp wBC">B/C</span></td>
+                        <td><span class="sp sp-nv">No verificable</span></td>
+                        <td style="font-size:11px">Criterio organizativo: depende de evidencia interna o acción de la
+                            organización. No verificable mediante fuentes públicas.</td>
+                        <td style="font-size:11px">-</td>
+                        <td style="font-size:11px">-</td>
+                    </tr>
+                    <tr>
+                        <td>CS3.6</td>
+                        <td style="font-size:12px">Telemetría y envio de datos al proveedor</td>
+                        <td><span class="wp wBC">B/C</span></td>
+                        <td><span class="sp sp-p">Cumple parcialmente</span></td>
+                        <td style="font-size:11px">La documentación oficial de Claude Code
+                            (https://code.claude.com/docs/en/data-usage) describe con detalle los datos recogidos:
+                            métricas operacionales (latencia, fiabilidad, patrones de uso) via telemetría —que
+                            explícitamente NO incluye código ni rutas de ficheros—, errores via Sentry, y
+                            conversaciones/código completos solo cuando el usuario ejecuta /feedback. Existen variables
+                            de entorno para desactivar cada canal por separado: DISABLE_TELEMETRY,
+                            DISABLE_ERROR_REPORTING y DISABLE_FEEDBACK_COMMAND. Hasta aquí el proveedor cumple. El
+                            problema relevante para planes Pro/Max/Team es el cambio de política de octubre 2025:
+                            Anthropic introdujo un toggle de entrenamiento de modelos que, para cuentas consumer (Free,
+                            Pro, Max), se presentó con opt-in activado por defecto. El toggle de entrenamiento afecta a
+                            sesiones de Claude Code y puede resultar en retención de prompts/código durante 5 años. Para
+                            planes Team (bajo Commercial Terms) el entrenamiento está desactivado por defecto. La
+                            ambigüedad sobre el estado real del toggle para usuarios Pro/Max que aceptaron los nuevos
+                            términos sin desactivarlo constituye una duda real de cumplimiento que requiere verificación
+                            organizativa activa.</td>
+                        <td style="font-size:11px">https://code.claude.com/docs/en/data-usage |
+                            https://www.anthropic.com/news/updates-to-our-consumer-terms |
+                            https://privacy.claude.com/en/articles/7996868-is-my-data-used-for-model-training</td>
+                        <td style="font-size:11px">Evaluar si los datos recogidos incluyen información sensible y
+                            desactivar la telemetría si es necesario.</td>
+                    </tr>
+                    <tr>
+                        <td>CS3.7</td>
+                        <td style="font-size:12px">Cifrado de datos en reposo y en transito</td>
+                        <td><span class="wp wCO">C/O</span></td>
+                        <td><span class="sp sp-p">Cumple parcialmente</span></td>
+                        <td style="font-size:11px">En tránsito: la documentación oficial de Claude Code
+                            (code.claude.com/docs/en/data-usage) confirma explícitamente que todos los prompts y outputs
+                            se cifran en tránsito mediante TLS 1.2+. La telemetría enviada a Anthropic y los datos
+                            enviados a Sentry también se cifran en tránsito (TLS) y en reposo (AES-256). El Anthropic
+                            Privacy Center (privacy.claude.com) confirma cifrado automático en tránsito y en reposo para
+                            datos de usuarios. En reposo (lado servidor): Anthropic aplica AES-256 para datos
+                            almacenados en su infraestructura API, respaldado por SOC 2 Type II e ISO 27001. Sin
+                            embargo, existe una limitación relevante para planes Pro/Max: la documentación oficial
+                            indica que 'el cifrado en reposo depende del proveedor del modelo', sin garantizarlo
+                            explícitamente para todos los artefactos de Claude Code CLI. Más crítico para entornos
+                            regulados: Claude Code almacena datos localmente en caché (historial de sesiones,
+                            transcripts) en el dispositivo del usuario sin cifrado propio del proveedor; la seguridad de
+                            ese almacenamiento local depende del cifrado de disco del sistema operativo gestionado por
+                            la organización. Esta dependencia del control organizativo para los datos locales justifica
+                            estado parcial.</td>
+                        <td style="font-size:11px">https://code.claude.com/docs/en/data-usage (documentación oficial
+                            Claude Code - sección Network y Telemetry/Error Reporting);
+                            https://privacy.claude.com/en/articles/10458704-how-does-anthropic-protect-the-personal-data-of-claude-users
+                            (Anthropic Privacy Center); https://trust.anthropic.com (Anthropic Trust Center)</td>
+                        <td style="font-size:11px">Asegurarse de que los equipos aplican cifrado de disco completo.</td>
+                    </tr>
+                    <tr>
+                        <td>CS3.8</td>
+                        <td style="font-size:12px">Registro de versiónes instaladas y actualizaciónes</td>
+                        <td><span class="wp wCO">C/O</span></td>
+                        <td><span class="sp sp-c">Cumple</span></td>
+                        <td style="font-size:11px">Anthropic publica y mantiene activamente un historial de versiones
+                            público y detallado para Claude Code CLI a través de múltiples canales oficiales: (1) un
+                            CHANGELOG.md canónico en el repositorio GitHub oficial
+                            (github.com/anthropics/claude-code/blob/main/CHANGELOG.md), (2) una página de changelog en
+                            la documentación oficial (code.claude.com/docs/en/changelog), y (3) notas de versión en la
+                            plataforma (platform.claude.com/docs/en/release-notes/overview). El changelog documenta por
+                            versión las nuevas funciones, correcciones de bugs y cambios de seguridad relevantes (ej.
+                            correcciones de bypass de permisos de Bash, endurecimiento de acciones 'Open in editor',
+                            cambios en sandbox.credentials). Además, el CLI ofrece el comando `claude --version` para
+                            consultar la versión instalada y `/release-notes` como selector interactivo de versiones
+                            dentro de la sesión. También existe una gestión de versiones mínima/máxima permitida
+                            mediante settings `requiredMinimumVersion`/`requiredMaximumVersion`. El historial cubre
+                            incidentes de seguridad notables como el incidente del source map (v2.1.88) y la dependencia
+                            axios comprometida.</td>
+                        <td style="font-size:11px">https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md |
+                            https://code.claude.com/docs/en/changelog |
+                            https://platform.claude.com/docs/en/release-notes/overview</td>
+                        <td style="font-size:11px">Mantener registro del software instalado con nombre, versión y fecha.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>CS3.9</td>
+                        <td style="font-size:12px">Dependencia de licencia y activación online</td>
+                        <td><span class="wp wCO">C/O</span></td>
+                        <td><span class="sp sp-nc">No cumple</span></td>
+                        <td style="font-size:11px">Claude Code (plan Pro/Max/Team) requiere autenticación online
+                            continua con los servidores de Anthropic para funcionar. Según la documentación oficial de
+                            autenticación (code.claude.com/docs/en/authentication), el mecanismo predeterminado es OAuth
+                            2.0 contra claude.ai, con tokens de acceso de corta duración (~60 min) que se renuevan
+                            automáticamente mediante refresh tokens. La documentación oficial del proveedor confirma que
+                            la herramienta requiere conexión activa a api.anthropic.com para toda inferencia: 'Internet
+                            connection: Required for all model inference; Claude Code has no offline mode'
+                            (codersera.com). La instalación misma requiere descarga online (curl -fsSL
+                            https://claude.ai/install.sh | bash) y un issue abierto en el repositorio oficial GitHub
+                            (#39847) documenta explícitamente que no existe soporte para instalación ni operación en
+                            entornos air-gapped. Para planes Pro/Max/Team, la suscripción activa es requisito funcional:
+                            si caduca o es revocada, la herramienta deja de operar, sin modo degradado local. Esto
+                            supone dependencia estructural de disponibilidad del servidor de licencias/autenticación de
+                            Anthropic, incompatible con requisitos de continuidad operativa en entornos SaMD regulados.
+                        </td>
+                        <td style="font-size:11px">https://code.claude.com/docs/en/authentication |
+                            https://codersera.com/blog/how-to-run-open-source-claude-code-oss-developer-guide-2026/ |
+                            https://github.com/anthropics/claude-code/issues/39847</td>
+                        <td style="font-size:11px">Evaluar si la dependencia de activación online representa un riesgo
+                            inaceptable.</td>
+                    </tr>
+                    <tr>
+                        <td>CS3.10</td>
+                        <td style="font-size:12px">Licencia de uso y condiciones contractuales</td>
+                        <td><span class="wp wBC">B/C</span></td>
+                        <td><span class="sp sp-p">Cumple parcialmente</span></td>
+                        <td style="font-size:11px">El LICENSE.md del repositorio oficial de Claude Code
+                            (github.com/anthropics/claude-code) establece que el uso está sujeto a los Términos
+                            Comerciales de Anthropic. El uso comercial está permitido según los Términos Comerciales, y
+                            la propiedad de los outputs se asigna al cliente. Para planes Pro/Max (Consumer Terms), el
+                            uso está orientado a uso individual ordinario; para entornos empresariales o de desarrollo
+                            de productos se requiere autenticación por API key bajo Términos Comerciales. Respecto a
+                            instalaciones, no existe límite explícito por número de dispositivos, sino por seat/plan
+                            contratado. En cuanto a dispositivos médicos: la AUP prohíbe facilitar la destrucción o
+                            disrupción de infraestructura crítica incluyendo dispositivos médicos, y clasifica usos en
+                            sanidad como 'high-risk use cases' que requieren salvaguardas adicionales
+                            (human-in-the-loop, divulgación de IA). Sin embargo, los términos no contemplan ninguna
+                            declaración de conformidad con MDR EU 2017/745, IEC 62304 ni AI Act para uso como componente
+                            de SaMD, y el servicio se provee 'AS IS' con disclaimer expreso de garantías de idoneidad
+                            para un propósito particular. Esta ausencia de garantías contractuales específicas para
+                            dispositivos médicos regulados representa una brecha real para fabricantes de SaMD.</td>
+                        <td style="font-size:11px">github.com/anthropics/claude-code/blob/main/LICENSE.md |
+                            anthropic.com/legal/aup |
+                            www-cdn.anthropic.com/6b68a6508f0210c5fe08f0199caa05c4ee6fb4dc/Anthropic-on-Bedrock-Commercial-Terms-of-Service_Dec_2023.pdf
+                            | code.claude.com/docs/en/legal-and-compliance |
+                            anthropic.com/news/updating-our-usage-policy</td>
+                        <td style="font-size:11px">Verificar que el número de licencias adquiridas cubre las
+                            instalaciónes activas.</td>
+                    </tr>
+                    <tr>
+                        <td>CS5.1</td>
+                        <td style="font-size:12px">Clasificación de riesgo conforme al Reglamento de IA de la UE</td>
+                        <td><span class="wp wB">B</span></td>
+                        <td><span class="sp sp-p">Cumple parcialmente</span></td>
+                        <td style="font-size:11px">Claude Code, como interfaz de uso de los modelos Claude de Anthropic,
+                            se encuadra bajo el régimen GPAI (Modelo de IA de Uso General) del AI Act (Reg. 2024/1689),
+                            NO como sistema de alto riesgo Anexo III. Anthropic es proveedor GPAI sujeto a Arts. 53–55.
+                            Los modelos Claude (ej. Claude 3.7 Sonnet, Claude 4 Opus) están clasificados como GPAI con
+                            riesgo sistémico (&gt;10^25 FLOPs), lo que activa obligaciones reforzadas del Art. 55.
+                            Anthropic firmó el GPAI Code of Practice (julio 2025), mecanismo voluntario reconocido por
+                            la Comisión Europea como vía válida de conformidad con Arts. 53 y 55. Sin embargo, los
+                            registros formales de evaluación de conformidad y el resumen detallado de datos de
+                            entrenamiento exigidos por el Art. 53(1)(d) no son completamente públicos. Para el
+                            fabricante SaMD (deployer), Claude Code como herramienta de desarrollo de software no activa
+                            directamente Anexo III (no es el sistema médico en sí). La clasificación de riesgo del uso
+                            concreto (desarrollo de SaMD) recae en el deployer, no en Anthropic.</td>
+                        <td style="font-size:11px">https://www.anthropic.com/news/eu-code-practice — Anthropic anuncia
+                            adhesión al GPAI Code of Practice (julio 2025); https://code-of-practice.ai/ — Claude 4 Opus
+                            citado expresamente como modelo con riesgo sistémico sujeto a Art. 55;
+                            https://www.researchgate.net/publication/403936548_Privacy_Impact_Assessment_Claude_Opus_47
+                            — PIA Claude Opus 4.7: documenta que registros de evaluación de conformidad formal no son
+                            totalmente públicos; https://digital-strategy.ec.europa.eu/en/policies/contents-code-gpai —
+                            GPAI Code of Practice, Comisión Europea</td>
+                        <td style="font-size:11px">Documentar la clasificación de riesgo determinada y su fundamento.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>CS5.2</td>
+                        <td style="font-size:12px">Rol de la organización como desplegador de IA</td>
+                        <td><span class="wp wBC">B/C</span></td>
+                        <td><span class="sp sp-p">Cumple parcialmente</span></td>
+                        <td style="font-size:11px">Anthropic identifica a los clientes que acceden a la API como
+                            'operadores' en su arquitectura de principios (Claude's Constitution) y en sus términos
+                            comerciales, estableciendo que los operadores asumen responsabilidad sobre el uso adecuado
+                            de Claude en sus plataformas. Adicionalmente, Anthropic anunció en julio de 2025 su adhesión
+                            al GPAI Code of Practice de la UE, reconociendo sus obligaciones como proveedor de GPAI bajo
+                            el AI Act. Sin embargo, los documentos contractuales públicos (Términos de Uso comerciales,
+                            AUP, documentación de Claude Code) no mencionan de forma explícita el concepto de
+                            'desplegador' (deployer) en terminología AI Act (Art. 3(4), Art. 26), ni formalizan
+                            contractualmente las obligaciones específicas de la organización cliente como desplegador de
+                            IA de alto riesgo. La organización debe documentar internamente su rol como desplegador
+                            conforme al Art. 26 del AI Act, independientemente de lo que reconozca Anthropic en sus
+                            términos.</td>
+                        <td style="font-size:11px">https://www.anthropic.com/constitution (definición de 'operators');
+                            https://www.anthropic.com/news/eu-code-practice (adhesión GPAI Code of Practice, julio
+                            2025); https://companyscope.io/vendors/anthropic ('Your role as a buyer: deployer, with
+                            separate obligations'); https://code.claude.com/docs/en/legal-and-compliance (términos
+                            legales de Claude Code)</td>
+                        <td style="font-size:11px">Registrar formalmente el rol de la organización como desplegador.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>CS5.3</td>
+                        <td style="font-size:12px">Normas internas de uso de IA aprobadas</td>
+                        <td><span class="wp wB">B</span></td>
+                        <td><span class="sp sp-nv">No verificable</span></td>
+                        <td style="font-size:11px">Criterio organizativo: depende de evidencia interna o acción de la
+                            organización. No verificable mediante fuentes públicas.</td>
+                        <td style="font-size:11px">-</td>
+                        <td style="font-size:11px">-</td>
+                    </tr>
+                    <tr>
+                        <td>CS5.4</td>
+                        <td style="font-size:12px">Política de uso de datos de entrada para entrenamiento del modelo
+                        </td>
+                        <td><span class="wp wB">B</span></td>
+                        <td><span class="sp sp-p">Cumple parcialmente</span></td>
+                        <td style="font-size:11px">Para planes Pro/Max con Claude Code (cuentas consumer), desde
+                            agosto/octubre 2025 Anthropic modificó su política: los datos de chats y sesiones de
+                            codificación pueden usarse para entrenar modelos por defecto si el usuario no desactiva el
+                            toggle 'Help improve Claude' en Privacy Settings. El opt-out existe y es funcional (Settings
+                            → Privacy), cambiable en cualquier momento, pero opera como opt-out —no opt-in— para cuentas
+                            consumer, lo que implica que sin acción del usuario los datos pueden usarse para
+                            entrenamiento. Adicionalmente, existe una excepción relevante: aunque el usuario haga
+                            opt-out, las conversaciones marcadas por revisión de seguridad (safety flag) pueden
+                            igualmente usarse para entrenamiento, sin que el usuario sea notificado ni se definan los
+                            criterios de activación del flag. Por contraste, los planes Team y Enterprise (Commercial
+                            Terms) tienen prohibición explícita de uso para entrenamiento sin necesidad de acción del
+                            usuario. Dado que el criterio evalúa planes Pro/Max y que el opt-out consumer presenta
+                            limitaciones reales (carácter opt-out, excepción safety), el estado es parcial.</td>
+                        <td style="font-size:11px">https://www.anthropic.com/news/updates-to-our-consumer-terms |
+                            https://privacy.claude.com/en/articles/10023555-how-do-you-use-personal-data-in-model-training
+                            | https://privacy.claude.com/en/articles/7996868-is-my-data-used-for-model-training |
+                            Consumer Terms Section 4 citado en https://terms.law/ToS-Watchdog/ai-services/anthropic/ |
+                            Análisis de excepción safety flag en
+                            https://techcoffeehouse.com/2026/06/09/claude-training-data-opt-out-carve-out/</td>
+                        <td style="font-size:11px">Seleccionar un plan o configuracion que excluya el uso de datos para
+                            entrenamiento cuando se introduzca información sensible.</td>
+                    </tr>
+                    <tr>
+                        <td>CS5.5</td>
+                        <td style="font-size:12px">Datos permitidos para introducir en la herramienta</td>
+                        <td><span class="wp wB">B</span></td>
+                        <td><span class="sp sp-nv">No verificable</span></td>
+                        <td style="font-size:11px">Criterio organizativo: depende de evidencia interna o acción de la
+                            organización. No verificable mediante fuentes públicas.</td>
+                        <td style="font-size:11px">-</td>
+                        <td style="font-size:11px">-</td>
+                    </tr>
+                    <tr>
+                        <td>CS5.6</td>
+                        <td style="font-size:12px">Supervision humana de los resultados generados</td>
+                        <td><span class="wp wB">B</span></td>
+                        <td><span class="sp sp-nv">No verificable</span></td>
+                        <td style="font-size:11px">Criterio organizativo: depende de evidencia interna o acción de la
+                            organización. No verificable mediante fuentes públicas.</td>
+                        <td style="font-size:11px">-</td>
+                        <td style="font-size:11px">-</td>
+                    </tr>
+                    <tr>
+                        <td>CS5.7</td>
+                        <td style="font-size:12px">Integridad de los artefactos generados e incorporados al SaMD</td>
+                        <td><span class="wp wBC">B/C</span></td>
+                        <td><span class="sp sp-p">Cumple parcialmente</span></td>
+                        <td style="font-size:11px">Anthropic documenta parcialmente el proceso de generación de salidas
+                            y ofrece mecanismos de trazabilidad, pero con limitaciones relevantes para el contexto SaMD.
+                            A favor: (1) La API devuelve en cada respuesta el campo 'model' con el identificador exacto
+                            del modelo que generó la salida (p. ej. 'claude-sonnet-4-20250514'), junto con un 'id' de
+                            mensaje único y cabeceras 'request-id'. (2) Claude Code emite trazabilidad vía
+                            OpenTelemetry: el span 'claude_code.llm_request' registra model name, latencia y token
+                            counts por cada llamada; el atributo 'prompt.id' vincula todos los eventos de un prompt. (3)
+                            La propagación W3C TRACEPARENT conecta spans del cliente con la traza servidor. Sin embargo,
+                            existen brechas: (a) la trazabilidad OTel es opt-in y no está activa por defecto; (b) el
+                            texto de respuesta del modelo ('assistant response text') no se recoge salvo activación
+                            explícita; (c) no existe un mecanismo nativo de firma o hash de artefactos generados para
+                            garantizar su integridad inmutable; (d) los logs de auditoría del plan Pro/Max/Team no
+                            incluyen el modelo invocado ni el contenido de las conversaciones. Para SaMD regulado, la
+                            organización debe implementar configuración OTel activa y captura de respuestas para cubrir
+                            la brecha de trazabilidad.</td>
+                        <td style="font-size:11px">https://code.claude.com/docs/en/agent-sdk/observability (span
+                            claude_code.llm_request con model name), https://code.claude.com/docs/en/monitoring-usage
+                            (prompt.id, W3C TRACEPARENT, respuesta no capturada por defecto),
+                            https://platform.claude.com/docs/en/api/overview (request-id y campo model en respuesta
+                            API), https://generalanalysis.com/guides/claude-compliance-api ('Nothing about which model
+                            was invoked' en audit log del plan Team)</td>
+                        <td style="font-size:11px">Establecer un proceso de verificación de las salidas antes de su
+                            incorporacion al SaMD.</td>
+                    </tr>
+                    <tr>
+                        <td>CS5.8</td>
+                        <td style="font-size:12px">Propiedad intelectual de las salidas generadas</td>
+                        <td><span class="wp wBC">B/C</span></td>
+                        <td><span class="sp sp-c">Cumple</span></td>
+                        <td style="font-size:11px">Los Términos Comerciales de Anthropic (aplicables a los planes
+                            Pro/Max/Team) establecen explícitamente que el cliente es propietario de todos los outputs
+                            generados. El texto literal de los Commercial Terms of Service indica: 'Customer (a) retains
+                            all rights to its Inputs, and (b) owns its Outputs', y Anthropic asigna formalmente 'su
+                            derecho, título e interés (si lo hubiere) en y hacia los Outputs'. Además, Anthropic se
+                            compromete a defender al cliente frente a reclamaciones de infracción de derechos de autor
+                            derivadas del uso autorizado de los outputs. Existe una matización técnico-legal relevante:
+                            el calificador '(if any)' refleja la incertidumbre jurídica sobre si las salidas puramente
+                            generadas por IA son protegibles por copyright bajo la legislación vigente en UE/EE.UU. (la
+                            doctrina de autoría humana), cuestión no resuelta definitivamente por los tribunales. Este
+                            riesgo residual es inherente al estado del derecho y no es una carencia del proveedor. Para
+                            un fabricante de SaMD, la asignación contractual es sólida; el riesgo de protegibilidad de
+                            outputs no modificados requiere valoración jurídica propia.</td>
+                        <td style="font-size:11px">
+                            https://www.anthropic.com/legal/archive/7e37c9e3-af36-4555-93f0-2c677d027003 (Anthropic
+                            Commercial Terms of Service, sección Customer Content);
+                            https://www.anthropic.com/news/expanded-legal-protections-api-improvements (anuncio
+                            protecciones legales ampliadas, incluyendo indemnización por copyright)</td>
+                        <td style="font-size:11px">Documentar la revisión de las condiciones de propiedad intelectual.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>CS5.9</td>
+                        <td style="font-size:12px">Registro del uso: modelo, versión y finalidad</td>
+                        <td><span class="wp wBC">B/C</span></td>
+                        <td><span class="sp sp-nv">No verificable</span></td>
+                        <td style="font-size:11px">Criterio organizativo: depende de evidencia interna o acción de la
+                            organización. No verificable mediante fuentes públicas.</td>
+                        <td style="font-size:11px">-</td>
+                        <td style="font-size:11px">-</td>
+                    </tr>
+                    <tr>
+                        <td>CS5.10</td>
+                        <td style="font-size:12px">Procedencia del modelo y SBOM for AI</td>
+                        <td><span class="wp wCO">C/O</span></td>
+                        <td><span class="sp sp-p">Cumple parcialmente</span></td>
+                        <td style="font-size:11px">Anthropic publica información parcial sobre la procedencia del modelo
+                            mediante System Cards (https://www.anthropic.com/system-cards) y su Transparency Hub
+                            (https://www.anthropic.com/transparency/model-report). En estos documentos se describe que
+                            Claude fue entrenado con 'una mezcla propietaria de información públicamente disponible,
+                            datos de terceros, anotadores y usuarios que han dado su consentimiento', junto con detalles
+                            sobre técnicas de entrenamiento (Constitutional AI, RLHF) y evaluaciones de seguridad. Sin
+                            embargo, Anthropic NO publica un SBOM for AI formal en ningún formato estándar (CycloneDX,
+                            SPDX), ni un inventario estructurado y machine-readable de los componentes del modelo
+                            (datasets específicos, versiones de frameworks ML, dependencias de infraestructura, data
+                            lineage detallado). La información de procedencia es narrativa y de alto nivel, sin cubrir
+                            los elementos mínimos definidos por G7/CISA para un SBOM for AI. Como medida organizativa
+                            compensatoria, el fabricante SaMD puede construir internamente su propio AI-BOM utilizando
+                            la información pública disponible junto con herramientas de terceros.</td>
+                        <td style="font-size:11px">https://www.anthropic.com/system-cards |
+                            https://www.anthropic.com/transparency/model-report |
+                            https://www.anthropic.com/claude-4-system-card | Stanford FMTI Report:
+                            https://crfm.stanford.edu/fmti/December-2025/company-reports/Anthropic_FinalReport_FMTI2025.html
+                        </td>
+                        <td style="font-size:11px">Registrar la información disponible sobre procedencia del modelo en
+                            el expediente.</td>
+                    </tr>
+                    <tr>
+                        <td>CS5.11</td>
+                        <td style="font-size:12px">Mantenibilidad y soporte activo del modelo o versión utilizada</td>
+                        <td><span class="wp wCO">C/O</span></td>
+                        <td><span class="sp sp-p">Cumple parcialmente</span></td>
+                        <td style="font-size:11px">Anthropic dispone de una política de ciclo de vida de modelos
+                            públicamente documentada con cuatro estados (Active → Legacy → Deprecated → Retired) y
+                            garantiza al menos 60 días de preaviso antes del retiro de modelos públicamente lanzados,
+                            notificando por email y en la documentación oficial. Los modelos activos en el momento de la
+                            evaluación (familia Claude 4.x/Sonnet 5) tienen soporte activo. Sin embargo, existen dos
+                            limitaciones relevantes para SaMD: (1) el preaviso mínimo garantizado de 60 días puede ser
+                            insuficiente para los plazos regulatorios de validación y revalidación de software médico
+                            bajo IEC 62304; (2) los modelos que Claude Code utiliza internamente no son configurables
+                            por el usuario en el plan Pro/Max/Team, lo que impide anclar una versión concreta del modelo
+                            subyacente, exponiendo al fabricante a cambios no controlados. La organización puede mitigar
+                            esto mediante procedimientos de monitorización de la página de deprecaciones y planes de
+                            actualización documentados, pero la falta de control sobre la versión exacta del modelo en
+                            el CLI representa una brecha real de mantenibilidad.</td>
+                        <td style="font-size:11px">https://docs.anthropic.com/en/docs/about-claude/model-deprecations
+                            (política oficial de ciclo de vida y preaviso de 60 días)</td>
+                        <td style="font-size:11px">Establecer un proceso de seguimiento del ciclo de vida del modelo
+                            utilizado.</td>
+                    </tr>
+                    <tr>
+                        <td>CS5.12</td>
+                        <td style="font-size:12px">Controles de seguridad del modelo</td>
+                        <td><span class="wp wBC">B/C</span></td>
+                        <td><span class="sp sp-p">Cumple parcialmente</span></td>
+                        <td style="font-size:11px">Anthropic implementa controles documentados contra prompt injection
+                            en Claude Code a múltiples capas: (1) sistema de permisos read-only por defecto con
+                            aprobación explícita para operaciones sensibles; (2) sandboxing con aislamiento de
+                            filesystem y red basado en primitivas OS (bubblewrap/macOS Seatbelt), que contiene el
+                            impacto de inyecciones exitosas; (3) clasificadores de entrada que escanean contenido no
+                            confiable en el contexto del modelo; (4) clasificador de salida (auto mode) que valida
+                            acciones contra la intención del usuario antes de ejecutarlas; (5) entrenamiento con
+                            reinforcement learning para resistencia nativa a inyecciones. Sin embargo, existen
+                            evidencias públicas de vulnerabilidades CVE graves patched y activas: CVE-2025-54794 (CVSS
+                            7.7), CVE-2025-54795 (CVSS 8.7), CVE-2025-59536 (CVSS 8.7), CVE-2026-21852, y nuevas PoC
+                            publicadas en junio 2026. El propio system card de Anthropic reconoce que el Security Review
+                            de Claude Code 'no está endurecido contra prompt injection'. El sandboxing es opt-in y no
+                            activo por defecto. Los controles del proveedor son sustanciales pero la brecha residual es
+                            real y documentada.</td>
+                        <td style="font-size:11px">https://code.claude.com/docs/en/security |
+                            https://www.anthropic.com/engineering/claude-code-sandboxing |
+                            https://www.anthropic.com/engineering/claude-code-auto-mode |
+                            https://www.anthropic.com/research/prompt-injection-defenses |
+                            https://www.anthropic.com/transparency | CVE-2025-54794, CVE-2025-54795
+                            (Cymulate/cymulate.com) | CVE-2025-59536, CVE-2026-21852 (thehackernews.com/2026/02) |
+                            https://www.anthropic.com/engineering/how-we-contain-claude</td>
+                        <td style="font-size:11px">Evaluar si los controles del proveedor son suficientes para el caso
+                            de uso previsto.</td>
+                    </tr>
+                    <tr>
+                        <td>CS5.13</td>
+                        <td style="font-size:12px">Cifrado y aislamiento de datos entre clientes</td>
+                        <td><span class="wp wB">B</span></td>
+                        <td><span class="sp sp-c">Cumple</span></td>
+                        <td style="font-size:11px">Anthropic documenta públicamente cifrado en tránsito (TLS 1.2+) y en
+                            reposo (AES-256) para todos los datos de Claude Code, confirmado tanto en la documentación
+                            oficial de Claude Code (code.claude.com/docs/en/data-usage) como en el Anthropic Privacy
+                            Center. El aislamiento entre tenants está garantizado a nivel técnico mediante VMs aisladas
+                            por sesión en cloud execution ('each cloud session runs in an isolated, Anthropic-managed
+                            VM'), separación lógica de workspaces por organización (hasta 100 workspaces con boundaries
+                            independientes de API keys, rate limits y residencia de datos), y credenciales de vida corta
+                            de alcance único por sesión. La telemetría (vía Sentry) también usa cifrado en tránsito TLS
+                            y en reposo AES-256. El plan Pro/Max evaluado opera bajo términos de consumidor; para
+                            aislamiento enterprise avanzado (Zero-Data-Retention, DPA contractual) se requiere plan
+                            Team/Enterprise. Las certificaciones SOC 2 Type II e ISO 27001 están disponibles en el
+                            Anthropic Trust Center (trust.anthropic.com).</td>
+                        <td style="font-size:11px">https://code.claude.com/docs/en/data-usage |
+                            https://code.claude.com/docs/en/security |
+                            https://privacy.claude.com/en/articles/10458704-how-does-anthropic-protect-the-personal-data-of-claude-users
+                            | https://trust.anthropic.com/controls</td>
+                        <td style="font-size:11px">Para herramientas IA que manejan información confidencial,
+                            seleccionar planes que garanticen el aislamiento.</td>
+                    </tr>
+                    <tr>
+                        <td>CS5.14</td>
+                        <td style="font-size:12px">SLA y continuidad del servicio IA</td>
+                        <td><span class="wp wCO">C/O</span></td>
+                        <td><span class="sp sp-nc">No cumple</span></td>
+                        <td style="font-size:11px">Para los planes Pro/Max/Team (los contratados para Claude Code),
+                            Anthropic no ofrece SLA de disponibilidad con garantías contractuales ni créditos
+                            automáticos por caídas. Los Términos de Servicio establecen explícitamente que el servicio
+                            se presta 'as-is' y 'as-available' sin garantía de continuidad ininterrumpida. El único
+                            compromiso de uptime (99,5% objetivo) existe únicamente en el 'Priority Tier' de API, que
+                            requiere negociación comercial directa y compromiso de consumo. Los planes Pro/Max/Team no
+                            tienen SLA publicado, sin créditos automáticos ni reclamaciones por caídas. En cuanto a
+                            deprecaciones de modelos, Anthropic sí documenta públicamente un ciclo de vida
+                            (Active→Legacy→Deprecated→Retired) con al menos 60 días de preaviso por email antes del
+                            retiro de modelos, aunque se han registrado casos de retiros en Claude.ai con plazos
+                            inferiores (p.ej. Sonnet 4.5 con pocos días). La ausencia de SLA formal en los planes
+                            evaluados supone una carencia grave no compensable mediante medidas organizativas para un
+                            uso SaMD en entorno regulado.</td>
+                        <td style="font-size:11px">Términos de servicio Anthropic on Bedrock
+                            (https://www-cdn.anthropic.com/6b68a6508f0210c5fe08f0199caa05c4ee6fb4dc/Anthropic-on-Bedrock-Commercial-Terms-of-Service_Dec_2023.pdf);
+                            Política de deprecaciones
+                            (https://platform.claude.com/docs/en/about-claude/model-deprecations); Página del plan Team
+                            (https://support.claude.com/en/articles/9266767-what-is-the-team-plan)</td>
+                        <td style="font-size:11px">Evaluar el impacto de una indisponibilidad sobre los procesos del
+                            SaMD.</td>
+                    </tr>
+                    <tr>
+                        <td>CS5.15</td>
+                        <td style="font-size:12px">DPA, condiciones de uso y certificaciónes del proveedor IA</td>
+                        <td><span class="wp wB">B</span></td>
+                        <td><span class="sp sp-p">Cumple parcialmente</span></td>
+                        <td style="font-size:11px">DPA: Anthropic dispone de DPA público incorporado automáticamente en
+                            los términos comerciales (Commercial Terms), con SCCs (Módulos 2 y 3) para transferencias
+                            UE-EE.UU. conforme al Art. 28 RGPD. Sin embargo, el plan Pro/Max bajo el que opera Claude
+                            Code CLI se rige por los Términos de Consumidor, no los Comerciales: el DPA solo aplica a
+                            planes Team, Enterprise y API key. Para planes Pro/Max, no existe DPA aplicable, lo que
+                            supone una carencia relevante para un fabricante SaMD que procese datos personales.
+                            CERTIFICACIONES: Anthropic posee SOC 2 Type II, ISO 27001:2022 e ISO/IEC 42001:2023,
+                            documentadas en el Trust Center (trust.anthropic.com) y en la Privacy Center. Aplican a la
+                            infraestructura de Claude API/Enterprise; el acceso al informe SOC 2 requiere NDA.
+                            CONDICIONES DE USO MÉDICO: La Usage Policy de Anthropic clasifica el ámbito healthcare como
+                            'High-Risk Use Case', exigiendo supervisión humana cualificada y disclosure de IA al usuario
+                            final, pero no prohíbe el uso médico. El DPA estándar no contiene cláusulas
+                            sector-específicas para sanidad. La brecha principal para un fabricante SaMD es el uso de
+                            Claude Code bajo plan Pro/Max sin DPA RGPD aplicable.</td>
+                        <td style="font-size:11px">DPA:
+                            https://privacy.claude.com/en/articles/7996862-how-do-i-view-and-sign-your-data-processing-addendum-dpa
+                            | Certificaciones:
+                            https://privacy.claude.com/en/articles/10015870-what-certifications-has-anthropic-obtained y
+                            https://code.claude.com/docs/en/security | Condiciones uso médico:
+                            https://www.anthropic.com/legal/aup (sección High-Risk Use Cases) | Diferencia planes
+                            consumer vs commercial: https://www.anthropic.com/news/updates-to-our-consumer-terms | DPA
+                            no aplica a Pro/Max: https://compound.law/en-DE/tools/anthropic-data-processing-addendum/
+                            (sección 'Sector-specific provisions')</td>
+                        <td style="font-size:11px">Firmar o aceptar el DPA.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="rep-sec">
+            <h3>8. Fuentes consultadas por el agente</h3>
+            <div class="rep-blk"><strong>CT.1:</strong> https://code.claude.com/docs/en/overview —
+                https://claude.com/product/claude-code —
+                https://github.com/anthropics/claude-code<br><strong>CS3.1:</strong>
+                https://code.claude.com/docs/en/setup (sección 'Verify binary integrity' y 'Platform-native code
+                signatures')<br><strong>CS3.2:</strong> https://www.npmjs.com/package/@anthropic-ai/claude-code |
+                https://github.com/anthropics/claude-code/releases | https://code.claude.com/docs/en/changelog |
+                https://docs.anthropic.com/en/docs/about-claude/model-deprecations |
+                https://code.claude.com/docs/en/setup<br><strong>CS3.3:</strong>
+                https://github.com/anthropics/claude-code/security/advisories |
+                https://github.com/advisories/GHSA-jh7p-qr78-84p7 | https://nvd.nist.gov/vuln/detail/CVE-2026-21852 |
+                https://cybersecuritynews.com/claude-codes-network-sandbox-vulnerability/ |
+                https://pulse.adyog.com/insights/claude-code-28-cves-ai-coding-tools-attack-surface-cve-2026-46406<br><strong>CS3.4:</strong>
+                https://code.claude.ai/docs/en/setup (sección 'Verifying binary integrity' / 'Manifest
+                signatures')<br><strong>CS3.6:</strong> https://code.claude.com/docs/en/data-usage |
+                https://www.anthropic.com/news/updates-to-our-consumer-terms |
+                https://privacy.claude.com/en/articles/7996868-is-my-data-used-for-model-training<br><strong>CS3.7:</strong>
+                https://code.claude.com/docs/en/data-usage (documentación oficial Claude Code - sección Network y
+                Telemetry/Error Reporting);
+                https://privacy.claude.com/en/articles/10458704-how-does-anthropic-protect-the-personal-data-of-claude-users
+                (Anthropic Privacy Center); https://trust.anthropic.com (Anthropic Trust
+                Center)<br><strong>CS3.8:</strong> https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md |
+                https://code.claude.com/docs/en/changelog |
+                https://platform.claude.com/docs/en/release-notes/overview<br><strong>CS3.9:</strong>
+                https://code.claude.com/docs/en/authentication |
+                https://codersera.com/blog/how-to-run-open-source-claude-code-oss-developer-guide-2026/ |
+                https://github.com/anthropics/claude-code/issues/39847<br><strong>CS3.10:</strong>
+                github.com/anthropics/claude-code/blob/main/LICENSE.md | anthropic.com/legal/aup |
+                www-cdn.anthropic.com/6b68a6508f0210c5fe08f0199caa05c4ee6fb4dc/Anthropic-on-Bedrock-Commercial-Terms-of-Service_Dec_2023.pdf
+                | code.claude.com/docs/en/legal-and-compliance |
+                anthropic.com/news/updating-our-usage-policy<br><strong>CS5.1:</strong>
+                https://www.anthropic.com/news/eu-code-practice — Anthropic anuncia adhesión al GPAI Code of Practice
+                (julio 2025); https://code-of-practice.ai/ — Claude 4 Opus citado expresamente como modelo con riesgo
+                sistémico sujeto a Art. 55;
+                https://www.researchgate.net/publication/403936548_Privacy_Impact_Assessment_Claude_Opus_47 — PIA Claude
+                Opus 4.7: documenta que registros de evaluación de conformidad formal no son totalmente públicos;
+                https://digital-strategy.ec.europa.eu/en/policies/contents-code-gpai — GPAI Code of Practice, Comisión
+                Europea<br><strong>CS5.2:</strong> https://www.anthropic.com/constitution (definición de 'operators');
+                https://www.anthropic.com/news/eu-code-practice (adhesión GPAI Code of Practice, julio 2025);
+                https://companyscope.io/vendors/anthropic ('Your role as a buyer: deployer, with separate obligations');
+                https://code.claude.com/docs/en/legal-and-compliance (términos legales de Claude
+                Code)<br><strong>CS5.4:</strong> https://www.anthropic.com/news/updates-to-our-consumer-terms |
+                https://privacy.claude.com/en/articles/10023555-how-do-you-use-personal-data-in-model-training |
+                https://privacy.claude.com/en/articles/7996868-is-my-data-used-for-model-training | Consumer Terms
+                Section 4 citado en https://terms.law/ToS-Watchdog/ai-services/anthropic/ | Análisis de excepción safety
+                flag en
+                https://techcoffeehouse.com/2026/06/09/claude-training-data-opt-out-carve-out/<br><strong>CS5.7:</strong>
+                https://code.claude.com/docs/en/agent-sdk/observability (span claude_code.llm_request con model name),
+                https://code.claude.com/docs/en/monitoring-usage (prompt.id, W3C TRACEPARENT, respuesta no capturada por
+                defecto), https://platform.claude.com/docs/en/api/overview (request-id y campo model en respuesta API),
+                https://generalanalysis.com/guides/claude-compliance-api ('Nothing about which model was invoked' en
+                audit log del plan Team)<br><strong>CS5.8:</strong>
+                https://www.anthropic.com/legal/archive/7e37c9e3-af36-4555-93f0-2c677d027003 (Anthropic Commercial Terms
+                of Service, sección Customer Content);
+                https://www.anthropic.com/news/expanded-legal-protections-api-improvements (anuncio protecciones legales
+                ampliadas, incluyendo indemnización por copyright)<br><strong>CS5.10:</strong>
+                https://www.anthropic.com/system-cards | https://www.anthropic.com/transparency/model-report |
+                https://www.anthropic.com/claude-4-system-card | Stanford FMTI Report:
+                https://crfm.stanford.edu/fmti/December-2025/company-reports/Anthropic_FinalReport_FMTI2025.html<br><strong>CS5.11:</strong>
+                https://docs.anthropic.com/en/docs/about-claude/model-deprecations (política oficial de ciclo de vida y
+                preaviso de 60 días)<br><strong>CS5.12:</strong> https://code.claude.com/docs/en/security |
+                https://www.anthropic.com/engineering/claude-code-sandboxing |
+                https://www.anthropic.com/engineering/claude-code-auto-mode |
+                https://www.anthropic.com/research/prompt-injection-defenses | https://www.anthropic.com/transparency |
+                CVE-2025-54794, CVE-2025-54795 (Cymulate/cymulate.com) | CVE-2025-59536, CVE-2026-21852
+                (thehackernews.com/2026/02) |
+                https://www.anthropic.com/engineering/how-we-contain-claude<br><strong>CS5.13:</strong>
+                https://code.claude.com/docs/en/data-usage | https://code.claude.com/docs/en/security |
+                https://privacy.claude.com/en/articles/10458704-how-does-anthropic-protect-the-personal-data-of-claude-users
+                | https://trust.anthropic.com/controls<br><strong>CS5.14:</strong> Términos de servicio Anthropic on
+                Bedrock
+                (https://www-cdn.anthropic.com/6b68a6508f0210c5fe08f0199caa05c4ee6fb4dc/Anthropic-on-Bedrock-Commercial-Terms-of-Service_Dec_2023.pdf);
+                Política de deprecaciones (https://platform.claude.com/docs/en/about-claude/model-deprecations); Página
+                del plan Team
+                (https://support.claude.com/en/articles/9266767-what-is-the-team-plan)<br><strong>CS5.15:</strong> DPA:
+                https://privacy.claude.com/en/articles/7996862-how-do-i-view-and-sign-your-data-processing-addendum-dpa
+                | Certificaciones:
+                https://privacy.claude.com/en/articles/10015870-what-certifications-has-anthropic-obtained y
+                https://code.claude.com/docs/en/security | Condiciones uso médico: https://www.anthropic.com/legal/aup
+                (sección High-Risk Use Cases) | Diferencia planes consumer vs commercial:
+                https://www.anthropic.com/news/updates-to-our-consumer-terms | DPA no aplica a Pro/Max:
+                https://compound.law/en-DE/tools/anthropic-data-processing-addendum/ (sección 'Sector-specific
+                provisions')</div>
+        </div>
+        <div class="rep-sec">
+            <h3>9. Resolución formal humana</h3>
+            <div class="rep-blk">
+                <p style="font-size:12px;color:#6b7280;margin-bottom:8px">Este campo es editable. Registre aquí la
+                    resolución del responsable de cumplimiento.</p>
+                <div class="fr"><label>Estado de resolución</label><select onchange="ST.resolucion=this.value"
+                        style="max-width:320px">
+                        <option value="" selected="">— Pendiente de resolución —</option>
+                        <option value="aprobado">Aprobado</option>
+                        <option value="condicionado">Aprobado condicionado</option>
+                        <option value="rechazado">Rechazado</option>
+                    </select></div>
+                <div class="fr"><label>Observaciones de la resolución (responsable, fecha,
+                        justificación)</label><textarea style="min-height:80px"
+                        onblur="ST.obs_informe=this.value"></textarea></div>
+            </div>
+        </div>
+        <div class="rep-sec">
+            <h3>10. Seguimiento y revalidación</h3>
+            <div class="rep-blk"><strong>Frecuencia de revisión periódica:</strong> Semestral<br><br>Revalidación
+                anticipada ante: nueva versión mayor con cambios de arquitectura · modificación de condiciones de
+                servicio, política de privacidad o DPA · vulnerabilidad CVSS alta o crítica sin parche disponible ·
+                incidente de seguridad · cambio del uso previsto.</div>
+        </div>
+        <div class="btn-row" style="flex-wrap:wrap;gap:8px"><button class="btn" onclick="pv()">←
+                Anterior</button><button class="btn btn-sec" onclick="expJSON()">Exportar JSON</button><button
+                class="btn btn-sec" onclick="copyMD()">Copiar / Descargar Markdown</button><button class="btn btn-sec"
+                onclick="downloadReportHTML()">Descargar informe HTML</button><button class="btn btn-sec"
+                onclick="printReport()">Imprimir / PDF</button>
+            <div class="spacer"></div><button class="btn btn-d" onclick="resetCase()">Restablecer caso</button>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -4,8 +4,8 @@
     "short_title": "Catálogo EV-TRACE-MD para el EV-TRACE-MD Assistant",
     "language": "es-ES",
     "version": "0.8",
-    "status": "Operativo (v0.8). Pendiente: normalización definitiva de la regla de pesos.",
-    "source_document": "TFM.docx",
+    "status": "Operativo (v0.8).",
+    "source_document": "TFM EV-TRACE-MD",
     "source_date_in_document": "24/06/2026",
     "scope": "Organización fabricante de software como producto sanitario (SaMD) en el marco regulatorio europeo.",
     "statistics": {
@@ -18,17 +18,15 @@
     }
   },
   "agent_governance": {
-    "purpose": "Asistir en la aplicación del marco EV-TRACE-MD: recopilar información, homogeneizar criterios, leer fuentes públicas del proveedor y generar una valoración estructurada con riesgos, mitigaciones y evidencias.",
+    "purpose": "Asistir en la aplicación del marco: recopilar información, homogeneizar criterios, reducir la carga de búsqueda de información pública y generar una valoración estructurada con riesgos, mitigaciones y evidencias preliminares.",
     "limits": [
       "No sustituye la decisión humana ni automatiza la aprobación.",
       "No emite la resolución final: corresponde al responsable de cumplimiento.",
       "No debe presentar como verificado ningún dato sin una evidencia identificable.",
       "No debe resolver la viabilidad técnica de implementación, que se declara fuera del alcance del prototipo.",
-      "Ante evidencia insuficiente debe devolver «evidencia insuficiente» y formular preguntas o tareas de obtención de evidencia.",
-      "Si el proveedor no se indica, buscar en fuentes públicas la empresa o autor del producto antes de evaluar.",
-      "Rellenar automáticamente la acción requerida con la propuesta del catálogo (campo ov)."
+      "Ante evidencia insuficiente debe devolver «evidencia insuficiente» y formular preguntas o tareas de obtención de evidencia."
     ],
-    "source": "TFM, apartados 1.3, 2 y 3.3; 6.1.1; 6.2.5",
+    "source": "TFM EV-TRACE-MD, apartados 1.3, 2; 6.1.1; 6.2.5; 6.3.4",
     "evaluation_states": {
       "cumple": "El proveedor cumple el criterio. Que existan medidas organizativas adicionales como capa extra de control NO convierte un cumplimiento en parcial.",
       "parcial": "Dudas reales sobre el cumplimiento del proveedor, pero existe una medida organizativa que puede mitigar la desviación.",
@@ -67,7 +65,7 @@
         "name": "Activa",
         "trigger": "Un empleado o departamento identifica la necesidad y presenta una solicitud formal.",
         "minimum_information": "Uso previsto, proceso afectado, usuarios y tratamiento de datos personales o confidenciales.",
-        "source": "TFM, apartado 6.2.2"
+        "source": "TFM EV-TRACE-MD, apartado 6.2.2"
       },
       {
         "id": "tecnica",
@@ -75,7 +73,7 @@
         "trigger": "Nueva dependencia, librería o complemento incorporado al código del SaMD o a infraestructura CI/CD mediante una PR.",
         "minimum_information": "Detalles de la dependencia o complemento, versión y cambios en el manifiesto; no necesariamente el formulario completo.",
         "control": "Regla de protección de rama que impida fusionar la PR hasta superar la validación.",
-        "source": "TFM, apartado 6.2.2"
+        "source": "TFM EV-TRACE-MD, apartado 6.2.2"
       },
       {
         "id": "reactiva",
@@ -83,7 +81,7 @@
         "trigger": "Auditoría, revisión del inventario de activos, revisión de SBOM u otra detección de una herramienta no registrada.",
         "minimum_information": "Identificación de la herramienta descubierta, contexto de uso y motivo de la detección.",
         "control": "El responsable de cumplimiento inicia la validación para subsanar la falta de registro.",
-        "source": "TFM, apartado 6.2.2"
+        "source": "TFM EV-TRACE-MD, apartado 6.2.2"
       }
     ],
     "scope_decision_tree": {
@@ -113,7 +111,7 @@
         "dentro_del_alcance_validacion": "Continuar a clasificación y evaluación.",
         "fuera_del_alcance_obligatorio": "No es necesaria la validación del software. Valorar si accede, procesa o almacena información confidencial para su registro en el inventario de activos."
       },
-      "source": "TFM, Figura 4 y apartado 6.2.2"
+      "source": "TFM EV-TRACE-MD, Figura 6 y apartado 6.2.2"
     }
   },
   "classification_and_risk": {
@@ -123,81 +121,81 @@
         "family": "Dependencias y componentes de terceros",
         "function": "Incorporación de código externo al producto SaMD",
         "examples": "Librerías npm, PyPI; imágenes de contenedor (Docker); frameworks de desarrollo (Angular, Symfony)",
-        "source": "TFM, Tabla 3"
+        "source": "TFM EV-TRACE-MD, Tabla 4"
       },
       {
         "id": "S2",
         "family": "Repositorios de código y herramientas CI/CD.",
         "function": "Custodia del código y producción automatizada de artefactos",
         "examples": "GitHub, GitLab, BitBucket (control de versiones); Jenkins, GitHub Actions (CI/CD); JFrog Artifactory, Nexus (gestores de artefactos)",
-        "source": "TFM, Tabla 3"
+        "source": "TFM EV-TRACE-MD, Tabla 4"
       },
       {
         "id": "S3",
         "family": "Herramientas instalables",
         "function": "Uso local de software de terceros",
         "examples": "Visual Studio Code, PHPStorm, Jupyter Notebook (IDEs); DBeaver, MySQL Workbench (gestores de bases de datos); Postman (clientes de API)",
-        "source": "TFM, Tabla 3"
+        "source": "TFM EV-TRACE-MD, Tabla 4"
       },
       {
         "id": "S4.1",
         "family": "Servicios SaaS de soporte interno",
         "function": "Gestión del ciclo de vida del proyecto, colaboración, calidad y observabilidad",
         "examples": "Jira, Notion, Slack, Grafana, Google Workspace",
-        "source": "TFM, Tabla 3"
+        "source": "TFM EV-TRACE-MD, Tabla 4"
       },
       {
         "id": "S4.2",
         "family": "Servicios SaaS integrados en el producto",
         "function": "Funcionalidad de terceros incorporada al comportamiento del SaMD en tiempo de ejecución",
         "examples": "Intercom (atención al cliente); HubSpot (gestor de clientes); Segment (analíticas de uso); Stripe (pagos integrados)",
-        "source": "TFM, Tabla 3"
+        "source": "TFM EV-TRACE-MD, Tabla 4"
       },
       {
         "id": "S5",
         "family": "Herramientas con IA",
         "function": "Asistencia, generación y automatización mediante modelos de IA en cualquier fase",
         "examples": "GitHub Copilot, ChatGPT, Claude, Gemini",
-        "source": "TFM, Tabla 3"
+        "source": "TFM EV-TRACE-MD, Tabla 4"
       },
       {
         "id": "S6",
         "family": "Complementos y extensiones",
         "function": "Extensión del entorno de ejecución de otras herramientas",
         "examples": "Extensiones de Visual Studio Code; extensiones de navegador; plugins de Jira; add-ons de herramientas de ofimática",
-        "source": "TFM, Tabla 3"
+        "source": "TFM EV-TRACE-MD, Tabla 4"
       }
     ],
     "family_handling": [
       {
         "family_id": "S1",
         "handling": "Aplicar CT.1–CT.3 y la tabla S1. En la vía técnica, bloquear la fusión de la PR hasta completar la validación.",
-        "source": "TFM, apartados 6.2.2 y Anexo D"
+        "source": "TFM EV-TRACE-MD, apartados 6.2.2 y Anexo D"
       },
       {
         "family_id": "S2",
         "handling": "Aplicar CT.1–CT.3 y la tabla S2 para repositorios, CI/CD y gestores de artefactos.",
-        "source": "TFM, Anexo D"
+        "source": "TFM EV-TRACE-MD, Anexo D"
       },
       {
         "family_id": "S3",
         "handling": "Aplicar CT.1–CT.3 y la tabla S3. Los complementos se evalúan por separado con S6.",
-        "source": "TFM, Anexo D"
+        "source": "TFM EV-TRACE-MD, Anexo D"
       },
       {
         "family_id": "S4",
         "handling": "Aplicar CT.1–CT.3 y la tabla S4. Distinguir S4.1 (soporte interno) y S4.2 (integrado en el producto); aplicar las filas etiquetadas específicamente para cada subfamilia.",
-        "source": "TFM, Tabla 3 y Anexo D"
+        "source": "TFM EV-TRACE-MD, Tabla 4 y Anexo D"
       },
       {
         "family_id": "S5",
         "handling": "Aplicar CT.1–CT.3 y S5 como módulo adicional cuando la herramienta con IA pertenezca también a otra familia.",
-        "source": "TFM, apartado 6.1.2 y Anexo D"
+        "source": "TFM EV-TRACE-MD, apartado 6.1.2 y Anexo D"
       },
       {
         "family_id": "S6",
         "handling": "Aplicar CT.1–CT.3 y S6 de forma adicional a la familia huésped S2, S3 o S4; el expediente debe referenciarse en el expediente de la herramienta huésped.",
-        "source": "TFM, Anexo D"
+        "source": "TFM EV-TRACE-MD, Anexo D"
       }
     ],
     "criticality_decision_tree": {
@@ -247,7 +245,7 @@
         "importante": "La herramienta tiene un impacto moderado.",
         "bajo": "La herramienta tiene impacto reducido."
       },
-      "source": "TFM, Figura 5 y apartado 6.2.3"
+      "source": "TFM EV-TRACE-MD, Figura 7 y apartado 6.2.3"
     },
     "risk_dimensions": [
       {
@@ -271,7 +269,7 @@
             "name": "Gestión de secretos y credenciales"
           }
         ],
-        "source": "TFM, Tabla 4",
+        "source": "TFM EV-TRACE-MD, Tabla 5",
         "description": "Riesgos derivados de una gestión insuficiente de identidades digitales y mecanismos de autenticación en herramientas de terceros: cuentas compartidas, permisos excesivos, credenciales en texto plano o bajas de acceso no formalizadas."
       },
       {
@@ -295,7 +293,7 @@
             "name": "Privacidad, gobierno del dato y ciclo de vida (retención, borrado y exportación de datos) (no confundir con cumplimiento normativo)"
           }
         ],
-        "source": "TFM, Tabla 4",
+        "source": "TFM EV-TRACE-MD, Tabla 5",
         "description": "Riesgos de exposición de información restringida cuando la herramienta transmite, almacena o procesa datos fuera de un sistema controlado; incluye fuga de código, secretos, datos personales y telemetría."
       },
       {
@@ -315,7 +313,7 @@
             "name": "Integridad de evidencias y registros"
           }
         ],
-        "source": "TFM, Tabla 4",
+        "source": "TFM EV-TRACE-MD, Tabla 5",
         "description": "Modificaciones no autorizadas o no intencionadas en código fuente, artefactos de compilación, resultados de pruebas, evidencias o configuraciones."
       },
       {
@@ -339,7 +337,7 @@
             "name": "Retención y exportación de registros (no confundir con gobierno del dato)"
           }
         ],
-        "source": "TFM, Tabla 4",
+        "source": "TFM EV-TRACE-MD, Tabla 5",
         "description": "Incapacidad de demostrar qué ocurrió, cuándo, quién realizó una acción o qué evidencia respalda una liberación; incluye registros insuficientes o no auditables."
       },
       {
@@ -363,7 +361,7 @@
             "name": "Portabilidad de datos y salida del proveedor"
           }
         ],
-        "source": "TFM, Tabla 4",
+        "source": "TFM EV-TRACE-MD, Tabla 5",
         "description": "Interrupciones por caída del proveedor, discontinuidad del servicio o revocación de licencias, con impacto operativo en el fabricante."
       },
       {
@@ -395,7 +393,7 @@
             "name": "Dependencias transitivas y subcomponentes"
           }
         ],
-        "source": "TFM, Tabla 4",
+        "source": "TFM EV-TRACE-MD, Tabla 5",
         "description": "Amenazas derivadas de componentes, servicios o herramientas de terceros y sus dependencias: versiones vulnerables, obsolescencia, procedencia, actualizaciones, plugins o componentes transitivos."
       },
       {
@@ -427,7 +425,7 @@
             "name": "Monitorización del proveedor"
           }
         ],
-        "source": "TFM, Tabla 4",
+        "source": "TFM EV-TRACE-MD, Tabla 5",
         "description": "Riesgos de incumplimiento y falta de garantías del proveedor: certificaciones, incidentes, licencias, DPA/SLA, transferencias, subproveedores y seguimiento."
       },
       {
@@ -459,7 +457,7 @@
             "name": "Normas internas del uso de IA"
           }
         ],
-        "source": "TFM, Tabla 4",
+        "source": "TFM EV-TRACE-MD, Tabla 5",
         "description": "Riesgos específicos de IA: transmisión de datos mediante prompts, reutilización para entrenamiento, salidas incorrectas o sesgadas, propiedad intelectual, falta de trazabilidad y ausencia de revisión humana."
       }
     ],
@@ -562,7 +560,7 @@
           }
         }
       ],
-      "source": "TFM, Tabla 5"
+      "source": "TFM EV-TRACE-MD, Tabla 6"
     }
   },
   "roles": [
@@ -574,7 +572,7 @@
         "Detectar la necesidad de incorporar una nueva herramienta y activar el proceso mediante el formulario de solicitud.",
         "Definir con precisión el uso previsto: proceso afectado, tareas que realizará o automatizará, usuarios y tratamiento de datos personales o confidenciales."
       ],
-      "source": "TFM, apartado 6.1.3"
+      "source": "TFM EV-TRACE-MD, apartado 6.1.3"
     },
     {
       "role": "Responsable de cumplimiento",
@@ -586,7 +584,7 @@
         "Custodiar el inventario de herramientas validadas y los informes.",
         "Coordinar la evaluación de impacto y revalidación ante cambios relevantes."
       ],
-      "source": "TFM, apartado 6.1.3"
+      "source": "TFM EV-TRACE-MD, apartado 6.1.3"
     },
     {
       "role": "Responsable de la implementación",
@@ -597,7 +595,7 @@
         "Desplegar y configurar la herramienta tras la aprobación.",
         "Comunicar al responsable de cumplimiento los cambios que puedan afectar al estado validado."
       ],
-      "source": "TFM, apartado 6.1.3"
+      "source": "TFM EV-TRACE-MD, apartado 6.1.3"
     },
     {
       "role": "Responsable de calidad (QA/RA)",
@@ -606,7 +604,7 @@
       "responsibilities": [
         "Participar en la valoración de la herramienta respecto de procesos del SGC."
       ],
-      "source": "TFM, apartado 6.1.3"
+      "source": "TFM EV-TRACE-MD, apartado 6.1.3"
     },
     {
       "role": "Responsable de seguridad de la información",
@@ -617,7 +615,7 @@
         "Valorar riesgos de cadena de suministro.",
         "Proponer medidas de seguridad."
       ],
-      "source": "TFM, apartado 6.1.3"
+      "source": "TFM EV-TRACE-MD, apartado 6.1.3"
     },
     {
       "role": "Delegado de protección de datos (DPO)",
@@ -627,7 +625,7 @@
         "Supervisar los requisitos de protección de datos aplicables.",
         "Proponer medidas privacy by design y by default."
       ],
-      "source": "TFM, apartado 6.1.3"
+      "source": "TFM EV-TRACE-MD, apartado 6.1.3"
     }
   ],
   "framework_requirements": [
@@ -635,31 +633,31 @@
       "id": "R1",
       "name": "Diferenciación por tipología",
       "description": "El proceso debe modularse según la naturaleza de la herramienta, los vectores de riesgo, las obligaciones aplicables y los controles verificables.",
-      "source": "TFM, apartado 6.1.4"
+      "source": "TFM EV-TRACE-MD, apartado 6.1.4"
     },
     {
       "id": "R2",
       "name": "Suficiencia documental",
       "description": "La evaluación debe documentar criterios, fuentes de evidencia, riesgos, mitigaciones y resolución final.",
-      "source": "TFM, apartado 6.1.4"
+      "source": "TFM EV-TRACE-MD, apartado 6.1.4"
     },
     {
       "id": "R3",
       "name": "Proporcionalidad al nivel de criticidad",
       "description": "El esfuerzo y el umbral de exigencia deben modularse por impacto del fallo, uso indebido o compromiso sobre seguridad, evidencias y datos.",
-      "source": "TFM, apartado 6.1.4"
+      "source": "TFM EV-TRACE-MD, apartado 6.1.4"
     },
     {
       "id": "R4",
       "name": "Responsabilidad compartida",
       "description": "Cada criterio diferencia los controles nativos esperados del proveedor y las medidas complementarias de la organización.",
-      "source": "TFM, apartado 6.1.4"
+      "source": "TFM EV-TRACE-MD, apartado 6.1.4"
     },
     {
       "id": "R5",
       "name": "Cobertura del ciclo de vida del estado validado",
       "description": "La validación debe mantenerse y revisarse ante cambios que puedan comprometer el estado validado.",
-      "source": "TFM, apartado 6.1.4"
+      "source": "TFM EV-TRACE-MD, apartado 6.1.4"
     }
   ],
   "evaluation": {
@@ -678,7 +676,7 @@
         "O": "Observación. Se registra en el expediente y no condiciona la aprobación."
       },
       "source_variant_table_6": {
-        "description": "Conversión indicada en la Tabla 6 «Pesos de criterios según el impacto».",
+        "description": "Conversión indicada en la Tabla 7 «Pesos de criterios según el impacto».",
         "mapping": {
           "B": {
             "critico": "B",
@@ -696,10 +694,10 @@
             "bajo": "O"
           }
         },
-        "source": "TFM, Tabla 6"
+        "source": "TFM EV-TRACE-MD, Tabla 7"
       },
       "source_variant_method_and_annex_d": {
-        "description": "El apartado 6.2.4 indica que los criterios con peso simple son fijos e independientes del nivel de riesgo. La leyenda del Anexo D define B, C y O como pesos simples y B/C y C/O como pesos duales.",
+        "description": "El apartado 6.2.4 indica que los criterios con peso simple son fijos e independientes del nivel de criticidad. La leyenda del Anexo D define B, C y O como pesos simples y B/C y C/O como pesos duales.",
         "mapping": {
           "B": {
             "critico": "B",
@@ -727,10 +725,10 @@
             "bajo": "O"
           }
         },
-        "source": "TFM, apartado 6.2.4 y leyenda del Anexo D"
+        "source": "TFM EV-TRACE-MD, apartado 6.2.4 y Tabla 15 (Anexo D)"
       },
-      "automation_status": "BLOQUEADO HASTA NORMALIZACIÓN",
-      "implementation_note": "El borrador contiene dos lecturas incompatibles para los pesos simples B, C y O. El agente debe mostrar el peso bruto y abstenerse de calcular un peso efectivo o una resolución automática hasta que se apruebe una regla única."
+      "automation_status": "ACTIVO",
+      "implementation_note": "Regla de pesos normalizada (apartado 6.2.4 y Tabla 15, Anexo D): los pesos simples B, C y O son fijos e independientes del nivel de criticidad. Los pesos duales B/C y C/O sí varían: B/C → B en Crítico, C en Importante y Bajo; C/O → C en Crítico, O en Importante y Bajo. La variante source_variant_table_6 queda registrada como alternativa descartada."
     },
     "transversal_criteria": [
       {
@@ -746,7 +744,7 @@
           "Comparar el uso previsto declarado por el proveedor con el que se hará internamente."
         ],
         "raw_weight": "B",
-        "source": "TFM, Tabla 7"
+        "source": "TFM EV-TRACE-MD, Tabla 8"
       },
       {
         "id": "CT.2",
@@ -760,7 +758,7 @@
           "Diseñar y ejecutar pruebas de aceptación específicas. LAS DISEÑA LA PERSONA/ÁREA QUE DEBE USAR LA HERRAMIENTA"
         ],
         "raw_weight": "B",
-        "source": "TFM, Tabla 7"
+        "source": "TFM EV-TRACE-MD, Tabla 8"
       },
       {
         "id": "CT.3",
@@ -775,39 +773,39 @@
           "Documentar las limitaciones conocidas de la herramienta."
         ],
         "raw_weight": "B",
-        "source": "TFM, Tabla 7"
+        "source": "TFM EV-TRACE-MD, Tabla 8"
       }
     ],
     "family_metadata": {
       "S1": {
         "title": "S1 – Dependencias y componentes de terceros — Criterios de evaluación",
         "applies_to": "Aplica a librerías, paquetes, frameworks, imágenes de contenedor y cualquier componente de código incorporado directamente al producto SaMD.",
-        "source": "TFM, Anexo D, tabla S1"
+        "source": "TFM EV-TRACE-MD, Anexo D, Tabla 16"
       },
       "S2": {
         "title": "S2 – Repositorios de código y herramientas CI/CD — Criterios de evaluación",
         "applies_to": "Aplica a plataformas de control de versiones (GitHub, GitLab, Bitbucket), sistemas CI/CD (Jenkins, GitHub Actions) y gestores de artefactos (Artifactory, Nexus). Concentran acceso privilegiado al código fuente y a los artefactos distribuidos del SaMD.",
-        "source": "TFM, Anexo D, tabla S2"
+        "source": "TFM EV-TRACE-MD, Anexo D, Tabla 17"
       },
       "S3": {
         "title": "S3 – Herramientas de desarrollo instalables — Criterios de evaluación",
         "applies_to": "Aplica a software instalado localmente: IDEs, gestores de bases de datos, clientes de API.\nLos complementos y extensiones se evalúan de forma separada en la tabla de verificación S6.",
-        "source": "TFM, Anexo D, tabla S3"
+        "source": "TFM EV-TRACE-MD, Anexo D, Tabla 18"
       },
       "S4": {
         "title": "S4 – Servicios SaaS — Criterios de evaluación",
         "applies_to": "Aplica a servicios en la nube (software residente en infraestructura del proveedor).\nS4.1: soporte interno (Jira, Slack, Notion).\nS4.2: integrado en el SaMD (Stripe, Segment, Intercom).\nLas filas aplicables exclusivamente a una subfamilia se indican entre corchetes en la columna de verificación.",
-        "source": "TFM, Anexo D, tabla S4"
+        "source": "TFM EV-TRACE-MD, Anexo D, Tabla 19"
       },
       "S5": {
         "title": "S5 – Herramientas con inteligencia artificial — Criterios de evaluación",
         "applies_to": "Aplica a asistentes de codificación, LLMs, copilotos de IDE y herramientas de análisis con ML (ChatGPT, GitHub Copilot, Claude, Gemini).\nPara herramientas que combinen IA con otra familia (p. ej. GitHub Copilot = S2+S5), esta tabla se aplica en su totalidad como módulo complementario a la tabla de la familia principal.",
-        "source": "TFM, Anexo D, tabla S5"
+        "source": "TFM EV-TRACE-MD, Anexo D, Tabla 20"
       },
       "S6": {
         "title": "S6 – Complementos y extensiones — Criterios de evaluación",
         "applies_to": "Aplica a extensiones de navegador, plugins de IDE, add-ons de herramientas SaaS.\nSe evalúa siempre de forma adicional a la familia huésped (S2, S3 o S4). El expediente de evaluación de S6 debe quedar referenciado en el expediente de la herramienta huésped.",
-        "source": "TFM, Anexo D, tabla S6"
+        "source": "TFM EV-TRACE-MD, Anexo D, Tabla 21"
       }
     },
     "criteria_by_family": {
@@ -829,7 +827,7 @@
           ],
           "raw_weight": "B",
           "section": "Cadena de suministro y procedencia (A6)",
-          "source": "TFM, Anexo D, tabla S1"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 16"
         },
         {
           "id": "CS1.2",
@@ -848,7 +846,7 @@
           ],
           "raw_weight": "B/C",
           "section": "Cadena de suministro y procedencia (A6)",
-          "source": "TFM, Anexo D, tabla S1"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 16"
         },
         {
           "id": "CS1.3",
@@ -867,7 +865,7 @@
           ],
           "raw_weight": "B",
           "section": "Cadena de suministro y procedencia (A6)",
-          "source": "TFM, Anexo D, tabla S1"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 16"
         },
         {
           "id": "CS1.4",
@@ -885,7 +883,7 @@
           ],
           "raw_weight": "C/O",
           "section": "Cadena de suministro y procedencia (A6)",
-          "source": "TFM, Anexo D, tabla S1"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 16"
         },
         {
           "id": "CS1.5",
@@ -903,7 +901,7 @@
           ],
           "raw_weight": "C/O",
           "section": "Cadena de suministro y procedencia (A6)",
-          "source": "TFM, Anexo D, tabla S1"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 16"
         },
         {
           "id": "CS1.6",
@@ -921,7 +919,7 @@
           ],
           "raw_weight": "B",
           "section": "Integridad del componente (A3)",
-          "source": "TFM, Anexo D, tabla S1"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 16"
         },
         {
           "id": "CS1.7",
@@ -941,7 +939,7 @@
           ],
           "raw_weight": "B",
           "section": "Licencias y compatibilidad (A7)",
-          "source": "TFM, Anexo D, tabla S1"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 16"
         },
         {
           "id": "CS1.8",
@@ -960,7 +958,7 @@
           ],
           "raw_weight": "B",
           "section": "Trazabilidad (A4)",
-          "source": "TFM, Anexo D, tabla S1"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 16"
         },
         {
           "id": "CS1.9",
@@ -978,7 +976,7 @@
           ],
           "raw_weight": "C/O",
           "section": "Disponibilidad y continuidad (A5)",
-          "source": "TFM, Anexo D, tabla S1"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 16"
         },
         {
           "id": "CS1.10",
@@ -998,7 +996,7 @@
           ],
           "raw_weight": "C/O",
           "section": "Confidencialidad (A2)",
-          "source": "TFM, Anexo D, tabla S1"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 16"
         }
       ],
       "S2": [
@@ -1019,7 +1017,7 @@
           ],
           "raw_weight": "B",
           "section": "Identidad, autenticación y control de acceso (A1)",
-          "source": "TFM, Anexo D, tabla S2"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 17"
         },
         {
           "id": "CS2.2",
@@ -1036,7 +1034,7 @@
           ],
           "raw_weight": "B",
           "section": "Identidad, autenticación y control de acceso (A1)",
-          "source": "TFM, Anexo D, tabla S2"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 17"
         },
         {
           "id": "CS2.3",
@@ -1055,7 +1053,7 @@
           ],
           "raw_weight": "B",
           "section": "Identidad, autenticación y control de acceso (A1)",
-          "source": "TFM, Anexo D, tabla S2"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 17"
         },
         {
           "id": "CS2.4",
@@ -1073,7 +1071,7 @@
           ],
           "raw_weight": "B/C",
           "section": "Identidad, autenticación y control de acceso (A1)",
-          "source": "TFM, Anexo D, tabla S2"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 17"
         },
         {
           "id": "CS2.5",
@@ -1093,7 +1091,7 @@
           ],
           "raw_weight": "B",
           "section": "Integridad del código y los artefactos (A3)",
-          "source": "TFM, Anexo D, tabla S2"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 17"
         },
         {
           "id": "CS2.6",
@@ -1112,7 +1110,7 @@
           ],
           "raw_weight": "B/C",
           "section": "Integridad del código y los artefactos (A3)",
-          "source": "TFM, Anexo D, tabla S2"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 17"
         },
         {
           "id": "CS2.7",
@@ -1131,7 +1129,7 @@
           ],
           "raw_weight": "C/O",
           "section": "Integridad del código y los artefactos (A3)",
-          "source": "TFM, Anexo D, tabla S2"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 17"
         },
         {
           "id": "CS2.8",
@@ -1149,7 +1147,7 @@
           ],
           "raw_weight": "B/C",
           "section": "Trazabilidad y auditoría (A4)",
-          "source": "TFM, Anexo D, tabla S2"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 17"
         },
         {
           "id": "CS2.9",
@@ -1166,7 +1164,7 @@
           ],
           "raw_weight": "C/O",
           "section": "Trazabilidad y auditoría (A4)",
-          "source": "TFM, Anexo D, tabla S2"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 17"
         },
         {
           "id": "CS2.10",
@@ -1185,7 +1183,7 @@
           ],
           "raw_weight": "B",
           "section": "Confidencialidad (A2)",
-          "source": "TFM, Anexo D, tabla S2"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 17"
         },
         {
           "id": "CS2.11",
@@ -1205,7 +1203,7 @@
           ],
           "raw_weight": "B/C",
           "section": "Disponibilidad y continuidad (A5)",
-          "source": "TFM, Anexo D, tabla S2"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 17"
         },
         {
           "id": "CS2.12",
@@ -1223,7 +1221,7 @@
           ],
           "raw_weight": "C/O",
           "section": "Disponibilidad y continuidad (A5)",
-          "source": "TFM, Anexo D, tabla S2"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 17"
         },
         {
           "id": "CS2.13",
@@ -1241,7 +1239,7 @@
           ],
           "raw_weight": "B/C",
           "section": "Cumplimiento y garantías del proveedor (A7)",
-          "source": "TFM, Anexo D, tabla S2"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 17"
         },
         {
           "id": "CS2.14",
@@ -1259,7 +1257,7 @@
           ],
           "raw_weight": "B",
           "section": "Cumplimiento y garantías del proveedor (A7)",
-          "source": "TFM, Anexo D, tabla S2"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 17"
         },
         {
           "id": "CS2.15",
@@ -1279,7 +1277,7 @@
           ],
           "raw_weight": "C/O",
           "section": "Cumplimiento y garantías del proveedor (A7)",
-          "source": "TFM, Anexo D, tabla S2"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 17"
         },
         {
           "id": "CS2.16",
@@ -1299,7 +1297,7 @@
           ],
           "raw_weight": "B/C",
           "section": "Cadena de suministro del pipeline (A6)",
-          "source": "TFM, Anexo D, tabla S2"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 17"
         }
       ],
       "S3": [
@@ -1321,7 +1319,7 @@
           ],
           "raw_weight": "B",
           "section": "Procedencia e integridad del instalador (A6 / A3)",
-          "source": "TFM, Anexo D, tabla S3"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 18"
         },
         {
           "id": "CS3.2",
@@ -1339,7 +1337,7 @@
           ],
           "raw_weight": "B/C",
           "section": "Procedencia e integridad del instalador (A6 / A3)",
-          "source": "TFM, Anexo D, tabla S3"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 18"
         },
         {
           "id": "CS3.3",
@@ -1358,7 +1356,7 @@
           ],
           "raw_weight": "B",
           "section": "Procedencia e integridad del instalador (A6 / A3)",
-          "source": "TFM, Anexo D, tabla S3"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 18"
         },
         {
           "id": "CS3.4",
@@ -1376,7 +1374,7 @@
           ],
           "raw_weight": "B/C",
           "section": "Integridad del software instalado (A3)",
-          "source": "TFM, Anexo D, tabla S3"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 18"
         },
         {
           "id": "CS3.5",
@@ -1394,7 +1392,7 @@
           ],
           "raw_weight": "B/C",
           "section": "Identidad y control de acceso al equipo (A1)",
-          "source": "TFM, Anexo D, tabla S3"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 18"
         },
         {
           "id": "CS3.6",
@@ -1413,7 +1411,7 @@
           ],
           "raw_weight": "B/C",
           "section": "Confidencialidad y telemetría (A2)",
-          "source": "TFM, Anexo D, tabla S3"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 18"
         },
         {
           "id": "CS3.7",
@@ -1431,7 +1429,7 @@
           ],
           "raw_weight": "C/O",
           "section": "Confidencialidad y telemetría (A2)",
-          "source": "TFM, Anexo D, tabla S3"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 18"
         },
         {
           "id": "CS3.8",
@@ -1448,7 +1446,7 @@
           ],
           "raw_weight": "C/O",
           "section": "Trazabilidad y auditoría (A4)",
-          "source": "TFM, Anexo D, tabla S3"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 18"
         },
         {
           "id": "CS3.9",
@@ -1467,7 +1465,7 @@
           ],
           "raw_weight": "C/O",
           "section": "Disponibilidad y continuidad (A5)",
-          "source": "TFM, Anexo D, tabla S3"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 18"
         },
         {
           "id": "CS3.10",
@@ -1486,7 +1484,7 @@
           ],
           "raw_weight": "B/C",
           "section": "Cumplimiento y licencia (A7)",
-          "source": "TFM, Anexo D, tabla S3"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 18"
         }
       ],
       "S4": [
@@ -1508,7 +1506,7 @@
           ],
           "raw_weight": "B",
           "section": "Identidad, autenticación y control de acceso (A1)",
-          "source": "TFM, Anexo D, tabla S4"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 19"
         },
         {
           "id": "CS4.2",
@@ -1526,7 +1524,7 @@
           ],
           "raw_weight": "B",
           "section": "Identidad, autenticación y control de acceso (A1)",
-          "source": "TFM, Anexo D, tabla S4"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 19"
         },
         {
           "id": "CS4.3",
@@ -1544,7 +1542,7 @@
           ],
           "raw_weight": "B",
           "section": "Confidencialidad y privacidad (A2)",
-          "source": "TFM, Anexo D, tabla S4"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 19"
         },
         {
           "id": "CS4.4",
@@ -1563,7 +1561,7 @@
           ],
           "raw_weight": "B",
           "section": "Confidencialidad y privacidad (A2)",
-          "source": "TFM, Anexo D, tabla S4"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 19"
         },
         {
           "id": "CS4.5",
@@ -1581,7 +1579,7 @@
           ],
           "raw_weight": "B/C",
           "section": "Confidencialidad y privacidad (A2)",
-          "source": "TFM, Anexo D, tabla S4"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 19"
         },
         {
           "id": "CS4.6",
@@ -1602,7 +1600,7 @@
           ],
           "raw_weight": "B/C",
           "section": "Integridad de los datos y trazabilidad (A3 / A4)",
-          "source": "TFM, Anexo D, tabla S4"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 19"
         },
         {
           "id": "CS4.7",
@@ -1620,7 +1618,7 @@
           ],
           "raw_weight": "B/C",
           "section": "Disponibilidad y continuidad (A5)",
-          "source": "TFM, Anexo D, tabla S4"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 19"
         },
         {
           "id": "CS4.8",
@@ -1638,7 +1636,7 @@
           ],
           "raw_weight": "B/C",
           "section": "Disponibilidad y continuidad (A5)",
-          "source": "TFM, Anexo D, tabla S4"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 19"
         },
         {
           "id": "CS4.9",
@@ -1654,7 +1652,7 @@
           ],
           "raw_weight": "C/O",
           "section": "Disponibilidad y continuidad (A5)",
-          "source": "TFM, Anexo D, tabla S4"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 19"
         },
         {
           "id": "CS4.10",
@@ -1672,7 +1670,7 @@
           ],
           "raw_weight": "C/O",
           "section": "Cadena de suministro del servicio (A6) — S4.2",
-          "source": "TFM, Anexo D, tabla S4"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 19"
         },
         {
           "id": "CS4.11",
@@ -1690,7 +1688,7 @@
           ],
           "raw_weight": "C/O",
           "section": "Cadena de suministro del servicio (A6) — S4.2",
-          "source": "TFM, Anexo D, tabla S4"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 19"
         },
         {
           "id": "CS4.12",
@@ -1708,7 +1706,7 @@
           ],
           "raw_weight": "B/C",
           "section": "Cumplimiento y garantías del proveedor (A7)",
-          "source": "TFM, Anexo D, tabla S4"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 19"
         },
         {
           "id": "CS4.13",
@@ -1726,7 +1724,7 @@
           ],
           "raw_weight": "B",
           "section": "Cumplimiento y garantías del proveedor (A7)",
-          "source": "TFM, Anexo D, tabla S4"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 19"
         },
         {
           "id": "CS4.14",
@@ -1742,7 +1740,7 @@
           ],
           "raw_weight": "C/O",
           "section": "Cumplimiento y garantías del proveedor (A7)",
-          "source": "TFM, Anexo D, tabla S4"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 19"
         }
       ],
       "S5": [
@@ -1762,7 +1760,7 @@
           ],
           "raw_weight": "B",
           "section": "Clasificación regulatoria y gobernanza (A8)",
-          "source": "TFM, Anexo D, tabla S5"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 20"
         },
         {
           "id": "CS5.2",
@@ -1779,7 +1777,7 @@
           ],
           "raw_weight": "B/C",
           "section": "Clasificación regulatoria y gobernanza (A8)",
-          "source": "TFM, Anexo D, tabla S5"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 20"
         },
         {
           "id": "CS5.3",
@@ -1795,7 +1793,7 @@
           ],
           "raw_weight": "B",
           "section": "Clasificación regulatoria y gobernanza (A8)",
-          "source": "TFM, Anexo D, tabla S5"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 20"
         },
         {
           "id": "CS5.4",
@@ -1814,7 +1812,7 @@
           ],
           "raw_weight": "B",
           "section": "Condiciones de uso de datos y entrenamiento del modelo (A8 / A2)",
-          "source": "TFM, Anexo D, tabla S5"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 20"
         },
         {
           "id": "CS5.5",
@@ -1832,7 +1830,7 @@
           ],
           "raw_weight": "B",
           "section": "Condiciones de uso de datos y entrenamiento del modelo (A8 / A2)",
-          "source": "TFM, Anexo D, tabla S5"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 20"
         },
         {
           "id": "CS5.6",
@@ -1849,7 +1847,7 @@
           ],
           "raw_weight": "B",
           "section": "Supervisión humana y calidad de las salidas (A8)",
-          "source": "TFM, Anexo D, tabla S5"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 20"
         },
         {
           "id": "CS5.7",
@@ -1869,7 +1867,7 @@
           ],
           "raw_weight": "B/C",
           "section": "Integridad de los artefactos generados (A3)",
-          "source": "TFM, Anexo D, tabla S5"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 20"
         },
         {
           "id": "CS5.8",
@@ -1887,7 +1885,7 @@
           ],
           "raw_weight": "B/C",
           "section": "Supervisión humana y calidad de las salidas (A8)",
-          "source": "TFM, Anexo D, tabla S5"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 20"
         },
         {
           "id": "CS5.9",
@@ -1906,7 +1904,7 @@
           ],
           "raw_weight": "B/C",
           "section": "Registro y trazabilidad del uso (A8 / A4)",
-          "source": "TFM, Anexo D, tabla S5"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 20"
         },
         {
           "id": "CS5.10",
@@ -1922,11 +1920,11 @@
           ],
           "organization_verification": [
             "Registrar la información disponible sobre procedencia del modelo en el expediente.",
-            "Evaluar si la opacidad del proveedor sobre la composición del modelo es aceptable para el nivel de riesgo de la herramienta."
+            "Evaluar si la opacidad del proveedor sobre la composición del modelo es aceptable para el nivel de criticidad de la herramienta."
           ],
           "raw_weight": "C/O",
           "section": "Componentes de IA de terceros y cadena de suministro del modelo (A8 / A6)",
-          "source": "TFM, Anexo D, tabla S5"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 20"
         },
         {
           "id": "CS5.11",
@@ -1947,7 +1945,7 @@
           ],
           "raw_weight": "C/O",
           "section": "Componentes de IA de terceros y cadena de suministro del modelo (A8 / A6)",
-          "source": "TFM, Anexo D, tabla S5"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 20"
         },
         {
           "id": "CS5.12",
@@ -1966,7 +1964,7 @@
           ],
           "raw_weight": "B/C",
           "section": "Componentes de IA de terceros y cadena de suministro del modelo (A8 / A6)",
-          "source": "TFM, Anexo D, tabla S5"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 20"
         },
         {
           "id": "CS5.13",
@@ -1985,7 +1983,7 @@
           ],
           "raw_weight": "B",
           "section": "Confidencialidad y privacidad (A2)",
-          "source": "TFM, Anexo D, tabla S5"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 20"
         },
         {
           "id": "CS5.14",
@@ -2005,7 +2003,7 @@
           ],
           "raw_weight": "C/O",
           "section": "Disponibilidad (A5)",
-          "source": "TFM, Anexo D, tabla S5"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 20"
         },
         {
           "id": "CS5.15",
@@ -2026,7 +2024,7 @@
           ],
           "raw_weight": "B",
           "section": "Cumplimiento y condiciones contractuales (A7)",
-          "source": "TFM, Anexo D, tabla S5"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 20"
         }
       ],
       "S6": [
@@ -2048,7 +2046,7 @@
           ],
           "raw_weight": "B",
           "section": "Procedencia e identidad del complemento (A6 / A1)",
-          "source": "TFM, Anexo D, tabla S6"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 21"
         },
         {
           "id": "CS6.2",
@@ -2064,7 +2062,7 @@
           ],
           "raw_weight": "B/C",
           "section": "Procedencia e identidad del complemento (A6 / A1)",
-          "source": "TFM, Anexo D, tabla S6"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 21"
         },
         {
           "id": "CS6.3",
@@ -2083,7 +2081,7 @@
           ],
           "raw_weight": "C/O",
           "section": "Procedencia e identidad del complemento (A6 / A1)",
-          "source": "TFM, Anexo D, tabla S6"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 21"
         },
         {
           "id": "CS6.4",
@@ -2102,7 +2100,7 @@
           ],
           "raw_weight": "B",
           "section": "Permisos de ejecución y acceso al entorno (A1 / A2 / A3)",
-          "source": "TFM, Anexo D, tabla S6"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 21"
         },
         {
           "id": "CS6.5",
@@ -2121,7 +2119,7 @@
           ],
           "raw_weight": "B",
           "section": "Permisos de ejecución y acceso al entorno (A1 / A2 / A3)",
-          "source": "TFM, Anexo D, tabla S6"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 21"
         },
         {
           "id": "CS6.6",
@@ -2141,7 +2139,7 @@
           ],
           "raw_weight": "B",
           "section": "Integridad (A3)",
-          "source": "TFM, Anexo D, tabla S6"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 21"
         },
         {
           "id": "CS6.7",
@@ -2160,7 +2158,7 @@
           ],
           "raw_weight": "B/C",
           "section": "Permisos de ejecución y acceso al entorno (A1 / A2 / A3)",
-          "source": "TFM, Anexo D, tabla S6"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 21"
         },
         {
           "id": "CS6.8",
@@ -2177,7 +2175,7 @@
           ],
           "raw_weight": "B/C",
           "section": "Trazabilidad y gestión del inventario (A4)",
-          "source": "TFM, Anexo D, tabla S6"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 21"
         },
         {
           "id": "CS6.9",
@@ -2196,7 +2194,7 @@
           ],
           "raw_weight": "B/C",
           "section": "Cumplimiento y condiciones de uso (A7)",
-          "source": "TFM, Anexo D, tabla S6"
+          "source": "TFM EV-TRACE-MD, Anexo D, Tabla 21"
         }
       ]
     }
@@ -2216,10 +2214,10 @@
         "conditions": "Existe uno o más incumplimientos bloqueantes."
       },
       "authority": "La resolución final corresponde al responsable de cumplimiento.",
-      "source": "TFM, apartado 6.2.5"
+      "source": "TFM EV-TRACE-MD, apartado 6.2.5"
     },
     "minimum_validation_report_fields": [
-      "Identificación de la herramienta: denominación, versión o plan, familia, nivel de riesgo y uso previsto.",
+      "Identificación de la herramienta: denominación, versión o plan, familia, nivel de criticidad y uso previsto.",
       "Vía de activación y fechas de inicio y final de la evaluación.",
       "Criterios aplicados, resultado de cada criterio y fuentes o evidencias consultadas.",
       "Medidas de mitigación acordadas.",
@@ -2240,7 +2238,7 @@
         "Incidente de seguridad, brecha de datos o no conformidad relevante de la herramienta, interna o públicamente notificada por el proveedor.",
         "Cambio del uso previsto, por ampliación a nuevos procesos o datos."
       ],
-      "source": "TFM, apartado 6.2.5"
+      "source": "TFM EV-TRACE-MD, apartado 6.2.5"
     }
   },
   "normative_anchors": [
@@ -2251,7 +2249,7 @@
       "scope": "EU",
       "type": "Reg",
       "relevance": "Marco central. Obliga al fabricante a mantener control sobre procesos externalizados, componentes integrados y servicios de terceros que puedan afectar a la seguridad o conformidad del producto.",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "SaMD",
@@ -2260,7 +2258,7 @@
       "scope": "ES",
       "type": "RD",
       "relevance": "Desarrollo español del MDR. Articula las obligaciones de los operadores económicos y refuerza el control sobre actores externos en comercialización y seguimiento.",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "SaMD",
@@ -2269,7 +2267,7 @@
       "scope": "EU",
       "type": "RegEj",
       "relevance": "Relevancia acotada: aplica cuando se emplean herramientas externas para suministrar instrucciones electrónicas de uso, debiendo garantizarse accesibilidad, seguridad e integridad.",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "SaMD",
@@ -2278,7 +2276,7 @@
       "scope": "EU",
       "type": "Reg",
       "relevance": "Aplicable cuando herramientas de terceros tratan datos personales. Obliga a delimitar responsabilidades, regular contractualmente al proveedor y evitar riesgos para los derechos de los interesados.",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "SaMD",
@@ -2287,7 +2285,7 @@
       "scope": "ES",
       "type": "LO",
       "relevance": "Complemento español del RGPD. Refuerza las obligaciones sobre terceros que accedan o traten información personal en nombre de la organización.",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "SaMD",
@@ -2296,7 +2294,7 @@
       "scope": "INT",
       "type": "Norm",
       "relevance": "Obliga a integrar en el SGC los procesos, herramientas y servicios externos que puedan influir en la conformidad del producto sanitario.",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "SaMD",
@@ -2305,7 +2303,7 @@
       "scope": "INT",
       "type": "Norm",
       "relevance": "Base para evaluar cómo una herramienta o librería de terceros puede introducir peligros o modificar el perfil de riesgo del producto.",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "SaMD",
@@ -2314,7 +2312,7 @@
       "scope": "INT",
       "type": "Norm",
       "relevance": "Todo elemento software externo que forme parte del producto o de su desarrollo debe quedar sujeto a control, trazabilidad y verificación.",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "SaMD",
@@ -2323,7 +2321,7 @@
       "scope": "INT",
       "type": "Norm",
       "relevance": "Relevancia residual: incide únicamente cuando una herramienta externa interviene en la generación o presentación de información de etiquetado.",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "SaMD",
@@ -2332,7 +2330,7 @@
       "scope": "INT",
       "type": "Norm",
       "relevance": "Relevancia indirecta: puede ser de apoyo cuando terceros intervienen en la gestión o distribución de la información del producto.",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "SaMD",
@@ -2341,7 +2339,7 @@
       "scope": "INT",
       "type": "Norm",
       "relevance": "Permite fundamentar la comprobación de requisitos de seguridad, fiabilidad y ciclo de vida de software sanitario suministrado o mantenido por un tercero.",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "SaMD",
@@ -2350,7 +2348,7 @@
       "scope": "INT",
       "type": "IT",
       "relevance": "Referencia especialmente valiosa: establece que la validación debe extenderse al software usado en diseño, pruebas, aceptación, fabricación, etiquetado y gestión de reclamaciones dentro del SGC.",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "SaMD",
@@ -2359,7 +2357,7 @@
       "scope": "INT",
       "type": "Norm",
       "relevance": "Relevancia indirecta: aplica cuando una herramienta de terceros afecta a la usabilidad del sistema y, por tanto, a su uso seguro.",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "Guías",
@@ -2368,7 +2366,7 @@
       "scope": "EU",
       "type": "Guía",
       "relevance": "Útil cuando módulos o evidencias clínicas proceden de elementos externos que deben considerarse en la evaluación global del producto.",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "Guías",
@@ -2377,7 +2375,7 @@
       "scope": "EU",
       "type": "Guía",
       "relevance": "Relevancia limitada: puede servir de apoyo cuando la evidencia clínica depende parcialmente de componentes o desarrollos externos.",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "Guías",
@@ -2386,7 +2384,7 @@
       "scope": "EU",
       "type": "Guía",
       "relevance": "Una de las referencias más relevantes: aborda expresamente el impacto de componentes hardware y software de terceros desde la perspectiva de la ciberseguridad del producto.",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "Guías",
@@ -2395,7 +2393,7 @@
       "scope": "EU",
       "type": "Guía",
       "relevance": "Relevancia marginal: solo aplica cuando terceros intervienen en la configuración o distribución del software identificado por UDI.",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "Guías",
@@ -2404,7 +2402,7 @@
       "scope": "EU",
       "type": "Guía",
       "relevance": "Clave para determinar cuándo una solución de terceros debe considerarse producto sanitario o accesorio, condicionando el nivel de control y validación exigible.",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "Guías",
@@ -2413,7 +2411,7 @@
       "scope": "EU",
       "type": "Guía",
       "relevance": "Relevancia secundaria: aplica cuando el plan de seguimiento poscomercialización debe contemplar incidencias asociadas a componentes externos.",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "Guías",
@@ -2422,7 +2420,7 @@
       "scope": "EU",
       "type": "Guía",
       "relevance": "Relevancia secundaria: puede incluir efectos de herramientas de terceros si repercuten en el comportamiento del producto en condiciones reales.",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "Guías",
@@ -2431,7 +2429,7 @@
       "scope": "EU",
       "type": "Guía",
       "relevance": "Relevancia indirecta: el PSUR puede verse afectado por incidentes o vulnerabilidades derivados de componentes externos.",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "Guías",
@@ -2440,7 +2438,7 @@
       "scope": "EU",
       "type": "Guía",
       "relevance": "Contribuye a interpretar adecuadamente incidentes en los que intervengan herramientas o servicios de terceros.",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "Guías",
@@ -2449,7 +2447,7 @@
       "scope": "INT",
       "type": "DT",
       "relevance": "El origen externo de un componente software no exime de demostrar su seguridad, rendimiento y adecuación clínica.",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "GRC",
@@ -2458,7 +2456,7 @@
       "scope": "ES",
       "type": "RD",
       "relevance": "Exige considerar la cadena de suministro en el análisis de riesgos y extender las cautelas a contratistas y prestadores de servicios tecnológicos.",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "GRC",
@@ -2467,7 +2465,7 @@
       "scope": "INT",
       "type": "Norm",
       "relevance": "Marco de gestión para identificar, evaluar y tratar los riesgos asociados a proveedores, servicios externalizados y herramientas que afecten a la seguridad de la información.",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "GRC",
@@ -2476,7 +2474,7 @@
       "scope": "INT",
       "type": "Norm",
       "relevance": "Controles operativos directamente aplicables a la gestión de proveedores, cadena de suministro TIC y servicios cloud (controles 5.19–5.23 y 8.26).",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "GRC",
@@ -2485,7 +2483,7 @@
       "scope": "INT",
       "type": "Norm",
       "relevance": "Aplicable cuando terceros o subencargados intervienen en operaciones sobre datos personales; obliga a documentar responsabilidades y garantías.",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "GRC",
@@ -2494,7 +2492,7 @@
       "scope": "INT",
       "type": "Norm",
       "relevance": "Pertinente cuando se valoran herramientas de IA de terceros: exige gobernanza, gestión del riesgo y control organizativo sobre sistemas de IA externos.",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "GRC",
@@ -2503,7 +2501,7 @@
       "scope": "EE. UU.",
       "type": "Marco",
       "relevance": "Referencia técnica de uso voluntario. Aporta estructura para evaluar riesgos de IA de terceros en aspectos como opacidad, sesgos, dependencia y cadena de suministro del modelo.",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "GRC",
@@ -2511,8 +2509,8 @@
       "title": "Reglamento (UE) 2024/1689. Normas armonizadas en materia de IA",
       "scope": "EU",
       "type": "Reg",
-      "relevance": "Establece obligaciones específicas para operadores que incorporen sistemas de IA de terceros: análisis de finalidad, nivel de riesgo, documentación y responsabilidades del proveedor.",
-      "source": "TFM, Anexo A"
+      "relevance": "Establece obligaciones específicas para operadores que incorporen sistemas de IA de terceros: análisis de finalidad, nivel de criticidad, documentación y responsabilidades del proveedor.",
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "GRC",
@@ -2521,7 +2519,7 @@
       "scope": "EU",
       "type": "Reg",
       "relevance": "Relevante cuando se externalizan servicios de firma electrónica, sellado temporal o certificación: la dependencia de terceros queda sujeta a requisitos regulatorios de confianza reforzada.",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "GRC",
@@ -2530,7 +2528,7 @@
       "scope": "ES",
       "type": "Ley",
       "relevance": "Complementa eIDAS en España. Aplica cuando se externalizan servicios electrónicos de confianza a proveedores críticos.",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "GRC",
@@ -2539,7 +2537,7 @@
       "scope": "ES",
       "type": "RDL",
       "relevance": "Extiende obligaciones de seguridad a proveedores de servicios digitales; la externalización no elimina la responsabilidad de la entidad sobre la seguridad de sus sistemas.",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "GRC",
@@ -2548,7 +2546,7 @@
       "scope": "ES",
       "type": "RD",
       "relevance": "Consolida la supervisión sobre operadores y proveedores digitales; refuerza que la externalización no traslada la responsabilidad de seguridad.",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "GRC",
@@ -2557,7 +2555,7 @@
       "scope": "EU",
       "type": "Dir",
       "relevance": "Incorpora expresamente los riesgos de la cadena de suministro y de las relaciones con suministradores dentro de las medidas de gestión de ciberseguridad exigidas.",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "GRC",
@@ -2566,7 +2564,7 @@
       "scope": "EU",
       "type": "Reg",
       "relevance": "Refuerza el control sobre componentes digitales externos y dependencias a lo largo del ciclo de vida. Aunque excluye los productos cubiertos por el MDR, contextualiza la evolución regulatoria en curso.",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "PI",
@@ -2575,7 +2573,7 @@
       "scope": "ES",
       "type": "Ley",
       "relevance": "Relevancia indirecta: aplica cuando el uso de una solución externa implica explotación de signos distintivos o riesgos de confusión comercial.",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "PI",
@@ -2584,7 +2582,7 @@
       "scope": "ES",
       "type": "RDL",
       "relevance": "El uso de software, librerías o contenidos de terceros obliga a considerar aspectos de licenciamiento, titularidad y límites de uso que condicionan la viabilidad de determinadas herramientas externas.",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     },
     {
       "section": "Pagos",
@@ -2593,7 +2591,7 @@
       "scope": "INT",
       "type": "Norm",
       "relevance": "Aplicable cuando intervienen proveedores de pago o terceros que almacenen, procesen o transmitan datos de tarjeta; permite documentar la responsabilidad compartida en entornos de pago.",
-      "source": "TFM, Anexo A"
+      "source": "TFM EV-TRACE-MD, Anexo B, Tabla 13"
     }
   ],
   "agent_input_contract": {
@@ -2601,52 +2599,52 @@
       {
         "field": "Departamento solicitante",
         "guidance": "Indicar el área, departamento o equipo que solicita la incorporación de la herramienta.\nEjemplo: Área de Sistemas.",
-        "source": "TFM, Anexo C"
+        "source": "TFM EV-TRACE-MD, Anexo C, Tabla 14"
       },
       {
         "field": "Nombre de la herramienta",
         "guidance": "Indicar el área comercial o técnico de la herramienta solicitada.\nEjemplo: Bitwarden",
-        "source": "TFM, Anexo C"
+        "source": "TFM EV-TRACE-MD, Anexo C, Tabla 14"
       },
       {
         "field": "Tipo de software",
         "guidance": "Seleccionar la categoría que mejor describa la herramienta solicitada:\nRepositorio de código y herramientas CI/CD\nSoftware instalable\nSaaS\nHerramienta IA\nComplementos y extensiones\nEjemplo: Proveedor SaaS",
-        "source": "TFM, Anexo C"
+        "source": "TFM EV-TRACE-MD, Anexo C, Tabla 14"
       },
       {
         "field": "Describe la herramienta",
         "guidance": "Describir brevemente la finalidad de la herramienta, sus principales funcionalidades, el modelo de uso y el enlace oficial del proveedor o repositorio.\nEjemplo: Bitwarden es una plataforma de gestión de credenciales basada en la nube (SaaS), diseñada para el almacenamiento, intercambio y generación de contraseñas. El software garantiza que los datos sólo sean accesibles para los usuarios autorizados mediante una clave maestra. Permite la gestión centralizada de identidades, la implementación de políticas de seguridad empresarial y la sincronización multiplataforma bajo un modelo de actualización continua por parte del proveedor.\nhttps://bitwarden.com/",
-        "source": "TFM, Anexo C"
+        "source": "TFM EV-TRACE-MD, Anexo C, Tabla 14"
       },
       {
         "field": "Tipo de licencia",
         "guidance": "Indicar el tipo de licencia, plan o modalidad de contratación necesaria para el uso previsto.\nEjemplo: Teams\nAclaración: en herramientas SaaS, las funcionalidades de seguridad, administración, auditoría, integración o cumplimiento pueden variar significativamente según el plan contratado.",
-        "source": "TFM, Anexo C"
+        "source": "TFM EV-TRACE-MD, Anexo C, Tabla 14"
       },
       {
         "field": "Procesos en los que se usará",
         "guidance": "Indicar los procesos internos que se verán afectados por el uso de la herramienta.\nEjemplo: Procesos de mantenimiento de infraestructuras, equipamiento y herramientas software.",
-        "source": "TFM, Anexo C"
+        "source": "TFM EV-TRACE-MD, Anexo C, Tabla 14"
       },
       {
         "field": "Tareas para las que se hará uso de la herramienta o que serán automatizadas",
         "guidance": "Describir el uso previsto de la herramienta dentro del flujo de trabajo de la organización.\nEjemplos:\n- Eliminará el riesgo de almacenar contraseñas en texto plano.\n- Automatizar la detección de vulnerabilidades en el código.\n- Registrar y realizar seguimiento de incidencias con clientes.\n- Facilitar la planificación de las actividades del equipo.\n- Automatizar el envío de correos o comunicaciones internas.",
-        "source": "TFM, Anexo C"
+        "source": "TFM EV-TRACE-MD, Anexo C, Tabla 14"
       },
       {
         "field": "Datos personales tratados por la herramienta",
         "guidance": "Indicar si la herramienta tratará datos personales en el contexto de uso previsto.\nDe acuerdo con el Reglamento General de Protección de Datos, se entiende por dato personal toda información sobre una persona física identificada o identificable. Esto incluye, entre otros, nombre, apellidos, correo electrónico, identificadores en línea, datos de localización, información profesional o cualquier otro dato que permita identificar directa o indirectamente a una persona.\nEjemplos:\n- Una herramienta de control horario tratará datos de empleados.\n- Un CRM tratará datos de clientes, contactos profesionales o potenciales clientes.\nEjemplo de respuesta: La herramienta tratará nombre, apellidos y correo electrónico corporativo de empleados.",
-        "source": "TFM, Anexo C"
+        "source": "TFM EV-TRACE-MD, Anexo C, Tabla 14"
       },
       {
         "field": "Datos confidenciales tratados por la herramienta",
         "guidance": "Indicar si la herramienta almacenará, procesará o permitirá acceder a información confidencial de la organización.\nEjemplo: La herramienta contendrá información reservada, incluyendo credenciales de acceso a otros sistemas corporativos.",
-        "source": "TFM, Anexo C"
+        "source": "TFM EV-TRACE-MD, Anexo C, Tabla 14"
       },
       {
         "field": "Prioridad de uso",
         "guidance": "Indicar la prioridad de incorporación de la herramienta en una escala del 1 al 5:\n1: Baja: Mejora deseable, pero no impide el flujo de trabajo actual.\n5: Crítica: La falta de esta herramienta detiene la operación actual.",
-        "source": "TFM, Anexo C"
+        "source": "TFM EV-TRACE-MD, Anexo C, Tabla 14"
       }
     ],
     "additional_fields_proposed_for_digital_execution": [
@@ -2710,7 +2708,7 @@
   "quality_control_notes": [
     "La taxonomía se expresa como seis familias S1–S6; S4 se divide en S4.1 y S4.2, por lo que el catálogo contiene siete filas de familia o subfamilia.",
     "El Anexo C enumera cinco tipos de software en la solicitud activa; S1 se activa principalmente por la vía técnica o reactiva.",
-    "El apartado 6.2.4 y la leyenda del Anexo D tratan los pesos simples B, C y O como fijos, mientras que la Tabla 6 los convierte por criticidad. El agente no debe aplicar una conversión hasta que se normalice la regla final.",
+    "El apartado 6.2.4 y la leyenda de la Tabla 15 (Anexo D) establecen la regla de pesos aprobada: los pesos simples B, C y O son fijos; los pesos duales B/C y C/O varían según el nivel de criticidad conforme a la Tabla 7.",
     "Las referencias normativas se incorporan como anclajes y no sustituyen la consulta de sus textos oficiales vigentes.",
     "El catálogo no incorpora información del proveedor evaluado: cada evaluación deberá respaldarse con evidencias contextualizadas, fechadas y trazables."
   ]

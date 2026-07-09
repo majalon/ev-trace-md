@@ -294,7 +294,7 @@ El borrador contiene **dos lecturas que deben unificarse antes de programar una 
 1. **Tabla 6.** Convierte los pesos simples en función de la criticidad.
 2. **Apartado 6.2.4 y leyenda del Anexo D.** Indican que los criterios con peso simple son fijos e independientes del nivel de riesgo; solo `B/C` y `C/O` son pesos duales.
 
-| Peso bruto | Lectura según apartado 6.2.4 y Anexo D | Lectura de la Tabla 6: Crítico | Importante | Bajo |
+| Peso bruto | Lectura según apartado 6.2.4 y Anexo D | Lectura de la Tabla 7: Crítico | Importante | Bajo |
 |---|---|---|---|---|
 | B | B fijo | B | C | C |
 | C | C fijo | C | O | O |
