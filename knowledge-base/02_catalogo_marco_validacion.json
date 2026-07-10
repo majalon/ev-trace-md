@@ -111,7 +111,7 @@
         "dentro_del_alcance_validacion": "Continuar a clasificación y evaluación.",
         "fuera_del_alcance_obligatorio": "No es necesaria la validación del software. Valorar si accede, procesa o almacena información confidencial para su registro en el inventario de activos."
       },
-      "source": "TFM EV-TRACE-MD, Figura 6 y apartado 6.2.2"
+      "source": "TFM EV-TRACE-MD, Figura 8 y apartado 6.2.2"
     }
   },
   "classification_and_risk": {
@@ -2671,12 +2671,12 @@
       {
         "field": "respuestas_al_arbol_de_alcance",
         "reason": "Registra las respuestas que determinan la necesidad de validación.",
-        "status": "Propuesta de modelado para la implementación; derivada de la Figura 4."
+        "status": "Propuesta de modelado para la implementación; derivada de la Figura 7."
       },
       {
         "field": "respuestas_al_arbol_de_criticidad",
         "reason": "Sustenta el nivel Crítico, Importante o Bajo.",
-        "status": "Propuesta de modelado para la implementación; derivada de la Figura 5."
+        "status": "Propuesta de modelado para la implementación; derivada de la Figura 8."
       },
       {
         "field": "evidencias",

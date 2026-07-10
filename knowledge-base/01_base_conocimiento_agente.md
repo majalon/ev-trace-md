@@ -1117,8 +1117,8 @@ Los siguientes campos no modifican el marco, pero permiten que el agente aplique
 - **via_activacion:** Determina el origen del expediente y la información mínima aplicable. (Propuesta de modelado para la implementación; derivada de la Etapa 1.)
 - **version_o_plan_evaluado:** El informe debe identificar versión o plan evaluado; los criterios dependen de la versión concreta. (Propuesta de modelado para la implementación; derivada de los apartados 6.2.3 y 6.2.5.)
 - **familia_principal_y_modulos_adicionales:** Permite seleccionar la tabla principal y añadir S5 o S6 cuando proceda. (Propuesta de modelado para la implementación; derivada de la taxonomía y Anexo D.)
-- **respuestas_al_arbol_de_alcance:** Registra las respuestas que determinan la necesidad de validación. (Propuesta de modelado para la implementación; derivada de la Figura 4.)
-- **respuestas_al_arbol_de_criticidad:** Sustenta el nivel Crítico, Importante o Bajo. (Propuesta de modelado para la implementación; derivada de la Figura 5.)
+- **respuestas_al_arbol_de_alcance:** Registra las respuestas que determinan la necesidad de validación. (Propuesta de modelado para la implementación; derivada de la Figura 7.)
+- **respuestas_al_arbol_de_criticidad:** Sustenta el nivel Crítico, Importante o Bajo. (Propuesta de modelado para la implementación; derivada de la Figura 8.)
 - **evidencias:** Cada criterio debe conservar fuente, URL o documento, fecha de consulta, localizador y resultado de la verificación. (Propuesta de modelado para la implementación; derivada de los requisitos de suficiencia documental e informe de validación.)
 
 ### 13.3 Estructura mínima de resultado por criterio
@@ -1189,7 +1189,7 @@ Los siguientes elementos son las referencias de apoyo seleccionadas en el marco.
 
 - `01_base_conocimiento_agente.md`: corpus legible del marco EV-TRACE-MD, utilizable como documento de conocimiento del assistant.
 - `02_catalogo_marco_validacion.json`: datos normalizados del catálogo de 77 criterios para el EV-TRACE-MD Assistant.
-- `03_informe_validacion_herramienta.md`: plantilla del informe de validación generado por el assistant.
+- `03_plantilla_informe_validacion.md`: plantilla del informe de validación generado por el assistant.
 - `ev_trace_md_v08.html`: aplicación standalone del EV-TRACE-MD Assistant (v0.8).
 
 ## 16. Salvaguardas de calidad
