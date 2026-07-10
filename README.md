@@ -24,6 +24,7 @@ detección, clasificación, evaluación y decisión/registro/seguimiento.
 
 ---
 
+
 ## Contenido del repositorio
 
 | Fichero | Descripción |
@@ -32,9 +33,10 @@ detección, clasificación, evaluación y decisión/registro/seguimiento.
 | `01_base_conocimiento_agente.md` | Base de conocimiento del agente de evaluación |
 | `02_catalogo_marco_validacion.json` | Catálogo de criterios estructurado para el agente |
 | `03_informe_validacion_herramienta.md` | Plantilla de informe de validación |
-| `examples/report_ev_trace_md_v08_claude_code.html` | Informe de ejemplo — Caso A: Claude Code |
-| `examples/report_ev_trace_md_v07_cheerio.html` | Informe de ejemplo — Caso B : Cheerio |
-| `examples/report_ev_trace_md_v07_cheerio_complete.html` | Informe de ejemplo Completo — Caso B Cheerio |
+| `examples/report_ev_trace_md_v08_claude_code_reduce.html` | Informe de ejemplo simple— Caso A: Claude Code |
+| `examples/report_ev_trace_md_v08_claude_code.html` | Informe de ejemplo completo— Caso A: Claude Code |
+| `examples/report_ev_trace_md_v07_cheerio_reduce.html` | Informe de ejemplo simple — Caso B : Cheerio |
+| `examples/report_ev_trace_md_v07_cheerio.html` | Informe de ejemplo completo — Caso B Cheerio |
 
 ---
 
@@ -85,6 +87,20 @@ Pueden consultarse directamente sin necesidad de cuenta Claude ni clave de API.
 > constituyen una evaluación de conformidad regulatoria real. Las marcas
 > mencionadas (Claude Code, Anthropic, cheerio, undici) se usan de forma
 > nominativa sin implicar aval de sus titulares.
+
+---
+
+## Demostración
+
+El siguiente vídeo muestra la ejecución completa del EV-TRACE-MD Assistant 
+sobre un caso de uso, desde el inicio de la sesión 
+hasta la generación del informe de validación.
+
+> La ejecución requiere cuenta activa de Claude y consumo de tokens de la API 
+> de Anthropic. El vídeo permite verificar el flujo sin necesidad de acceso 
+> a la herramienta.
+
+[![YouTube](https://img.shields.io/badge/-YouTube-red?style=flat&logo=youtube&logoColor=white&label=)](https://youtu.be/N5mYKOyIB5E)
 
 ---
 

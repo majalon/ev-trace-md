@@ -1189,7 +1189,7 @@ Los siguientes elementos son las referencias de apoyo seleccionadas en el marco.
 
 - `01_base_conocimiento_agente.md`: corpus legible del marco EV-TRACE-MD, utilizable como documento de conocimiento del assistant.
 - `02_catalogo_marco_validacion.json`: datos normalizados del catálogo de 77 criterios para el EV-TRACE-MD Assistant.
-- `03_informe_validacion_herramienta.md`: plantilla del informe de validación generado por el assistant.
+- `03_plantilla_informe_validacion.md`: plantilla del informe de validación generado por el assistant.
 - `ev_trace_md_v08.html`: aplicación standalone del EV-TRACE-MD Assistant (v0.8).
 
 ## 16. Salvaguardas de calidad
