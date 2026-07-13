@@ -4,7 +4,7 @@
     "short_title": "Catálogo EV-TRACE-MD para el EV-TRACE-MD Assistant",
     "language": "es-ES",
     "version": "0.8",
-    "status": "Operativo (v0.8).",
+    "status": "Operativo (v0.9).",
     "source_document": "TFM EV-TRACE-MD",
     "source_date_in_document": "24/06/2026",
     "scope": "Organización fabricante de software como producto sanitario (SaMD) en el marco regulatorio europeo.",
@@ -201,7 +201,7 @@
     "criticality_decision_tree": {
       "id": "nivel_3_criticidad",
       "title": "Determinación del nivel de criticidad",
-      "notes": "La figura está titulada «Nuevo proveedor»; la metodología utiliza los niveles Crítico, Importante y Bajo para la herramienta evaluada.",
+      "notes": "La figura está titulada «Nueva herramienta»; la metodología utiliza los niveles Crítico, Importante y Bajo para la herramienta evaluada.",
       "questions": [
         {
           "order": 1,
@@ -217,19 +217,19 @@
         },
         {
           "order": 3,
-          "question": "¿El proveedor tratará datos sensibles, reservados o confidenciales?",
+          "question": "¿La herramienta tratará datos sensibles, reservados o confidenciales?",
           "yes": "importante",
           "no": "pregunta_4"
         },
         {
           "order": 4,
-          "question": "¿Existen proveedores alternativos que ofrezcan el mismo servicio?",
+          "question": "¿Existen herramientas alternativos que ofrezcan el mismo servicio?",
           "yes": "pregunta_5",
           "no": "critico"
         },
         {
           "order": 5,
-          "question": "¿El proveedor tratará datos de carácter personal sin llegar a ser sensibles?",
+          "question": "¿La herramienta tratará datos de carácter personal sin llegar a ser sensibles?",
           "yes": "importante",
           "no": "pregunta_6"
         },

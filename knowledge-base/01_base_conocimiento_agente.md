@@ -2,9 +2,9 @@
 
 ## 1. Finalidad y estado
 
-Este documento consolida la información operativa del marco **EV-TRACE-MD** (Evaluation and Traceability for Regulated Medical Devices) para evaluar, aprobar y seguir herramientas software de terceros empleadas en el ciclo de vida de un SaMD o en procesos del sistema de gestión de calidad. Está preparado para usarse como corpus de conocimiento del **EV-TRACE-MD Assistant**, mientras que el fichero JSON asociado aporta la misma información con estructura reutilizable por un flujo conversacional o un sistema RAG.
+Este documento consolida la información operativa del marco **EV-TRACE-MD** (Evidence-based Validation of Third-party: Risk Assessment, Classification and Evaluation for Medical Devices) para evaluar, aprobar y seguir herramientas software de terceros empleadas en el ciclo de vida de un SaMD o en procesos del sistema de gestión de calidad. Está preparado para usarse como corpus de conocimiento del **EV-TRACE-MD Assistant**, mientras que el fichero JSON asociado aporta la misma información con estructura reutilizable por un flujo conversacional o un sistema RAG.
 
-**Estado:** operativo (v0.8). Pendiente: normalización definitiva de la regla de pesos.
+**Estado:** operativo (v0.9). Pendiente: normalización definitiva de la regla de pesos.
 
 **Estadísticas del catálogo:** 6 familias (S1-S6), con S4 dividida en dos subfamilias; 8 dimensiones de riesgo; 3 criterios transversales; 74 criterios específicos; 77 criterios en total; 39 anclajes normativos y regulatorios.
 
@@ -109,13 +109,13 @@ El nivel de criticidad modula la consecuencia del incumplimiento de los criterio
 2. ¿Un fallo o interrupción en el servicio podría causar un incumplimiento legal?
    - Sí: Critico.
    - No: pregunta 3.
-3. ¿El proveedor tratará datos sensibles, reservados o confidenciales?
+3. ¿La herramienta tratará datos sensibles, reservados o confidenciales?
    - Sí: Importante.
    - No: pregunta 4.
-4. ¿Existen proveedores alternativos que ofrezcan el mismo servicio?
+4. ¿Existen herramientas alternativas que ofrezcan el mismo servicio?
    - Sí: Pregunta_5.
    - No: critico.
-5. ¿El proveedor tratará datos de carácter personal sin llegar a ser sensibles?
+5. ¿La herramienta tratará datos de carácter personal sin llegar a ser sensibles?
    - Sí: Importante.
    - No: pregunta 6.
 6. ¿Un fallo o interrupción en el servicio podría influir en la operativa pero no afectar al servicio diario?
@@ -1125,7 +1125,7 @@ Los siguientes campos no modifican el marco, pero permiten que el agente aplique
 
 Para cada CT o CS, conservar: identificador; estado (`cumple`, `parcial`, `no-cumple`, `no-verif` o `no-aplica`); peso efectivo; evidencias; brecha o riesgo; acción organizativa; responsable y fecha objetivo, cuando proceda.
 
-### Reglas de asignación de estado (lógica del EV-TRACE-MD Assistant v0.8)
+### Reglas de asignación de estado (lógica del EV-TRACE-MD Assistant v0.9)
 
 - **cumple**: el proveedor cumple el criterio según la evidencia pública encontrada. Que existan medidas organizativas adicionales como capa extra de control NO convierte un cumplimiento del proveedor en parcial. Si el proveedor ofrece la funcionalidad, la documenta o la garantiza, el estado es «cumple» aunque la organización deba además activarla o configurarla.
 - **parcial**: existen dudas reales sobre el cumplimiento del proveedor — la evidencia encontrada es ambigua, incompleta o sugiere que el proveedor solo cubre parte del criterio, pero existe una medida organizativa razonable que puede mitigar esa desviación específica.
@@ -1190,7 +1190,7 @@ Los siguientes elementos son las referencias de apoyo seleccionadas en el marco.
 - `01_base_conocimiento_agente.md`: corpus legible del marco EV-TRACE-MD, utilizable como documento de conocimiento del assistant.
 - `02_catalogo_marco_validacion.json`: datos normalizados del catálogo de 77 criterios para el EV-TRACE-MD Assistant.
 - `03_plantilla_informe_validacion.md`: plantilla del informe de validación generado por el assistant.
-- `ev_trace_md_v08.html`: aplicación standalone del EV-TRACE-MD Assistant (v0.8).
+- `ev_trace_md_v08.html`: aplicación standalone del EV-TRACE-MD Assistant (v0.9).
 
 ## 16. Salvaguardas de calidad
 

@@ -1,6 +1,6 @@
 # INFORME DE VALIDACIÓN EV-TRACE-MD
 
-**Marco:** EV-TRACE-MD (Evaluation and Traceability for Regulated Medical Devices)
+**Marco:** EV-TRACE-MD (Evidence-based Validation of Third-party: Risk Assessment, Classification and Evaluation for Medical Devices)
 
 **Advertencia:** este informe constituye una propuesta de evaluación asistida generada por el EV-TRACE-MD Assistant. La resolución definitiva corresponde al responsable de cumplimiento designado por la organización.
 
